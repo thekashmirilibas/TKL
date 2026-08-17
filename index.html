@@ -321,12 +321,23 @@
     border-bottom:1px solid var(--line);
   }
   .search-bar form{
-    position:relative;width:100%;max-width:480px;
+    position:relative;width:100%;max-width:760px;
+  }
+  .search-controls{
+    display:flex;gap:10px;align-items:center;
+  }
+  .search-field{
+    position:relative;flex:1;min-width:0;
   }
   .search-bar input{
     width:100%;padding:11px 40px 11px 16px;
     border:1.5px solid var(--line);border-radius:var(--curve-sm);
     font-family:inherit;font-size:14px;background:#fff;color:var(--ink);
+  }
+  .global-size-filter{
+    min-width:140px;padding:11px 34px 11px 12px;
+    border:1.5px solid var(--line);border-radius:var(--curve-sm);
+    font-family:inherit;font-size:13px;background:#fff;color:var(--ink);
   }
   .search-bar input:focus{outline:none;border-color:var(--winter-accent);}
   .search-bar .search-icon{
@@ -348,6 +359,8 @@
     .hero .paisley-mark{width:260px;height:260px;opacity:0.045;}
     .season-section{padding:40px 18px 48px;}
     .cat-page{padding:24px 18px 60px;}
+    .search-controls{flex-direction:column;align-items:stretch;}
+    .global-size-filter{width:100%;}
   }
 </style>
 </head>
@@ -370,8 +383,15 @@
 
 <div class="search-bar">
   <form id="searchForm">
-    <input type="text" id="searchInput" placeholder="Search shawls, kaftans, pherans…" autocomplete="off">
-    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <div class="search-controls">
+      <div class="search-field">
+        <input type="text" id="searchInput" placeholder="Search shawls, kaftans, pherans…" autocomplete="off">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </div>
+      <select id="sizeFilter" class="global-size-filter" aria-label="Filter by size">
+        <option value="">All Sizes</option>
+      </select>
+    </div>
   </form>
 </div>
 
@@ -484,6 +504,36 @@ function slug(s){ return (s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-')
 function cleanText(s){ return (s||'').toString().trim(); }
 function isYes(v){ return /^y$/i.test((v||'').trim()); }
 
+let selectedSize = '';
+
+function getProductSizes(product){
+  return product && product.size
+    ? product.size.split(',').map(s=>s.trim()).filter(Boolean)
+    : [];
+}
+
+function productHasSize(product, size){
+  if(!size) return true;
+  return getProductSizes(product).some(s => s.toLowerCase() === size.toLowerCase());
+}
+
+function populateSizeFilter(){
+  const select = document.getElementById('sizeFilter');
+  if(!select) return;
+
+  const sizes = [...new Set(PRODUCTS.flatMap(getProductSizes))]
+    .sort((a,b)=>a.localeCompare(b, undefined, {numeric:true, sensitivity:'base'}));
+
+  select.innerHTML = '<option value="">All Sizes</option>' +
+    sizes.map(size => `<option value="${size}">${size}</option>`).join('');
+
+  select.value = selectedSize;
+}
+
+function applyGlobalSizeFilter(items){
+  return selectedSize ? items.filter(p=>productHasSize(p, selectedSize)) : items;
+}
+
 function loadData(){
   document.getElementById('loadingMsg').style.display='block';
   document.getElementById('errorMsg').style.display='none';
@@ -506,6 +556,7 @@ function loadData(){
         }))
         .filter(p=>p.name && p.season && p.category && p.image);
       document.getElementById('loadingMsg').style.display='none';
+      populateSizeFilter();
       renderHome();
       router();
     },
@@ -535,10 +586,19 @@ function renderHome(){
 function renderTiles(season, containerId, countId, grouped){
   const el = document.getElementById(containerId);
   const cats = grouped[season] || {};
-  const names = Object.keys(cats).sort((a,b)=>cats[b].length-cats[a].length);
-  document.getElementById(countId).textContent = names.length + ' categories';
+  const filteredCats = {};
+
+  Object.keys(cats).forEach(cat=>{
+    const matching = applyGlobalSizeFilter(cats[cat]);
+    if(matching.length) filteredCats[cat] = matching;
+  });
+
+  const names = Object.keys(filteredCats).sort((a,b)=>filteredCats[b].length-filteredCats[a].length);
+  document.getElementById(countId).textContent =
+    selectedSize ? `${names.length} categories · ${selectedSize}` : `${names.length} categories`;
+
   el.innerHTML = names.map(cat=>{
-    const items = cats[cat];
+    const items = filteredCats[cat];
     return `<a class="tile" href="#/${slug(season)}/${slug(cat)}">
       <img src="${items[0].image}" alt="${cat}" loading="lazy" decoding="async">
       <div class="tile-label">
@@ -547,6 +607,12 @@ function renderTiles(season, containerId, countId, grouped){
       </div>
     </a>`;
   }).join('');
+
+  if(!names.length){
+    el.innerHTML = `<div class="drawer-empty" style="grid-column:1/-1;">
+      No products available for the selected size.
+    </div>`;
+  }
 }
 
 function router(){
@@ -575,11 +641,11 @@ function router(){
     document.getElementById('subChips').style.display='none';
     document.getElementById('subChips').innerHTML='';
     const q = query.toLowerCase();
-    const items = PRODUCTS.filter(p=>
+    const items = applyGlobalSizeFilter(PRODUCTS.filter(p=>
       p.name.toLowerCase().includes(q) ||
       p.category.toLowerCase().includes(q) ||
       p.subcategory.toLowerCase().includes(q)
-    );
+    ));
     if(items.length===0){
       document.getElementById('productGrid').innerHTML = `<div class="drawer-empty" style="grid-column:1/-1;">No products matched "${query}". Try a different word, like a category (kaftan, shawl, pheran) or colour.</div>`;
       currentGridItems = [];
@@ -614,7 +680,9 @@ function router(){
 
   let state = { sub:'', budget:false };
   function applyFilters(){
-    return items.filter(p=>(!state.sub || p.subcategory===state.sub) && (!state.budget || p.budget));
+    return applyGlobalSizeFilter(
+      items.filter(p=>(!state.sub || p.subcategory===state.sub) && (!state.budget || p.budget))
+    );
   }
 
   const chips = [];
@@ -650,7 +718,7 @@ function router(){
     chipRow.style.display='none';
     chipRow.innerHTML='';
   }
-  renderGrid(items);
+  renderGrid(applyFilters());
   window.scrollTo({top:0,behavior:'instant'});
 }
 
@@ -730,7 +798,7 @@ function closeLightbox(){
 }
 document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
 document.getElementById('lightbox').addEventListener('click', (e)=>{
-  if(e.target.id === 'lightbox'){ closeLightbox(); }
+  if(!e.target.closest('#lightboxImg')){ closeLightbox(); }
 });
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape'){ closeLightbox(); }
@@ -838,6 +906,15 @@ document.getElementById('searchForm').addEventListener('submit', (e)=>{
 });
 
 window.addEventListener('hashchange', router);
+
+document.getElementById('sizeFilter').addEventListener('change', (e)=>{
+  selectedSize = e.target.value;
+  renderHome();
+  if(location.hash){
+    router();
+  }
+});
+
 loadData();
 </script>
 </body>
