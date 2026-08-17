@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Kashmiri Libas — Kashmir, Stitched by Hand</title>
+<meta name="description" content="Aari embroidery, Kani weaves and hand-finished pieces from Kashmir — shawls, pherans, kaftans, kurtis and more. Order directly on WhatsApp, no payment gateway needed.">
+<meta property="og:title" content="The Kashmiri Libas">
+<meta property="og:description" content="Kashmir, stitched by hand. Aari embroidery, Kani weaves and hand-finished pieces for every season.">
+<meta property="og:image" content="https://i.ibb.co/HfJjSvHH/IMG-E2498.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Kashmiri Libas">
+<meta name="twitter:description" content="Kashmir, stitched by hand. Aari embroidery, Kani weaves and hand-finished pieces for every season.">
+<meta name="twitter:image" content="https://i.ibb.co/HfJjSvHH/IMG-E2498.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231B1512'/%3E%3Cpath d='M20 6C13 6 9 12 9 18c0 7 5 11 9 15 1.5 1.5 2 3 2 5 2-2 6-5 6-11 0-4-2-6-4-6-3 0-4 2-4 4 0 1.5 1 2.5 2 2.5' stroke='%23C9A227' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -304,6 +314,34 @@
   }
   .card .img-wrap{cursor:zoom-in;}
 
+  .search-bar{
+    padding:14px 28px;
+    display:flex;justify-content:center;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .search-bar form{
+    position:relative;width:100%;max-width:480px;
+  }
+  .search-bar input{
+    width:100%;padding:11px 40px 11px 16px;
+    border:1.5px solid var(--line);border-radius:var(--curve-sm);
+    font-family:inherit;font-size:14px;background:#fff;color:var(--ink);
+  }
+  .search-bar input:focus{outline:none;border-color:var(--winter-accent);}
+  .search-bar .search-icon{
+    position:absolute;right:12px;top:50%;transform:translateY(-50%);
+    width:16px;height:16px;color:var(--ink-soft);pointer-events:none;
+  }
+
+  .size-select{
+    width:100%;margin-top:9px;padding:8px 10px;
+    border:1px solid var(--line);border-radius:var(--curve-sm);
+    font-family:inherit;font-size:12.5px;background:#fff;color:var(--ink);
+  }
+  .chip.budget{border-color:var(--summer-coral);color:var(--summer-coral);}
+  .chip.budget.active{background:var(--summer-coral);border-color:var(--summer-coral);color:#fff;}
+
   @media (max-width:640px){
     .site-header{padding:12px 18px;}
     .hero{padding:32px 18px 26px;}
@@ -329,6 +367,13 @@
     </button>
   </div>
 </header>
+
+<div class="search-bar">
+  <form id="searchForm">
+    <input type="text" id="searchInput" placeholder="Search shawls, kaftans, pherans…" autocomplete="off">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+  </form>
+</div>
 
 <main id="homeView">
   <section class="hero">
@@ -456,6 +501,7 @@ function loadData(){
           category:cleanText(r['Category']),
           subcategory:cleanText(r['Subcategory']),
           size:cleanText(r['Size']),
+          budget: isYes(r['Shop By Budget']),
           featured: isYes(r['Featured This Summer']),
         }))
         .filter(p=>p.name && p.season && p.category && p.image);
@@ -512,8 +558,38 @@ function router(){
     homeView.style.display='block';
     catView.classList.remove('active');
     crumb.style.display='none';
+    document.getElementById('searchInput').value='';
     return;
   }
+
+  if(hash.indexOf('search/')===0){
+    const query = decodeURIComponent(hash.slice(7));
+    homeView.style.display='none';
+    catView.classList.add('active');
+    crumb.style.display='flex';
+    crumb.innerHTML = `<button onclick="location.hash=''">Home</button> / Search`;
+    document.getElementById('catTitle').textContent = `Results for "${query}"`;
+    const tag = document.getElementById('catTag');
+    tag.textContent='';
+    tag.className='tag';
+    document.getElementById('subChips').style.display='none';
+    document.getElementById('subChips').innerHTML='';
+    const q = query.toLowerCase();
+    const items = PRODUCTS.filter(p=>
+      p.name.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      p.subcategory.toLowerCase().includes(q)
+    );
+    if(items.length===0){
+      document.getElementById('productGrid').innerHTML = `<div class="drawer-empty" style="grid-column:1/-1;">No products matched "${query}". Try a different word, like a category (kaftan, shawl, pheran) or colour.</div>`;
+      currentGridItems = [];
+    } else {
+      renderGrid(items);
+    }
+    window.scrollTo({top:0,behavior:'instant'});
+    return;
+  }
+
   const [seasonSlug, catSlug] = hash.split('/');
   const grouped = groupBySeasonCategory();
   const seasonName = Object.keys(grouped).find(s=>slug(s)===seasonSlug);
@@ -533,18 +609,41 @@ function router(){
 
   let items = grouped[seasonName][catName];
   const subcats = [...new Set(items.map(p=>p.subcategory).filter(Boolean))];
+  const hasBudget = items.some(p=>p.budget);
   const chipRow = document.getElementById('subChips');
+
+  let state = { sub:'', budget:false };
+  function applyFilters(){
+    return items.filter(p=>(!state.sub || p.subcategory===state.sub) && (!state.budget || p.budget));
+  }
+
+  const chips = [];
   if(subcats.length > 1){
+    chips.push(...['All',...subcats].map(s=>({type:'sub', value:s==='All'?'':s, label:s})));
+  }
+  if(hasBudget){
+    chips.push({type:'budget', value:true, label:'💰 Budget Picks'});
+  }
+
+  if(chips.length){
     chipRow.style.display='flex';
-    chipRow.innerHTML = ['All',...subcats].map((s,i)=>
-      `<button class="chip ${i===0?'active':''}" data-sub="${s==='All'?'':s}">${s}</button>`
-    ).join('');
+    chipRow.innerHTML = chips.map(c=>{
+      const activeClass = c.type==='sub' && c.value==='' ? 'active' : '';
+      const budgetClass = c.type==='budget' ? 'budget' : '';
+      return `<button class="chip ${activeClass} ${budgetClass}" data-type="${c.type}" data-value="${c.value}">${c.label}</button>`;
+    }).join('');
     chipRow.querySelectorAll('.chip').forEach(chip=>{
       chip.addEventListener('click', ()=>{
-        chipRow.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-        chip.classList.add('active');
-        const sub = chip.dataset.sub;
-        renderGrid(sub ? items.filter(p=>p.subcategory===sub) : items);
+        if(chip.dataset.type==='sub'){
+          chipRow.querySelectorAll('.chip[data-type="sub"]').forEach(c=>c.classList.remove('active'));
+          chip.classList.add('active');
+          state.sub = chip.dataset.value;
+        } else {
+          const nowActive = !chip.classList.contains('active');
+          chip.classList.toggle('active', nowActive);
+          state.budget = nowActive;
+        }
+        renderGrid(applyFilters());
       });
     });
   } else {
@@ -555,36 +654,58 @@ function router(){
   window.scrollTo({top:0,behavior:'instant'});
 }
 
+let currentGridItems = [];
+
 function renderGrid(items){
+  currentGridItems = items;
   const grid = document.getElementById('productGrid');
   grid.innerHTML = items.map(p=>{
     const sizes = p.size ? p.size.split(',').map(s=>s.trim()).filter(Boolean) : [];
-    const inBucket = bucket.some(b=>b.id===p.id);
+    const inBucket = bucket.some(b=>b.id===p.id && b.size===(sizes[0]||''));
     return `<div class="card" data-id="${p.id}">
       <div class="img-wrap" data-image="${p.image}" data-name="${p.name.replace(/"/g,'&quot;')}">
         ${p.featured ? '<div class="featured-badge">Featured</div>' : ''}
+        ${p.budget ? '<div class="featured-badge" style="left:auto;right:10px;background:var(--summer-accent);">Budget Pick</div>' : ''}
         <img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async">
       </div>
       <div class="card-body">
         <div class="card-name">${p.name}</div>
         <div class="card-price">${p.price || 'Price on request'}</div>
-        ${sizes.length ? `<div class="size-row">${sizes.map(s=>`<span class="size-chip">${s}</span>`).join('')}</div>` : ''}
+        ${sizes.length > 1 ? `<select class="size-select">${sizes.map(s=>`<option value="${s}">${s}</option>`).join('')}</select>` : ''}
+        ${sizes.length === 1 ? `<div class="size-row"><span class="size-chip">${sizes[0]}</span></div>` : ''}
         <div class="card-actions">
           <button class="btn btn-bucket ${inBucket?'added':''}" data-action="bucket">${inBucket ? 'Added ✓' : 'Add to Bucket'}</button>
-          <a class="btn btn-wa" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(p.waText)}" target="_blank" rel="noopener">
+          <button class="btn btn-wa" data-action="whatsapp">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.4C8.4 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.2-.7-2.7-1.1-4.4-3.8-4.6-4-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.3-.4.5-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.1.5.2.6.3.1.2.1.9-.1 1.5z"/></svg>
             WhatsApp
-          </a>
+          </button>
         </div>
       </div>
     </div>`;
   }).join('');
 
-  grid.querySelectorAll('[data-action="bucket"]').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      const id = e.target.closest('.card').dataset.id;
-      const product = PRODUCTS.find(p=>p.id===id);
-      toggleBucket(product, e.target);
+  grid.querySelectorAll('.card').forEach(card=>{
+    const id = card.dataset.id;
+    const product = PRODUCTS.find(p=>p.id===id);
+    const select = card.querySelector('.size-select');
+    const bucketBtn = card.querySelector('[data-action="bucket"]');
+    const waBtn = card.querySelector('[data-action="whatsapp"]');
+
+    function currentSize(){ return select ? select.value : (product.size && !product.size.includes(',') ? product.size : ''); }
+    function syncBucketLabel(){
+      const already = bucket.some(b=>b.id===product.id && b.size===currentSize());
+      bucketBtn.textContent = already ? 'Added ✓' : 'Add to Bucket';
+      bucketBtn.classList.toggle('added', already);
+    }
+    if(select){ select.addEventListener('change', syncBucketLabel); }
+
+    bucketBtn.addEventListener('click', ()=>{
+      toggleBucket(product, currentSize(), bucketBtn, syncBucketLabel);
+    });
+    waBtn.addEventListener('click', ()=>{
+      const size = currentSize();
+      const msg = product.waText + (size ? ` (Size: ${size})` : '');
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     });
   });
 
@@ -615,16 +736,17 @@ document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape'){ closeLightbox(); }
 });
 
-function toggleBucket(product, btnEl){
-  const idx = bucket.findIndex(b=>b.id===product.id);
+function toggleBucket(product, size, btnEl, syncFn){
+  const idx = bucket.findIndex(b=>b.id===product.id && b.size===size);
   if(idx>-1){
     bucket.splice(idx,1);
-    btnEl.textContent='Add to Bucket';
-    btnEl.classList.remove('added');
   } else {
-    bucket.push(product);
-    btnEl.textContent='Added ✓';
-    btnEl.classList.add('added');
+    bucket.push({id:product.id, name:product.name, price:product.price, image:product.image, waText:product.waText, size:size});
+  }
+  if(syncFn){ syncFn(); } else if(btnEl){
+    const already = bucket.some(b=>b.id===product.id && b.size===size);
+    btnEl.textContent = already ? 'Added ✓' : 'Add to Bucket';
+    btnEl.classList.toggle('added', already);
   }
   updateCartBadge();
   renderDrawer();
@@ -654,13 +776,13 @@ function renderDrawer(){
     return;
   }
   foot.style.display='block';
-  list.innerHTML = bucket.map(p=>`
-    <div class="drawer-item" data-id="${p.id}">
+  list.innerHTML = bucket.map((p,i)=>`
+    <div class="drawer-item" data-index="${i}">
       <img src="${p.image}" alt="${p.name}">
       <div class="info">
-        <div class="n">${p.name}</div>
+        <div class="n">${p.name}${p.size ? ' <span style="opacity:.6;font-weight:400;">· '+p.size+'</span>' : ''}</div>
         <div class="p">${p.price || 'Price on request'}</div>
-        <button class="remove" data-remove="${p.id}">Remove</button>
+        <button class="remove" data-remove="${i}">Remove</button>
       </div>
     </div>
   `).join('');
@@ -668,12 +790,11 @@ function renderDrawer(){
   document.getElementById('drawerTotal').textContent = '₹' + total.toLocaleString('en-IN');
   list.querySelectorAll('[data-remove]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const id = btn.dataset.remove;
-      bucket = bucket.filter(b=>b.id!==id);
+      const i = parseInt(btn.dataset.remove,10);
+      bucket.splice(i,1);
       updateCartBadge();
       renderDrawer();
-      const cardBtn = document.querySelector(`.card[data-id="${id}"] [data-action="bucket"]`);
-      if(cardBtn){ cardBtn.textContent='Add to Bucket'; cardBtn.classList.remove('added'); }
+      if(currentGridItems.length){ renderGrid(currentGridItems); }
     });
   });
 }
@@ -681,7 +802,8 @@ function renderDrawer(){
 function buildBucketMessage(){
   let lines = ["Hi! I'd like to order the following:"];
   bucket.forEach((p,i)=>{
-    lines.push(`${i+1}. ${p.name} - ${p.price || 'price on request'}`);
+    const sizeTxt = p.size ? ` (Size: ${p.size})` : '';
+    lines.push(`${i+1}. ${p.name}${sizeTxt} - ${p.price || 'price on request'}`);
   });
   const total = bucket.reduce((sum,p)=>sum+parsePrice(p.price),0);
   lines.push(`\nTotal: ₹${total.toLocaleString('en-IN')}`);
@@ -707,6 +829,12 @@ document.getElementById('homeLink').addEventListener('click', (e)=>{
   if(location.hash === '' || location.hash === '#'){ router(); }
   else { location.hash = ''; }
   window.scrollTo({top:0,behavior:'smooth'});
+});
+
+document.getElementById('searchForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const q = document.getElementById('searchInput').value.trim();
+  if(q){ location.hash = '#/search/' + encodeURIComponent(q); }
 });
 
 window.addEventListener('hashchange', router);
