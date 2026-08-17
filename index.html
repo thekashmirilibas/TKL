@@ -13,7 +13,9 @@
 <meta name="twitter:title" content="The Kashmiri Libas">
 <meta name="twitter:description" content="Kashmir, stitched by hand. Aari embroidery, Kani weaves and hand-finished pieces for every season.">
 <meta name="twitter:image" content="https://i.ibb.co/HfJjSvHH/IMG-E2498.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231B1512'/%3E%3Cpath d='M20 6C13 6 9 12 9 18c0 7 5 11 9 15 1.5 1.5 2 3 2 5 2-2 6-5 6-11 0-4-2-6-4-6-3 0-4 2-4 4 0 1.5 1 2.5 2 2.5' stroke='%23C9A227' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<!-- Brand favicon -->
+<link rel="icon" type="image/png" sizes="512x512" href="the-kashmiri-libas-favicon.png">
+<link rel="apple-touch-icon" href="the-kashmiri-libas-apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -354,13 +356,47 @@
   .chip.budget.active{background:var(--summer-coral);border-color:var(--summer-coral);color:#fff;}
 
   @media (max-width:640px){
-    .site-header{padding:12px 18px;}
+    .site-header{padding:11px 14px;gap:10px;}
+    .logo{font-size:18px;gap:6px;min-width:0;}
+    .logo svg{width:19px;height:19px;flex-shrink:0;}
+    .header-right{gap:8px;min-width:0;}
+    .crumb{font-size:11px;max-width:42vw;overflow:hidden;white-space:nowrap;}
+    .cart-btn{padding:8px 11px;font-size:12px;gap:5px;white-space:nowrap;}
+
     .hero{padding:32px 18px 26px;}
     .hero .paisley-mark{width:260px;height:260px;opacity:0.045;}
+    .hero h1{font-size:clamp(27px,8vw,38px);}
+    .hero p{font-size:14px;}
+    .hero-ctas{gap:8px;margin-top:18px;}
+    .hero-cta{padding:10px 16px;}
+
     .season-section{padding:40px 18px 48px;}
-    .cat-page{padding:24px 18px 60px;}
-    .search-controls{flex-direction:column;align-items:stretch;}
-    .global-size-filter{width:100%;}
+    .season-head{margin-bottom:24px;}
+    .tile-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+    .tile-label{left:11px;right:11px;bottom:10px;}
+    .tile-label .name{font-size:16px;}
+    .tile-label .num{font-size:10.5px;}
+
+    .cat-page{padding:24px 14px 60px;}
+    .cat-hero{gap:10px;margin-bottom:22px;}
+    .cat-hero h2{font-size:30px;}
+    .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px;}
+    .card .img-wrap{aspect-ratio:3/4;}
+    .card-body{padding:9px 1px 0;}
+    .card-name{font-size:13px;min-height:34px;}
+    .card-price{font-size:17px;}
+    .card-actions{flex-direction:column;gap:6px;margin-top:9px;}
+    .btn{width:100%;padding:9px 7px;font-size:11.5px;}
+    .size-select{font-size:12px;padding:8px;}
+
+    .search-bar{padding:10px 14px;}
+    .search-controls{flex-direction:column;align-items:stretch;gap:7px;}
+    .global-size-filter{width:100%;min-width:0;}
+
+    .drawer{width:min(420px,94vw);}
+    .drawer-head{padding:18px 18px 14px;}
+    .drawer-list{padding:12px 18px;}
+    .drawer-foot{padding:16px 18px 20px;}
   }
 </style>
 </head>
