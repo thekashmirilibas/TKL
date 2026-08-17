@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koshur Shawl — Kashmir, Stitched by Hand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+  :root{
+    --paper:#F4EEDF;
+    --ink:#221D18;
+    --ink-soft:#5B5248;
+    --line: rgba(34,29,24,0.14);
+    --winter-bg:#1B1512;
+    --winter-bg-2:#241C17;
+    --winter-accent:#8B2635;
+    --winter-gold:#C9A227;
+    --winter-text:#EFE6D8;
+    --summer-bg:#FBF6EA;
+    --summer-accent:#2F6B5E;
+    --summer-coral:#D9642F;
+    --wa-green:#3E9C6E;
+    --curve: 30px 6px 30px 6px;
+    --curve-sm: 16px 4px 16px 4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .eyebrow{
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+  /* header */
+  .site-header{
+    position:sticky;top:0;z-index:40;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;
+    background:rgba(244,238,223,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-size:22px;font-weight:600;
+    display:flex;align-items:center;gap:8px;
+  }
+  .logo svg{width:22px;height:22px;color:var(--winter-accent);}
+  .header-right{display:flex;align-items:center;gap:18px;}
+  .crumb{font-size:13px;color:var(--ink-soft);display:flex;align-items:center;gap:6px;}
+  .crumb button{color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px;}
+  .cart-btn{
+    position:relative;display:flex;align-items:center;gap:8px;
+    padding:9px 16px;border:1.5px solid var(--ink);border-radius:var(--curve-sm);
+    font-size:13px;font-weight:600;
+  }
+  .cart-btn svg{width:16px;height:16px;}
+  .cart-badge{
+    position:absolute;top:-8px;right:-8px;
+    background:var(--winter-accent);color:#fff;
+    font-size:11px;font-weight:700;
+    width:19px;height:19px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* paisley */
+  .paisley-mark{width:100%;height:100%;}
+
+  /* hero */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:88px 28px 72px;
+    text-align:center;
+  }
+  .hero .paisley-mark{
+    position:absolute;top:-60px;right:-80px;
+    width:420px;height:420px;color:var(--winter-accent);opacity:0.06;
+    transform:rotate(12deg);
+  }
+  .hero .paisley-mark.left{
+    right:auto;left:-100px;top:auto;bottom:-100px;
+    color:var(--summer-accent);transform:rotate(-18deg);
+  }
+  .hero h1{
+    font-size:clamp(34px,6vw,64px);
+    line-height:1.05;
+    max-width:16ch;margin:0 auto;
+    position:relative;
+  }
+  .hero h1 em{
+    font-style:italic;font-weight:400;color:var(--winter-accent);
+  }
+  .hero p{
+    max-width:46ch;margin:20px auto 0;
+    color:var(--ink-soft);font-size:16px;line-height:1.6;
+    position:relative;
+  }
+  .hero-ctas{display:flex;gap:14px;justify-content:center;margin-top:34px;position:relative;flex-wrap:wrap;}
+  .hero-cta{
+    padding:13px 26px;border-radius:var(--curve-sm);
+    font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+    border:1.5px solid var(--ink);
+  }
+  .hero-cta.winter{background:var(--winter-bg);color:var(--winter-text);border-color:var(--winter-bg);}
+  .hero-cta.summer{background:transparent;color:var(--summer-accent);border-color:var(--summer-accent);}
+
+  /* season sections */
+  .season-section{padding:64px 28px 76px;}
+  .season-section.winter{background:var(--winter-bg);color:var(--winter-text);}
+  .season-section.summer{background:var(--summer-bg);color:var(--ink);}
+  .season-head{max-width:1180px;margin:0 auto 34px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .season-head .eyebrow{color:var(--winter-gold);}
+  .season-section.summer .season-head .eyebrow{color:var(--summer-accent);}
+  .season-head h2{font-size:clamp(26px,4vw,38px);margin-top:6px;}
+  .season-head .count{font-size:13px;opacity:0.65;}
+
+  .tile-row{
+    max-width:1180px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:20px;
+  }
+  .tile{
+    display:block;position:relative;
+    border-radius:var(--curve);
+    overflow:hidden;
+    aspect-ratio:3/3.6;
+    background:#000;
+  }
+  .tile img{width:100%;height:100%;object-fit:cover;opacity:0.88;transition:transform .5s ease, opacity .3s ease;}
+  .tile:hover img{transform:scale(1.06);opacity:1;}
+  .tile::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.78) 100%);
+  }
+  .tile-label{
+    position:absolute;left:16px;right:16px;bottom:14px;z-index:2;
+    color:#fff;
+  }
+  .tile-label .name{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
+  .tile-label .num{font-size:12px;opacity:0.75;margin-top:2px;}
+
+  /* category page */
+  .cat-page{max-width:1180px;margin:0 auto;padding:40px 28px 90px;display:none;}
+  .cat-page.active{display:block;}
+  .cat-hero{display:flex;align-items:center;gap:18px;margin-bottom:28px;flex-wrap:wrap;}
+  .cat-hero h2{font-size:clamp(28px,4vw,42px);}
+  .cat-hero .tag{
+    font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    padding:6px 12px;border-radius:20px;
+  }
+  .tag.winter{background:var(--winter-bg);color:var(--winter-gold);}
+  .tag.summer{background:var(--summer-accent);color:#fff;}
+
+  .chip-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+  .chip{
+    padding:8px 16px;border-radius:20px;border:1.5px solid var(--line);
+    font-size:13px;font-weight:600;color:var(--ink-soft);
+  }
+  .chip.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+
+  .product-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:26px 20px;
+  }
+  .card{position:relative;}
+  .card .img-wrap{
+    position:relative;border-radius:var(--curve);overflow:hidden;
+    aspect-ratio:3/4;background:#eee2c9;
+  }
+  .card img{width:100%;height:100%;object-fit:cover;}
+  .featured-badge{
+    position:absolute;top:10px;left:10px;z-index:2;
+    background:var(--summer-coral);color:#fff;
+    font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+    padding:5px 10px;border-radius:12px;
+  }
+  .card-body{padding:12px 2px 0;}
+  .card-name{font-size:14.5px;font-weight:600;line-height:1.3;min-height:38px;}
+  .card-price{font-family:'Fraunces',serif;font-size:19px;margin-top:4px;}
+  .size-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;}
+  .size-chip{font-size:10.5px;color:var(--ink-soft);border:1px solid var(--line);border-radius:8px;padding:2px 7px;}
+  .card-actions{display:flex;gap:8px;margin-top:12px;}
+  .btn{
+    flex:1;padding:10px 10px;border-radius:var(--curve-sm);
+    font-size:12.5px;font-weight:700;text-align:center;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+  }
+  .btn-bucket{background:var(--ink);color:var(--paper);}
+  .btn-bucket.added{background:var(--summer-accent);}
+  .btn-wa{background:var(--wa-green);color:#fff;}
+  .btn svg{width:14px;height:14px;flex-shrink:0;}
+
+  /* cart drawer */
+  .overlay{
+    position:fixed;inset:0;background:rgba(20,16,12,0.5);
+    opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:50;
+  }
+  .overlay.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:-420px;width:min(420px,92vw);height:100%;
+    background:var(--paper);z-index:51;
+    box-shadow:-10px 0 40px rgba(0,0,0,0.2);
+    display:flex;flex-direction:column;
+    transition:right .3s ease;
+  }
+  .drawer.open{right:0;}
+  .drawer-head{padding:22px 22px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+  .drawer-head h3{font-size:22px;}
+  .drawer-close{font-size:22px;line-height:1;padding:4px;}
+  .drawer-list{flex:1;overflow-y:auto;padding:14px 22px;}
+  .drawer-empty{color:var(--ink-soft);font-size:14px;text-align:center;padding:60px 20px;}
+  .drawer-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .drawer-item img{width:58px;height:58px;object-fit:cover;border-radius:var(--curve-sm);}
+  .drawer-item .info{flex:1;}
+  .drawer-item .info .n{font-size:13.5px;font-weight:600;line-height:1.3;}
+  .drawer-item .info .p{font-family:'Fraunces',serif;font-size:15px;margin-top:3px;}
+  .drawer-item .remove{font-size:12px;color:var(--winter-accent);font-weight:600;margin-top:4px;text-decoration:underline;}
+  .drawer-foot{padding:18px 22px 24px;border-top:1px solid var(--line);}
+  .drawer-total{display:flex;justify-content:space-between;font-family:'Fraunces',serif;font-size:20px;margin-bottom:14px;}
+  .drawer-order{
+    width:100%;padding:15px;border-radius:var(--curve-sm);
+    background:var(--wa-green);color:#fff;font-weight:700;font-size:14px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .drawer-order svg{width:17px;height:17px;}
+  .drawer-hint{font-size:11.5px;color:var(--ink-soft);text-align:center;margin-top:10px;}
+
+  .state-msg{max-width:1180px;margin:0 auto;padding:90px 28px;text-align:center;color:var(--ink-soft);}
+  .spinner{
+    width:26px;height:26px;border-radius:50%;
+    border:3px solid var(--line);border-top-color:var(--winter-accent);
+    margin:0 auto 16px;animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .retry-btn{margin-top:14px;padding:10px 20px;border:1.5px solid var(--ink);border-radius:var(--curve-sm);font-weight:600;font-size:13px;}
+
+  footer{
+    background:var(--winter-bg);color:var(--winter-text);
+    padding:40px 28px;text-align:center;
+  }
+  footer .logo{justify-content:center;color:var(--winter-text);}
+  footer .logo svg{color:var(--winter-gold);}
+  footer p{color:rgba(239,230,216,0.6);font-size:13px;margin-top:10px;}
+
+  @media (max-width:640px){
+    .site-header{padding:14px 18px;}
+    .hero{padding:64px 18px 52px;}
+    .season-section{padding:48px 18px 56px;}
+    .cat-page{padding:28px 18px 70px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6C13 6 9 12 9 18c0 7 5 11 9 15 1.5 1.5 2 3 2 5 2-2 6-5 6-11 0-4-2-6-4-6-3 0-4 2-4 4 0 1.5 1 2.5 2 2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    Koshur Shawl
+  </div>
+  <div class="header-right">
+    <div class="crumb" id="crumb" style="display:none;"></div>
+    <button class="cart-btn" id="cartBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/><path d="M3 3h2l1 3"/></svg>
+      Bucket
+      <span class="cart-badge" id="cartBadge" style="display:none;">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="homeView">
+  <section class="hero">
+    <svg class="paisley-mark" viewBox="0 0 200 260"><path d="M100 20C55 20 25 60 25 105c0 40 25 60 50 85 10 10 12 20 10 30 12-8 30-28 30-58 0-22-10-32-22-32-15 0-22 12-22 24 0 8 5 14 12 14" stroke="currentColor" stroke-width="4" fill="none"/></svg>
+    <svg class="paisley-mark left" viewBox="0 0 200 260"><path d="M100 20C55 20 25 60 25 105c0 40 25 60 50 85 10 10 12 20 10 30 12-8 30-28 30-58 0-22-10-32-22-32-15 0-22 12-22 24 0 8 5 14 12 14" stroke="currentColor" stroke-width="4" fill="none"/></svg>
+    <h1>Kashmir, stitched <em>by hand.</em></h1>
+    <p>Aari embroidery, Kani weaves and hand-finished pieces from the valley — a wardrobe for every season, made to order.</p>
+    <div class="hero-ctas">
+      <a href="#winter" class="hero-cta winter">Shop Winter</a>
+      <a href="#summer" class="hero-cta summer">Shop Summer</a>
+    </div>
+  </section>
+
+  <section class="season-section winter" id="winter">
+    <div class="season-head">
+      <div>
+        <div class="eyebrow">Cold Season</div>
+        <h2>The Winter Edit</h2>
+      </div>
+      <div class="count" id="winterCount"></div>
+    </div>
+    <div class="tile-row" id="winterTiles"></div>
+  </section>
+
+  <section class="season-section summer" id="summer">
+    <div class="season-head">
+      <div>
+        <div class="eyebrow">Warm Season</div>
+        <h2>The Summer Edit</h2>
+      </div>
+      <div class="count" id="summerCount"></div>
+    </div>
+    <div class="tile-row" id="summerTiles"></div>
+  </section>
+</main>
+
+<div class="cat-page" id="catView">
+  <div class="cat-hero">
+    <h2 id="catTitle"></h2>
+    <span class="tag" id="catTag"></span>
+  </div>
+  <div class="chip-row" id="subChips"></div>
+  <div class="product-grid" id="productGrid"></div>
+</div>
+
+<div class="state-msg" id="loadingMsg">
+  <div class="spinner"></div>
+  Bringing the collection in from the loom…
+</div>
+
+<div class="state-msg" id="errorMsg" style="display:none;">
+  Couldn't load the catalog right now.<br>
+  <button class="retry-btn" id="retryBtn">Try again</button>
+</div>
+
+<footer>
+  <div class="logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6C13 6 9 12 9 18c0 7 5 11 9 15 1.5 1.5 2 3 2 5 2-2 6-5 6-11 0-4-2-6-4-6-3 0-4 2-4 4 0 1.5 1 2.5 2 2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    Koshur Shawl
+  </div>
+  <p>Every piece made to order · Questions? Message us on WhatsApp</p>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>Your Bucket</h3>
+    <button class="drawer-close" id="drawerClose">&times;</button>
+  </div>
+  <div class="drawer-list" id="drawerList"></div>
+  <div class="drawer-foot" id="drawerFoot" style="display:none;">
+    <div class="drawer-total"><span>Total</span><span id="drawerTotal">₹0</span></div>
+    <button class="drawer-order" id="drawerOrder">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.4C8.4 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.2-.7-2.7-1.1-4.4-3.8-4.6-4-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.3-.4.5-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.1.5.2.6.3.1.2.1.9-.1 1.5z"/></svg>
+      Order via WhatsApp
+    </button>
+    <div class="drawer-hint">Opens WhatsApp with your list pre-filled — no payment needed here.</div>
+  </div>
+</div>
+
+<script>
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAbptGhYwrqu1yV2P0uqam1bMWGcpPglIYyW_mIUljfbvvWJXBdGPcsluUoxXqM4d5wkR5vT41NVAx/pub?gid=1342573888&single=true&output=csv";
+const WA_NUMBER = "919911029922";
+
+let PRODUCTS = [];
+let bucket = []; // {id, name, price, image}
+
+function slug(s){ return (s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+function cleanText(s){ return (s||'').toString().trim(); }
+function isYes(v){ return /^y$/i.test((v||'').trim()); }
+
+function loadData(){
+  document.getElementById('loadingMsg').style.display='block';
+  document.getElementById('errorMsg').style.display='none';
+  Papa.parse(SHEET_CSV_URL, {
+    download:true, header:true, skipEmptyLines:true,
+    complete: function(results){
+      PRODUCTS = results.data
+        .map((r,i)=>({
+          id:'p'+i,
+          name:cleanText(r['Product Name']),
+          price:cleanText(r['Price']),
+          image:cleanText(r['Image URL']),
+          waText:cleanText(r['WhatsApp Text']) || ('Hi! I want to order the ' + cleanText(r['Product Name'])),
+          season:cleanText(r['Season']),
+          category:cleanText(r['Category']),
+          subcategory:cleanText(r['Subcategory']),
+          size:cleanText(r['Size']),
+          featured: isYes(r['Featured This Summer']),
+        }))
+        .filter(p=>p.name && p.season && p.category && p.image);
+      document.getElementById('loadingMsg').style.display='none';
+      renderHome();
+      router();
+    },
+    error: function(){
+      document.getElementById('loadingMsg').style.display='none';
+      document.getElementById('errorMsg').style.display='block';
+    }
+  });
+}
+
+function groupBySeasonCategory(){
+  const map = {}; // season -> category -> [products]
+  PRODUCTS.forEach(p=>{
+    map[p.season] = map[p.season] || {};
+    map[p.season][p.category] = map[p.season][p.category] || [];
+    map[p.season][p.category].push(p);
+  });
+  return map;
+}
+
+function renderHome(){
+  const grouped = groupBySeasonCategory();
+  renderTiles('Winter','winterTiles','winterCount',grouped);
+  renderTiles('Summer','summerTiles','summerCount',grouped);
+}
+
+function renderTiles(season, containerId, countId, grouped){
+  const el = document.getElementById(containerId);
+  const cats = grouped[season] || {};
+  const names = Object.keys(cats).sort((a,b)=>cats[b].length-cats[a].length);
+  document.getElementById(countId).textContent = names.length + ' categories';
+  el.innerHTML = names.map(cat=>{
+    const items = cats[cat];
+    return `<a class="tile" href="#/${slug(season)}/${slug(cat)}">
+      <img src="${items[0].image}" alt="${cat}" loading="lazy">
+      <div class="tile-label">
+        <div class="name">${cat}</div>
+        <div class="num">${items.length} piece${items.length>1?'s':''}</div>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+function router(){
+  const hash = location.hash.replace(/^#\/?/, '');
+  const homeView = document.getElementById('homeView');
+  const catView = document.getElementById('catView');
+  const crumb = document.getElementById('crumb');
+  if(!hash){
+    homeView.style.display='block';
+    catView.classList.remove('active');
+    crumb.style.display='none';
+    return;
+  }
+  const [seasonSlug, catSlug] = hash.split('/');
+  const grouped = groupBySeasonCategory();
+  const seasonName = Object.keys(grouped).find(s=>slug(s)===seasonSlug);
+  if(!seasonName){ location.hash=''; return; }
+  const catName = Object.keys(grouped[seasonName]).find(c=>slug(c)===catSlug);
+  if(!catName){ location.hash=''; return; }
+
+  homeView.style.display='none';
+  catView.classList.add('active');
+  crumb.style.display='flex';
+  crumb.innerHTML = `<button onclick="location.hash=''">Home</button> / ${seasonName} / ${catName}`;
+
+  document.getElementById('catTitle').textContent = catName;
+  const tag = document.getElementById('catTag');
+  tag.textContent = seasonName;
+  tag.className = 'tag ' + (seasonName==='Winter'?'winter':'summer');
+
+  let items = grouped[seasonName][catName];
+  const subcats = [...new Set(items.map(p=>p.subcategory).filter(Boolean))];
+  const chipRow = document.getElementById('subChips');
+  if(subcats.length > 1){
+    chipRow.style.display='flex';
+    chipRow.innerHTML = ['All',...subcats].map((s,i)=>
+      `<button class="chip ${i===0?'active':''}" data-sub="${s==='All'?'':s}">${s}</button>`
+    ).join('');
+    chipRow.querySelectorAll('.chip').forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        chipRow.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+        chip.classList.add('active');
+        const sub = chip.dataset.sub;
+        renderGrid(sub ? items.filter(p=>p.subcategory===sub) : items);
+      });
+    });
+  } else {
+    chipRow.style.display='none';
+    chipRow.innerHTML='';
+  }
+  renderGrid(items);
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function renderGrid(items){
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = items.map(p=>{
+    const sizes = p.size ? p.size.split(',').map(s=>s.trim()).filter(Boolean) : [];
+    const inBucket = bucket.some(b=>b.id===p.id);
+    return `<div class="card" data-id="${p.id}">
+      <div class="img-wrap">
+        ${p.featured ? '<div class="featured-badge">Featured</div>' : ''}
+        <img src="${p.image}" alt="${p.name}" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-name">${p.name}</div>
+        <div class="card-price">${p.price || 'Price on request'}</div>
+        ${sizes.length ? `<div class="size-row">${sizes.map(s=>`<span class="size-chip">${s}</span>`).join('')}</div>` : ''}
+        <div class="card-actions">
+          <button class="btn btn-bucket ${inBucket?'added':''}" data-action="bucket">${inBucket ? 'Added ✓' : 'Add to Bucket'}</button>
+          <a class="btn btn-wa" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(p.waText)}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.4C8.4 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.2-.7-2.7-1.1-4.4-3.8-4.6-4-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.3-.4.5-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.1.5.2.6.3.1.2.1.9-.1 1.5z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('[data-action="bucket"]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const id = e.target.closest('.card').dataset.id;
+      const product = PRODUCTS.find(p=>p.id===id);
+      toggleBucket(product, e.target);
+    });
+  });
+}
+
+function toggleBucket(product, btnEl){
+  const idx = bucket.findIndex(b=>b.id===product.id);
+  if(idx>-1){
+    bucket.splice(idx,1);
+    btnEl.textContent='Add to Bucket';
+    btnEl.classList.remove('added');
+  } else {
+    bucket.push(product);
+    btnEl.textContent='Added ✓';
+    btnEl.classList.add('added');
+  }
+  updateCartBadge();
+  renderDrawer();
+}
+
+function updateCartBadge(){
+  const badge = document.getElementById('cartBadge');
+  if(bucket.length>0){
+    badge.style.display='flex';
+    badge.textContent = bucket.length;
+  } else {
+    badge.style.display='none';
+  }
+}
+
+function parsePrice(priceStr){
+  const n = parseFloat((priceStr||'').replace(/[^0-9.]/g,''));
+  return isNaN(n) ? 0 : n;
+}
+
+function renderDrawer(){
+  const list = document.getElementById('drawerList');
+  const foot = document.getElementById('drawerFoot');
+  if(bucket.length===0){
+    list.innerHTML = '<div class="drawer-empty">Your bucket is empty.<br>Browse the collection and tap "Add to Bucket".</div>';
+    foot.style.display='none';
+    return;
+  }
+  foot.style.display='block';
+  list.innerHTML = bucket.map(p=>`
+    <div class="drawer-item" data-id="${p.id}">
+      <img src="${p.image}" alt="${p.name}">
+      <div class="info">
+        <div class="n">${p.name}</div>
+        <div class="p">${p.price || 'Price on request'}</div>
+        <button class="remove" data-remove="${p.id}">Remove</button>
+      </div>
+    </div>
+  `).join('');
+  const total = bucket.reduce((sum,p)=>sum+parsePrice(p.price),0);
+  document.getElementById('drawerTotal').textContent = '₹' + total.toLocaleString('en-IN');
+  list.querySelectorAll('[data-remove]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.dataset.remove;
+      bucket = bucket.filter(b=>b.id!==id);
+      updateCartBadge();
+      renderDrawer();
+      const cardBtn = document.querySelector(`.card[data-id="${id}"] [data-action="bucket"]`);
+      if(cardBtn){ cardBtn.textContent='Add to Bucket'; cardBtn.classList.remove('added'); }
+    });
+  });
+}
+
+function buildBucketMessage(){
+  let lines = ["Hi! I'd like to order the following:"];
+  bucket.forEach((p,i)=>{
+    lines.push(`${i+1}. ${p.name} - ${p.price || 'price on request'}`);
+  });
+  const total = bucket.reduce((sum,p)=>sum+parsePrice(p.price),0);
+  lines.push(`\nTotal: ₹${total.toLocaleString('en-IN')}`);
+  return lines.join('\n');
+}
+
+// drawer open/close
+const overlay = document.getElementById('overlay');
+const drawer = document.getElementById('drawer');
+function openDrawer(){ overlay.classList.add('open'); drawer.classList.add('open'); renderDrawer(); }
+function closeDrawer(){ overlay.classList.remove('open'); drawer.classList.remove('open'); }
+document.getElementById('cartBtn').addEventListener('click', openDrawer);
+document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+document.getElementById('drawerOrder').addEventListener('click', ()=>{
+  const msg = buildBucketMessage();
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+});
+document.getElementById('retryBtn').addEventListener('click', loadData);
+
+window.addEventListener('hashchange', router);
+loadData();
+</script>
+</body>
+</html>
