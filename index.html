@@ -6,35 +6,45 @@
 <title>The Kashmiri Libas — Authentic Kashmiri Clothing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg: #fcfbf9;
+  --paper: #fcfbf9;
   --surface: #ffffff;
-  --surface-subtle: #f8f6f0;
   --border: #e8e6e1;
   --border-dark: #18181b;
   --text: #121214;
   --text-muted: #71717a;
   --text-dim: #a1a1aa;
   --saffron: #c28833;
-  --saffron-tint: rgba(194, 136, 51, 0.08);
   --ruby: #7d1a1a;
-  --ruby-light: #9e2020;
   --sage: #2a8f56;
+
+  /* Distinct High-Contrast Seasonal Backgrounds */
+  --winter-bg: #181412;
+  --winter-card: #221d19;
+  --winter-border: rgba(255, 255, 255, 0.12);
+  --winter-text: #f5ede2;
+  --winter-muted: #a69888;
+  --winter-gold: #d4a84b;
+
+  --summer-bg: #f8f3e6;
+  --summer-card: #ffffff;
+  --summer-border: #e3d9c5;
+  --summer-text: #1f1b16;
+
   --radius: 3px;
   --radius-pill: 999px;
-  --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
   --font-serif: 'Cinzel', Georgia, serif;
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --ease: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --ease: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
 body {
-  background-color: var(--bg);
+  background-color: var(--paper);
   color: var(--text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -48,14 +58,14 @@ button { cursor: pointer; }
 /* ─── MASTHEAD ──────────────────────────────── */
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(252, 251, 249, 0.90);
+  background: rgba(252, 251, 249, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
 }
 .header-inner {
   max-width: 1400px; margin: 0 auto;
-  min-height: 64px; padding: 10px 24px;
+  min-height: 62px; padding: 8px 24px;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .brand-group { display: flex; flex-direction: column; cursor: pointer; }
@@ -68,12 +78,10 @@ button { cursor: pointer; }
 .brand-sub {
   font-size: 8.5px; letter-spacing: 2px;
   text-transform: uppercase; color: var(--saffron);
-  font-weight: 600; margin-top: 2px;
+  font-weight: 600; margin-top: 1px;
 }
 .header-controls { display: flex; align-items: center; gap: 10px; }
-.search-input-wrap {
-  position: relative; width: 260px;
-}
+.search-input-wrap { position: relative; width: 260px; }
 .search-input-wrap input {
   width: 100%; height: 38px;
   padding: 0 12px 0 34px; font-size: 11.5px;
@@ -107,22 +115,21 @@ button { cursor: pointer; }
   text-transform: uppercase; letter-spacing: 1px;
   display: flex; align-items: center; gap: 6px; text-decoration: none;
 }
-.wa-direct-btn:hover { background: #227546; }
 
-/* ─── HERO & EDITORIAL SHOWCASE ──────────────── */
+/* ─── HERO ──────────────────────────────────── */
 .hero-editorial {
   text-align: center;
-  padding: clamp(34px, 5vw, 56px) 20px clamp(24px, 4vw, 36px);
+  padding: clamp(36px, 5vw, 60px) 20px clamp(28px, 4vw, 44px);
   max-width: 900px; margin: 0 auto;
 }
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(24px, 5vw, 44px);
-  font-weight: 500; letter-spacing: 1px; line-height: 1.15;
+  font-size: clamp(26px, 5vw, 46px);
+  font-weight: 600; letter-spacing: 1px; line-height: 1.15;
 }
 .hero-title em { font-style: italic; color: var(--saffron); font-weight: 400; }
 .hero-sub {
-  color: var(--text-muted); font-size: 12.5px;
+  color: var(--text-muted); font-size: 13px;
   line-height: 1.6; margin: 12px auto 0; max-width: 580px;
 }
 .season-selector {
@@ -137,12 +144,12 @@ button { cursor: pointer; }
 .season-btn:hover { border-color: var(--border-dark); color: var(--text); }
 .season-btn.on { background: var(--text); color: #fff; border-color: var(--text); }
 
-/* ─── FEATURED SLIDER ───────────────────────── */
+/* ─── FEATURED STRIP ────────────────────────── */
 .featured-row-wrap {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  background: var(--surface-subtle);
-  padding: 32px 24px;
+  background: #f7f5ed;
+  padding: 30px 24px;
 }
 .section-masthead {
   max-width: 1400px; margin: 0 auto 16px;
@@ -156,67 +163,87 @@ button { cursor: pointer; }
 .featured-carousel {
   max-width: 1400px; margin: 0 auto;
   display: flex; gap: 14px; overflow-x: auto;
-  padding-bottom: 8px; scrollbar-width: none;
+  padding-bottom: 6px; scrollbar-width: none;
 }
 .featured-carousel::-webkit-scrollbar { display: none; }
 .feat-card {
-  flex-shrink: 0; width: clamp(160px, 18vw, 210px);
+  flex-shrink: 0; width: clamp(155px, 17vw, 205px);
   background: #fff; border: 1px solid var(--border);
   border-radius: var(--radius); overflow: hidden; cursor: pointer;
   transition: transform var(--ease), border-color var(--ease);
+  contain: content;
 }
 .feat-card:hover { transform: translateY(-3px); border-color: var(--border-dark); }
-.feat-media { aspect-ratio: 4 / 5; position: relative; background: #f4f4f5; }
+.feat-media { aspect-ratio: 4 / 5; position: relative; background: #eee; }
 .feat-details { padding: 10px 12px; }
-.feat-tag { font-size: 8.5px; font-weight: 600; color: var(--saffron); text-transform: uppercase; letter-spacing: 0.5px; }
+.feat-tag { font-size: 8.5px; font-weight: 600; color: var(--saffron); text-transform: uppercase; }
 .feat-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 2px 0 4px; }
 .feat-price { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; color: var(--text); }
 
-/* ─── SEASON CATEGORY TILES ─────────────────── */
-.editorial-edit-section {
-  max-width: 1400px; margin: 40px auto; padding: 0 24px;
+/* ─── DISTINCT SEASON EDITORIAL SECTIONS ─────── */
+.editorial-season-block {
+  padding: clamp(48px, 6vw, 76px) clamp(18px, 4vw, 56px);
 }
+.editorial-season-block.winter-theme {
+  background-color: var(--winter-bg);
+  color: var(--winter-text);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.editorial-season-block.summer-theme {
+  background-color: var(--summer-bg);
+  color: var(--summer-text);
+  border-bottom: 1px solid var(--summer-border);
+}
+
 .edit-head {
+  max-width: 1400px; margin: 0 auto 24px;
   display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 12px;
 }
+.winter-theme .edit-head { border-color: var(--winter-border); }
 .edit-kicker {
-  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--saffron);
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--saffron);
 }
+.winter-theme .edit-kicker { color: var(--winter-gold); }
 .edit-title {
-  font-family: var(--font-serif); font-size: 24px; font-weight: 600;
+  font-family: var(--font-serif); font-size: clamp(22px, 4vw, 32px); font-weight: 600;
 }
 .cat-tile-grid {
+  max-width: 1400px; margin: 0 auto;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;
 }
 .cat-tile {
-  position: relative; aspect-ratio: 4 / 4.8;
-  background: #18181b; border-radius: var(--radius);
-  overflow: hidden; cursor: pointer; border: 1px solid var(--border);
+  position: relative; aspect-ratio: 4 / 5;
+  border-radius: var(--radius); overflow: hidden;
+  cursor: pointer; contain: content;
 }
-.cat-tile img { opacity: 0.88; transition: transform 0.4s ease, opacity 0.3s ease; }
+.winter-theme .cat-tile { background: var(--winter-card); border: 1px solid var(--winter-border); }
+.summer-theme .cat-tile { background: var(--summer-card); border: 1px solid var(--summer-border); }
+
+.cat-tile img { opacity: 0.88; transition: transform 0.35s ease, opacity 0.25s ease; }
 .cat-tile:hover img { transform: scale(1.05); opacity: 0.98; }
 .cat-tile::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(18, 18, 20, 0.85) 100%);
+  background: linear-gradient(180deg, transparent 40%, rgba(18, 18, 20, 0.88) 100%);
 }
 .cat-tile-meta {
   position: absolute; left: 16px; right: 16px; bottom: 14px;
   z-index: 2; color: #fff;
 }
 .cat-tile-name {
-  font-family: var(--font-serif); font-size: 17px; font-weight: 600; letter-spacing: 1px;
+  font-family: var(--font-serif); font-size: 18px; font-weight: 600; letter-spacing: 1px;
 }
 .cat-tile-count {
-  font-size: 9.5px; opacity: 0.75; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px;
+  font-size: 9.5px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px;
 }
 
-/* ─── CATALOG & PRODUCTS VIEW ────────────────── */
+/* ─── CATALOG VIEW & FILTER TOOLBAR ──────────── */
 .catalog-view { display: none; max-width: 1400px; margin: 0 auto; padding: 24px; }
 .catalog-view.visible { display: block; }
 .catalog-header {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+  margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
 }
 .catalog-title-group { display: flex; align-items: baseline; gap: 12px; }
 .catalog-title {
@@ -230,12 +257,12 @@ button { cursor: pointer; }
 }
 .btn-back-link:hover { border-color: var(--border-dark); }
 
-/* Context Filter Toolbar */
+/* Context Filter Toolbar: Season, Material, Color, Length, Size */
 .toolbar-shelf {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 12px 16px;
+  border-radius: var(--radius); padding: 12px 14px;
   margin-bottom: 24px; display: flex; flex-wrap: wrap;
-  align-items: center; gap: 10px;
+  align-items: center; gap: 8px;
 }
 .filter-dropdown {
   height: 36px; padding: 0 10px;
@@ -262,7 +289,7 @@ button { cursor: pointer; }
 .btn-bag-icon {
   position: absolute; top: 10px; right: 10px; z-index: 2;
   width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.90); border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.92); border: 1px solid var(--border);
   display: grid; place-items: center; transition: all var(--ease);
 }
 .btn-bag-icon:hover { background: var(--text); color: #fff; }
@@ -271,14 +298,14 @@ button { cursor: pointer; }
 .badge-shots-count {
   position: absolute; bottom: 8px; right: 8px; z-index: 2;
   font-family: var(--font-mono); font-size: 8.5px; font-weight: 600;
-  padding: 3px 6px; border-radius: var(--radius); background: rgba(255, 255, 255, 0.85);
+  padding: 3px 6px; border-radius: var(--radius); background: rgba(255, 255, 255, 0.88);
   border: 1px solid var(--border);
 }
 
 .product-info { padding: 12px; display: flex; flex-direction: column; gap: 3px; flex-grow: 1; }
 .product-tagline { font-size: 8.5px; font-weight: 600; color: var(--saffron); text-transform: uppercase; letter-spacing: 0.5px; }
 .product-name { font-size: 12.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.product-specs { font-size: 9px; color: var(--text-muted); text-transform: uppercase; margin: 2px 0 4px; }
+.product-specs-line { font-size: 9px; color: var(--text-muted); text-transform: uppercase; margin: 2px 0 4px; }
 .product-price-bar {
   display: flex; justify-content: space-between; align-items: baseline;
   margin-top: auto; padding-top: 6px; border-top: 1px solid #f8f8f8;
@@ -286,7 +313,7 @@ button { cursor: pointer; }
 .price-tag { font-family: var(--font-mono); font-size: 13.5px; font-weight: 700; color: var(--text); }
 .product-size-pill { font-size: 9px; color: var(--text-muted); }
 
-/* ─── MODAL DIALOG ──────────────────────────── */
+/* ─── DETAILS MODAL ─────────────────────────── */
 .modal-backdrop {
   position: fixed; inset: 0; z-index: 400;
   background: rgba(18, 18, 20, 0.55); backdrop-filter: blur(8px);
@@ -402,7 +429,7 @@ button { cursor: pointer; }
   position: absolute; top: 16px; right: 20px; color: #fff; font-size: 26px; z-index: 601;
 }
 
-/* Toast Notification */
+/* Toast Bar */
 .toast-bar {
   position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px);
   z-index: 1000; background: var(--text); color: #fff;
@@ -413,7 +440,7 @@ button { cursor: pointer; }
 .toast-bar.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 @media (max-width: 768px) {
-  .header-inner { padding: 10px 16px; }
+  .header-inner { padding: 8px 16px; }
   .search-input-wrap { display: none; }
   .modal-content-grid { grid-template-columns: 1fr; overflow-y: auto; }
   .modal-main-image-wrap { min-height: 280px; }
@@ -448,7 +475,7 @@ button { cursor: pointer; }
   </div>
 </header>
 
-<!-- HOME / EDITORIAL SHOWCASE -->
+<!-- HOME / EDITORIAL SEASONS -->
 <main id="homeView">
   <section class="hero-editorial">
     <h1 class="hero-title">A Wardrobe <em>Crafted</em> by the Valley.</h1>
@@ -456,7 +483,7 @@ button { cursor: pointer; }
     <div class="season-selector" id="seasonChipsBar"></div>
   </section>
 
-  <!-- Featured Shelf -->
+  <!-- Curated Highlights Strip -->
   <section class="featured-row-wrap" id="featuredShelf" style="display:none;">
     <div class="section-masthead">
       <div class="section-title">Curated <em>Highlights</em></div>
@@ -464,20 +491,20 @@ button { cursor: pointer; }
     <div class="featured-carousel" id="featuredCarousel"></div>
   </section>
 
-  <!-- Cold Season: Winter Edit -->
-  <section class="editorial-edit-section" id="winterSection">
+  <!-- Cold Season Theme: Deep Velvet Dark -->
+  <section class="editorial-season-block winter-theme" id="winterSection">
     <div class="edit-head">
       <div>
         <div class="edit-kicker">Cold Weather Wardrobe</div>
         <div class="edit-title">The Winter Edit</div>
       </div>
-      <div id="winterTileCount" style="font-size:11px;color:var(--text-dim);"></div>
+      <div id="winterTileCount" style="font-size:11px;opacity:0.6;"></div>
     </div>
     <div class="cat-tile-grid" id="winterTileGrid"></div>
   </section>
 
-  <!-- Warm Season: Summer Edit -->
-  <section class="editorial-edit-section" id="summerSection">
+  <!-- Warm Season Theme: Soft Cream Parchment -->
+  <section class="editorial-season-block summer-theme" id="summerSection">
     <div class="edit-head">
       <div>
         <div class="edit-kicker">Lightweight Weaves</div>
@@ -489,7 +516,7 @@ button { cursor: pointer; }
   </section>
 </main>
 
-<!-- CATEGORY PRODUCTS VIEW -->
+<!-- CATEGORY VIEW -->
 <section class="catalog-view" id="catalogView">
   <div class="catalog-header">
     <button class="btn-back-link" id="btnBackToEdits">
@@ -502,12 +529,13 @@ button { cursor: pointer; }
     </div>
   </div>
 
-  <!-- Cascading Context Filters -->
+  <!-- Dynamic Toolbar: Season, Material (Col G), Color (Col N), Length (Col O), Size (Col H) -->
   <div class="toolbar-shelf" id="toolbarShelf">
     <select class="filter-dropdown" id="selSeasonSub"><option value="">All Seasons</option></select>
-    <select class="filter-dropdown" id="selSizeFilter"><option value="">All Sizes</option></select>
+    <select class="filter-dropdown" id="selMaterialFilter"><option value="">All Materials</option></select>
     <select class="filter-dropdown" id="selColorFilter"><option value="">All Colors</option></select>
     <select class="filter-dropdown" id="selLengthFilter"><option value="">All Lengths</option></select>
+    <select class="filter-dropdown" id="selSizeFilter"><option value="">All Sizes</option></select>
     <div class="toolbar-right">
       <select class="filter-dropdown" id="selSortOrder">
         <option value="">Sort: Default</option>
@@ -521,7 +549,7 @@ button { cursor: pointer; }
   <div class="products-grid" id="productsGrid"></div>
 </section>
 
-<!-- PRODUCT DETAILS MODAL -->
+<!-- PRODUCT MODAL -->
 <div class="modal-backdrop" id="productModalBackdrop">
   <div class="modal-window">
     <button class="btn-close-modal" id="btnCloseModal">✕</button>
@@ -529,7 +557,7 @@ button { cursor: pointer; }
   </div>
 </div>
 
-<!-- CART TRAY SLIDE-OVER -->
+<!-- CART SLIDE-OVER -->
 <div class="cart-slide-overlay" id="cartOverlay">
   <div class="cart-tray">
     <div class="cart-tray-head">
@@ -550,7 +578,7 @@ button { cursor: pointer; }
   </div>
 </div>
 
-<!-- LIGHTBOX ZOOM -->
+<!-- LIGHTBOX -->
 <div class="lightbox-overlay" id="lightboxView">
   <span class="btn-lightbox-close" id="btnCloseLightbox">✕</span>
   <div class="lightbox-img-holder">
@@ -565,7 +593,7 @@ button { cursor: pointer; }
 'use strict';
 
 const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxXrnuQJigZsfDKQoeDcCH0CwoWS2R6wHauIRYp13dLh7QYEPs6DHwzlS1qDgA0LeYMeA/exec';
-const PLACEHOLDER_SVG = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22400%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23f4f4f5%22%2F%3E%3C%2Fsvg%3E';
+const BLANK_SVG = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22400%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23f4f4f5%22%2F%3E%3C%2Fsvg%3E';
 const WA_PHONE = '919911029922';
 
 let ALL_PRODUCTS = [];
@@ -574,9 +602,10 @@ let CART = [];
 
 let filterState = {
   season: 'All',
-  size: '',
+  material: '',
   color: '',
   length: '',
+  size: '',
   query: '',
   sort: ''
 };
@@ -615,7 +644,7 @@ async function loadInventory() {
         description: String(r.description || r['Description'] || '').trim(),
         season: String(r.season || r['Season'] || '').trim(),
         category: String(r.category || r['Category'] || '').trim(),
-        subcategory: String(r.subcategory || r['Subcategory'] || '').trim(),
+        subcategory: String(r.subcategory || r['Subcategory'] || '').trim(), // Material
         size: String(r.size || r['Size'] || '').trim(),
         color: String(r.color || r['Color'] || '').trim(),
         length: String(r.length || r['Length'] || '').trim(),
@@ -627,7 +656,6 @@ async function loadInventory() {
     renderFeaturedShelf();
     renderSeasonTiles();
 
-    // Check hash for direct category link
     if (location.hash) {
       const catSlug = decodeURIComponent(location.hash.replace('#', '').trim());
       const matched = ALL_PRODUCTS.find(p => p.category.toLowerCase() === catSlug.toLowerCase());
@@ -638,7 +666,7 @@ async function loadInventory() {
   }
 }
 
-// 2. HOME SEASONS & TILES
+// 2. HERO SEASONS & DISTINCT TILES
 function renderHeroSeasonChips() {
   const seasons = ['All Seasons', ...new Set(ALL_PRODUCTS.map(p => p.season).filter(Boolean))].sort();
   $('seasonChipsBar').innerHTML = seasons.map(s => {
@@ -664,7 +692,7 @@ function renderFeaturedShelf() {
   $('featuredCarousel').innerHTML = featured.map(p => `
     <div class="feat-card" onclick="window.viewProduct('${p.id}')">
       <div class="feat-media">
-        <img src="${p.image || PLACEHOLDER_SVG}" alt="${p.name}" loading="lazy"/>
+        <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" onerror="this.src='${BLANK_SVG}'"/>
       </div>
       <div class="feat-details">
         <div class="feat-tag">${p.category}</div>
@@ -689,7 +717,7 @@ function renderSeasonTiles() {
       const totalCount = ALL_PRODUCTS.filter(p => p.category === cat && p.season.toLowerCase() === seasonName.toLowerCase()).length;
       return `
         <div class="cat-tile" onclick="window.openCategory('${cat}')">
-          <img src="${match ? match.image : PLACEHOLDER_SVG}" alt="${cat}" loading="lazy"/>
+          <img src="${match ? match.image : BLANK_SVG}" alt="${cat}" loading="lazy" decoding="async" fetchpriority="low" onerror="this.src='${BLANK_SVG}'"/>
           <div class="cat-tile-meta">
             <div class="cat-tile-name">${cat}</div>
             <div class="cat-tile-count">${totalCount} pieces</div>
@@ -714,10 +742,10 @@ function renderSeasonTiles() {
   }
 }
 
-// 3. CATEGORY VIEW & DYNAMIC TOOLBAR
+// 3. CATEGORY VIEW & MULTI-PARAM TOOLBAR
 window.openCategory = function(catName) {
   ACTIVE_CATEGORY = catName;
-  filterState.size = ''; filterState.color = ''; filterState.length = '';
+  filterState.material = ''; filterState.color = ''; filterState.length = ''; filterState.size = '';
   $('homeView').style.display = 'none';
   $('catalogView').classList.add('visible');
   $('catalogTitleDisplay').textContent = catName;
@@ -739,33 +767,39 @@ function closeCategoryView() {
 function populateToolbarFilters() {
   const pool = ALL_PRODUCTS.filter(p => p.category.toLowerCase() === ACTIVE_CATEGORY.toLowerCase());
 
-  // Seasons
+  // Season
   const seasons = [...new Set(pool.map(p => p.season).filter(Boolean))].sort();
   $('selSeasonSub').innerHTML = '<option value="">All Seasons</option>' + seasons.map(s => `<option value="${s}">${s}</option>`).join('');
 
-  // Sizes
-  const sizes = [...new Set(pool.flatMap(p => parseSizes(p.size)))].sort();
-  $('selSizeFilter').innerHTML = '<option value="">All Sizes</option>' + sizes.map(sz => `<option value="${sz}">${sz}</option>`).join('');
-  $('selSizeFilter').style.display = sizes.length > 1 ? 'block' : 'none';
+  // Material / Subcategory (Column G)
+  const materials = [...new Set(pool.map(p => p.subcategory).filter(Boolean))].sort();
+  $('selMaterialFilter').innerHTML = '<option value="">All Materials</option>' + materials.map(m => `<option value="${m}">${m}</option>`).join('');
+  $('selMaterialFilter').style.display = materials.length > 1 ? 'block' : 'none';
 
-  // Colors
+  // Color (Column N)
   const colors = [...new Set(pool.map(p => p.color).filter(Boolean))].sort();
   $('selColorFilter').innerHTML = '<option value="">All Colors</option>' + colors.map(c => `<option value="${c}">${c}</option>`).join('');
   $('selColorFilter').style.display = colors.length > 1 ? 'block' : 'none';
 
-  // Lengths
+  // Length (Column O)
   const lengths = [...new Set(pool.map(p => p.length).filter(Boolean))].sort();
   $('selLengthFilter').innerHTML = '<option value="">All Lengths</option>' + lengths.map(l => `<option value="${l}">${l}</option>`).join('');
   $('selLengthFilter').style.display = lengths.length > 1 ? 'block' : 'none';
+
+  // Size (Column H)
+  const sizes = [...new Set(pool.flatMap(p => parseSizes(p.size)))].sort();
+  $('selSizeFilter').innerHTML = '<option value="">All Sizes</option>' + sizes.map(sz => `<option value="${sz}">${sz}</option>`).join('');
+  $('selSizeFilter').style.display = sizes.length > 1 ? 'block' : 'none';
 }
 
 function renderCategoryProducts() {
   let list = ALL_PRODUCTS.filter(p => p.category.toLowerCase() === ACTIVE_CATEGORY.toLowerCase());
 
   if (filterState.season !== 'All' && filterState.season) list = list.filter(p => p.season.toLowerCase() === filterState.season.toLowerCase());
-  if (filterState.size) list = list.filter(p => parseSizes(p.size).includes(filterState.size));
+  if (filterState.material) list = list.filter(p => p.subcategory.toLowerCase() === filterState.material.toLowerCase());
   if (filterState.color) list = list.filter(p => p.color.toLowerCase() === filterState.color.toLowerCase());
   if (filterState.length) list = list.filter(p => p.length.toLowerCase() === filterState.length.toLowerCase());
+  if (filterState.size) list = list.filter(p => parseSizes(p.size).includes(filterState.size));
 
   if (filterState.query) {
     const q = filterState.query.toLowerCase();
@@ -779,13 +813,18 @@ function renderCategoryProducts() {
   $('catalogItemCount').textContent = `${list.length} Items`;
 
   if (!list.length) {
-    $('productsGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-dim);font-size:11.5px;letter-spacing:1px;text-transform:uppercase;">No products match selected specifications.</div>`;
+    $('productsGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-dim);font-size:11.5px;letter-spacing:1px;text-transform:uppercase;">No pieces match selected specifications.</div>`;
     return;
   }
 
   $('productsGrid').innerHTML = list.map(p => {
     const inBag = CART.some(item => item.id === p.id);
-    const specsArr = [p.size ? `Size: ${p.size}` : '', p.color ? `Color: ${p.color}` : '', p.length ? `Len: ${p.length}` : ''].filter(Boolean);
+    const specsArr = [
+      p.subcategory ? `Mat: ${p.subcategory}` : '',
+      p.color ? `Col: ${p.color}` : '',
+      p.length ? `Len: ${p.length}` : '',
+      p.size ? `Size: ${p.size}` : ''
+    ].filter(Boolean);
 
     return `
       <div class="product-card" onclick="window.viewProduct('${p.id}')">
@@ -794,12 +833,12 @@ function renderCategoryProducts() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           </button>
           ${p.images.length > 1 ? `<span class="badge-shots-count">${p.images.length} Photos</span>` : ''}
-          <img src="${p.image || PLACEHOLDER_SVG}" alt="${p.name}" loading="lazy"/>
+          <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" onerror="this.src='${BLANK_SVG}'"/>
         </div>
         <div class="product-info">
           <div class="product-tagline">${p.subcategory || p.category}</div>
           <div class="product-name">${p.name}</div>
-          <div class="product-specs">${specsArr.join(' • ')}</div>
+          <div class="product-specs-line">${specsArr.join(' • ')}</div>
           <div class="product-price-bar">
             <span class="price-tag">₹${p.price.toLocaleString('en-IN')}</span>
             <span class="product-size-pill">${p.size || 'Free Size'}</span>
@@ -810,24 +849,24 @@ function renderCategoryProducts() {
   }).join('');
 }
 
-// 4. PRODUCT MODAL VIEW
+// 4. DETAILS MODAL
 window.viewProduct = function(productId) {
   const p = ALL_PRODUCTS.find(item => item.id === productId);
   if (!p) return;
 
-  const images = p.images.length ? p.images : [p.image || PLACEHOLDER_SVG];
+  const images = p.images.length ? p.images : [p.image || BLANK_SVG];
   let activeIndex = 0;
 
   const buildModalContent = () => `
     <div class="modal-gallery-pane">
       <div class="modal-main-image-wrap" onclick="window.openLightbox('${images[activeIndex]}')">
-        <img src="${images[activeIndex]}" alt="${p.name}"/>
+        <img src="${images[activeIndex]}" alt="${p.name}" decoding="async"/>
       </div>
       ${images.length > 1 ? `
         <div class="modal-gallery-thumbs">
           ${images.map((src, i) => `
             <div class="modal-thumb ${i === activeIndex ? 'on' : ''}" data-idx="${i}">
-              <img src="${src}"/>
+              <img src="${src}" decoding="async"/>
             </div>
           `).join('')}
         </div>
@@ -839,9 +878,10 @@ window.viewProduct = function(productId) {
       </div>
       <h3 style="font-family:var(--font-serif);font-size:22px;line-height:1.2;font-weight:600;">${p.name}</h3>
       <div class="modal-specs-badge-row">
-        ${p.size ? `<span class="spec-chip">Size: ${p.size}</span>` : ''}
+        ${p.subcategory ? `<span class="spec-chip">Material: ${p.subcategory}</span>` : ''}
         ${p.color ? `<span class="spec-chip">Color: ${p.color}</span>` : ''}
         ${p.length ? `<span class="spec-chip">Length: ${p.length}</span>` : ''}
+        ${p.size ? `<span class="spec-chip">Size: ${p.size}</span>` : ''}
       </div>
       <div class="modal-price-tag">₹${p.price.toLocaleString('en-IN')}</div>
       ${p.description ? `<p style="font-size:12px;line-height:1.6;color:var(--text-muted);">${p.description}</p>` : ''}
@@ -879,7 +919,7 @@ window.openLightbox = (src) => {
 };
 $('btnCloseLightbox').onclick = () => $('lightboxView').classList.remove('open');
 
-// 5. CART & WHATSAPP CHECKOUT
+// 5. CART & WHATSAPP
 window.toggleCartItem = function(productId) {
   const p = ALL_PRODUCTS.find(item => item.id === productId);
   if (!p) return;
@@ -912,10 +952,10 @@ function updateCartVisuals() {
   foot.style.display = 'flex';
   list.innerHTML = CART.map(p => `
     <div class="cart-item-row">
-      <div class="cart-item-thumb"><img src="${p.image || PLACEHOLDER_SVG}"/></div>
+      <div class="cart-item-thumb"><img src="${p.image || BLANK_SVG}"/></div>
       <div class="cart-item-info">
         <div class="cart-item-title">${p.name}</div>
-        <div class="cart-item-specs">${[p.size, p.color, p.length].filter(Boolean).join(' • ')}</div>
+        <div class="cart-item-specs">${[p.subcategory, p.color, p.length, p.size].filter(Boolean).join(' • ')}</div>
         <div class="cart-item-price">₹${p.price.toLocaleString('en-IN')}</div>
         <span class="btn-remove-item" onclick="window.toggleCartItem('${p.id}')">Remove</span>
       </div>
@@ -929,8 +969,14 @@ function updateCartVisuals() {
 window.orderSingleItemWhatsApp = function(productId) {
   const p = ALL_PRODUCTS.find(item => item.id === productId);
   if (!p) return;
-  const specText = [p.size ? `Size: ${p.size}` : '', p.color ? `Color: ${p.color}` : '', p.length ? `Length: ${p.length}` : ''].filter(Boolean).join(', ');
-  const msg = `Hi! I would like to order: *${p.name}*\nPrice: ₹${p.price.toLocaleString('en-IN')}\nSpecifications: ${specText || 'Standard'}\nCategory: ${p.category} (${p.season})\nPlease confirm piece availability!`;
+  const specText = [
+    p.subcategory ? `Material: ${p.subcategory}` : '',
+    p.color ? `Color: ${p.color}` : '',
+    p.length ? `Length: ${p.length}` : '',
+    p.size ? `Size: ${p.size}` : ''
+  ].filter(Boolean).join(', ');
+
+  const msg = `Hi! I would like to order: *${p.name}*\nPrice: ₹${p.price.toLocaleString('en-IN')}\nSpecs: ${specText || 'Standard'}\nCategory: ${p.category} (${p.season})\nPlease confirm piece availability!`;
   window.open(`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 };
 
@@ -940,12 +986,12 @@ $('btnCheckoutWhatsApp').onclick = () => {
   let msg = `🧣 *NEW ORDER INQUIRY — THE KASHMIRI LIBAS*\nClient: ${name}\n\n`;
 
   CART.forEach((p, i) => {
-    const specs = [p.size ? `Size: ${p.size}` : '', p.color ? `Color: ${p.color}` : '', p.length ? `Len: ${p.length}` : ''].filter(Boolean).join(', ');
+    const specs = [p.subcategory, p.color, p.length, p.size].filter(Boolean).join(', ');
     msg += `${i + 1}. *${p.name}* — ₹${p.price.toLocaleString('en-IN')}\n   ${specs || 'Default'}\n`;
   });
 
   const total = CART.reduce((sum, item) => sum + item.price, 0);
-  msg += `\n*Estimated Total: ₹${total.toLocaleString('en-IN')}*\nPlease confirm availability and payment details.`;
+  msg += `\n*Estimated Total: ₹${total.toLocaleString('en-IN')}*\nPlease confirm availability.`;
   window.open(`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 };
 
@@ -956,17 +1002,16 @@ $('btnOpenCart').onclick = () => $('cartOverlay').classList.add('open');
 $('btnCloseCart').onclick = () => $('cartOverlay').classList.remove('open');
 $('cartOverlay').onclick = (e) => { if (e.target === $('cartOverlay')) $('cartOverlay').classList.remove('open'); };
 
-// Search input
 $('searchInput').oninput = (e) => {
   filterState.query = e.target.value.trim();
   if (ACTIVE_CATEGORY) renderCategoryProducts();
 };
 
-// Filter dropdown events
 $('selSeasonSub').onchange = (e) => { filterState.season = e.target.value || 'All'; renderCategoryProducts(); };
-$('selSizeFilter').onchange = (e) => { filterState.size = e.target.value; renderCategoryProducts(); };
+$('selMaterialFilter').onchange = (e) => { filterState.material = e.target.value; renderCategoryProducts(); };
 $('selColorFilter').onchange = (e) => { filterState.color = e.target.value; renderCategoryProducts(); };
 $('selLengthFilter').onchange = (e) => { filterState.length = e.target.value; renderCategoryProducts(); };
+$('selSizeFilter').onchange = (e) => { filterState.size = e.target.value; renderCategoryProducts(); };
 $('selSortOrder').onchange = (e) => { filterState.sort = e.target.value; renderCategoryProducts(); };
 
 window.onpopstate = () => {
