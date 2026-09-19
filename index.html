@@ -53,15 +53,11 @@
   button { cursor: pointer; border: none; background: none; }
   .hidden { display: none !important; }
 
-  /* ZARA EDITORIAL MASTHEAD + INTEGRATED ROW BAR */
+  /* ZARA EDITORIAL MASTHEAD (STATIC / NON-STICKY TO PREVENT OVERLAPPING) */
   .brand-masthead {
-    background: rgba(250, 245, 238, 0.98);
-    backdrop-filter: blur(12px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: var(--bg);
     border-bottom: 1px solid var(--border);
-    margin-bottom: 24px;
+    width: 100%;
   }
 
   .masthead-top-row {
@@ -96,7 +92,7 @@
     margin-top: 2px;
   }
 
-  /* UTILITY SEARCH & BAG BAR (ALIGNED BESIDE BRAND / TOP ROW) */
+  /* UTILITY SEARCH & BAG BAR */
   .utility-bar {
     display: flex;
     align-items: center;
@@ -247,53 +243,53 @@
 
   .flyout-link:hover { color: var(--ruby); padding-left: 4px; }
 
-  /* HIGH-FASHION HERO EDITORIAL BANNER */
+  /* COMPACT HERO BANNER (REDUCED HEIGHT & PROPERLY MATCHED TRADITIONAL KASHMIRI AESTHETIC) */
   .hero-banner {
     width: 100%;
     max-width: 1500px;
-    margin: 10px auto 36px;
+    margin: 16px auto 32px;
     position: relative;
     background: #1c0f00;
     color: #faf5ee;
     border-radius: var(--radius);
     overflow: hidden;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 440px;
+    grid-template-columns: 1.2fr 0.8fr;
+    min-height: 320px;
   }
 
   .hero-banner-content {
-    padding: clamp(36px, 5vw, 70px);
+    padding: clamp(28px, 4vw, 50px);
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
   .hero-tag {
-    font-size: 9.5px;
+    font-size: 9px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--saffron);
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .hero-heading {
     font-family: var(--font-serif);
-    font-size: clamp(28px, 4vw, 48px);
+    font-size: clamp(24px, 3.2vw, 38px);
     font-weight: 500;
     line-height: 1.15;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 
   .hero-desc {
-    font-size: 12.5px;
-    line-height: 1.65;
+    font-size: 11.5px;
+    line-height: 1.6;
     color: #d6ccbe;
-    max-width: 440px;
-    margin-bottom: 24px;
+    max-width: 420px;
+    margin-bottom: 20px;
     font-weight: 300;
   }
 
@@ -302,10 +298,10 @@
     align-items: center;
     justify-content: center;
     width: fit-content;
-    padding: 10px 24px;
+    padding: 9px 22px;
     background: #faf5ee;
     color: #1c0f00;
-    font-size: 9.5px;
+    font-size: 9px;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -317,7 +313,7 @@
   .hero-banner-img {
     position: relative;
     background: #2a1f14;
-    min-height: 300px;
+    min-height: 240px;
   }
 
   /* EDITORIAL CATEGORY SECTIONS */
@@ -356,7 +352,7 @@
 
   .edit-tile:hover { transform: translateY(-4px); border-color: var(--border-dark); }
   
-  /* FIX: Full image containment without cropping thumbnail heads/tops */
+  /* CONTAINER FIT TO AVOID CROPPING THUMBNAIL HEADS/TOPS */
   .edit-tile img {
     width: 100%;
     height: 100%;
@@ -402,7 +398,6 @@
   }
   .kl-card:hover { border-color: var(--border-dark); }
 
-  /* FIX: Product cards use contain/fit view so full item is visible immediately */
   .card-media {
     position: relative;
     aspect-ratio: 3 / 4;
@@ -517,7 +512,7 @@
 </head>
 <body>
 
-<!-- COMBINED MASTHEAD + TOP ROW + DROPDOWN NAVIGATION BAR -->
+<!-- COMBINED MASTHEAD + TOP ROW + DROPDOWN NAVIGATION BAR (STATIC POSITIONING TO ELIMINATE OVERLAPS) -->
 <header class="brand-masthead">
   <div class="masthead-top-row">
     <div class="brand-group" id="brandHomeTrigger" style="cursor:pointer;">
@@ -557,17 +552,16 @@
 <div class="editorial-shell">
   <!-- HOME EDITORIAL VIEW -->
   <div id="homeEditorialView">
-    <!-- HIGH FASHION HERO BANNER WITH RELATABLE KASHMIRI LIBAS HANDCRAFTED VISUAL -->
+    <!-- COMPACT HIGH-FASHION HERO BANNER WITH RELATABLE HANDCRAFTED KASHMIRI TEXTILE VISUAL -->
     <section class="hero-banner">
       <div class="hero-banner-content">
         <div class="hero-tag">Artisanal Curation</div>
         <h1 class="hero-heading">Crafted in the Heart of Kashmir</h1>
         <p class="hero-desc">Discover heritage Aari embroidery, exquisite Kani weaves, and timeless luxury silhouettes stitched completely by hand.</p>
-        <button class="hero-btn" onclick="window.scrollTo({top: 450, behavior: 'smooth'});">Explore Collections</button>
+        <button class="hero-btn" onclick="window.scrollTo({top: 400, behavior: 'smooth'});">Explore Collections</button>
       </div>
       <div class="hero-banner-img">
-        <!-- Relatable Kashmiri Libas Handcrafted Product Imagery -->
-        <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=900&q=80" alt="Kashmiri Handcrafted Textile" style="width:100%;height:100%;object-fit:cover;opacity:0.9;" />
+        <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=75" alt="Handcrafted Kashmiri Textile" style="width:100%;height:100%;object-fit:cover;opacity:0.9;" />
       </div>
     </section>
 
@@ -651,6 +645,16 @@
     t._t = setTimeout(() => t.classList.remove('show'), 2400);
   }
 
+  // OPTIMIZATION: Quick image compression helper for external Google Drive / Cloudinary URLs 
+  // to instantly load thumbnails and prevent in-app browser choking.
+  function getOptimizedImageUrl(url) {
+    if (!url) return '';
+    if (url.includes('cloudinary.com') && !url.includes('w_')) {
+      return url.replace('/upload/', '/upload/w_600,c_limit,q_auto,f_auto/');
+    }
+    return url;
+  }
+
   async function loadStore() {
     try {
       const res = await fetch(`${API_ENDPOINT}?type=products`, { mode: 'cors' });
@@ -659,7 +663,7 @@
 
       ALL_PRODUCTS = rows.map(r => {
         const rawPrice = String(r.price || r['Price'] || '0').replace(/[₹,\s]/g, '').replace(/[^0-9.]/g, '');
-        const imgs = [r.image, r.image2, r.image3, r.image4].filter(Boolean);
+        const imgs = [r.image, r.image2, r.image3, r.image4].filter(Boolean).map(getOptimizedImageUrl);
         return {
           id: String(r.id || r.name).toLowerCase().replace(/[^a-z0-9]/g, '-'),
           name: String(r.name || r['Product Name'] || '').trim(),
@@ -903,7 +907,8 @@
 
   $('brandHomeTrigger').onclick = closeCategory;
   $('btnBackHome').onclick = closeCategory;
-  $('btnOpenCart').onclick = () => $('cartOverlay').classList.add('open');$('cartCloseBtn').onclick = () => $('cartOverlay').classList.remove('open');$('cartOverlay').onclick = (e) => { if (e.target === $('cartOverlay'))$('cartOverlay').classList.remove('open'); };
+  $('btnOpenCart').onclick = () =>$('cartOverlay').classList.add('open');
+  $('cartCloseBtn').onclick = () =>$('cartOverlay').classList.remove('org') || $('cartOverlay').classList.remove('open');$('cartOverlay').onclick = (e) => { if (e.target === $('cartOverlay'))$('cartOverlay').classList.remove('open'); };
 
   $('searchInput').oninput = (e) => {
     const q = e.target.value.trim().toLowerCase();
