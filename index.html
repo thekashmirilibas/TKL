@@ -53,13 +53,13 @@
   button { cursor: pointer; border: none; background: none; }
   .hidden { display: none !important; }
 
-  /* ZARA EDITORIAL MASTHEAD */
+  /* ZARA EDITORIAL MASTHEAD (STATIC / NON-STICKY TO ELIMINATE OVERLAPS) */
   .brand-masthead {
-    background: rgba(250, 245, 238, 0.98);
-    backdrop-filter: blur(12px);
-    position: relative;
-    width: 100%;
+    background: var(--bg);
     border-bottom: 1px solid var(--border);
+    width: 100%;
+    position: relative;
+    z-index: 100;
   }
 
   .masthead-top-row {
@@ -80,7 +80,7 @@
     font-family: var(--font-serif);
     font-size: 22px;
     font-weight: 700;
-    letter-spacing: 5px;
+    letter-spacing: 6px;
     text-transform: uppercase;
     color: var(--text);
   }
@@ -94,7 +94,7 @@
     margin-top: 2px;
   }
 
-  /* UTILITY SEARCH & BAG BAR ALIGNED ON SAME LINE */
+  /* UTILITY SEARCH & BAG BAR */
   .utility-bar {
     display: flex;
     align-items: center;
@@ -175,7 +175,7 @@
     border-top: 1px solid var(--border);
     background: var(--surface);
     position: relative;
-    z-index: 90;
+    z-index: 120;
   }
 
   .nav-item-dropdown {
@@ -196,7 +196,7 @@
 
   .nav-item-btn:hover { color: var(--saffron); }
 
-  /* DROPDOWN FLYOUT PANEL */
+  /* DROPDOWN FLYOUT PANEL (FIXED OVERLAP & Z-INDEX LAYER) */
   .dropdown-flyout {
     position: absolute;
     top: 100%;
@@ -206,11 +206,12 @@
     border: 1px solid var(--border);
     min-width: 220px;
     padding: 14px 18px;
-    box-shadow: 0 15px 40px rgba(28,15,0,0.08);
+    box-shadow: 0 15px 40px rgba(28,15,0,0.12);
     opacity: 0;
     pointer-events: none;
     transition: all var(--ease);
     border-radius: var(--radius);
+    z-index: 999;
   }
 
   .nav-item-dropdown:hover .dropdown-flyout,
@@ -245,7 +246,7 @@
 
   .flyout-link:hover { color: var(--ruby); padding-left: 4px; }
 
-  /* SHORT & COMPACT HIGH-FASHION HERO BANNER WITH AUTHENTIC KASHMIRI LIBAS VISUAL */
+  /* SHORTENED HIGH-FASHION HERO BANNER WITH SLIDESHOW ANIMATION */
   .hero-banner {
     width: 100%;
     max-width: 1500px;
@@ -258,7 +259,7 @@
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     min-height: 280px;
-    max-height: 340px;
+    max-height: 320px;
   }
 
   .hero-banner-content {
@@ -292,7 +293,7 @@
     line-height: 1.55;
     color: #d6ccbe;
     max-width: 380px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     font-weight: 300;
   }
 
@@ -313,10 +314,32 @@
   }
   .hero-btn:hover { background: var(--saffron); color: #fff; }
 
+  /* SLIDESHOW ANIMATION CONTAINER */
   .hero-banner-img {
     position: relative;
     background: #2a1f14;
     overflow: hidden;
+    min-height: 240px;
+  }
+
+  .slideshow-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+
+  .slideshow-slide.active {
+    opacity: 1;
+  }
+
+  .slideshow-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
   }
 
   /* EDITORIAL CATEGORY SECTIONS */
@@ -326,7 +349,7 @@
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    margin: 30px 0 14px;
+    margin: 30px 0 16px;
     color: var(--text);
     border-bottom: 1px solid var(--border);
     padding-bottom: 8px;
@@ -355,11 +378,12 @@
 
   .edit-tile:hover { transform: translateY(-3px); border-color: var(--border-dark); }
   
-  /* OBJECT-FIT COVER + HIGH QUALITY IMAGE RENDERING TO SOLVE BLURRY/PARTIAL IMAGE CLIPPING */
+  /* FIX: OBJECT-FIT COVER & CENTERING TO SHOW THE FULL THUMBNAIL NATURALLY */
   .edit-tile img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
     background-color: #f4f4f5;
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
@@ -411,6 +435,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
     background-color: #f4f4f5;
   }
 
@@ -432,7 +457,7 @@
   .card-price { font-family: monospace; font-size: 13.5px; font-weight: 700; color: var(--text); }
   .card-size { font-size: 9px; color: var(--text-muted); text-transform: uppercase; }
 
-  /* FEATURED & BUDGET SUB-VIEW FOR EXPLORE */
+  /* EXPLORE / CURATED ROUTED VIEW */
   .explore-view { display: none; width: 100%; }
   .explore-view.visible { display: block; }
 
@@ -453,11 +478,11 @@
   .modal-grid { display: grid; grid-template-columns: 1.2fr 1fr; flex: 1; overflow: hidden; }
   .modal-img-pane { background: #f4f4f5; display: flex; flex-direction: column; position: relative; }
   .modal-main-img { flex: 1; position: relative; min-height: 380px; overflow: hidden; cursor: zoom-in; display: flex; align-items: center; justify-content: center; background: #f4f4f5; }
-  .modal-main-img img { width: 100%; height: 100%; object-fit: cover; background: #f4f4f5; }
+  .modal-main-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; background: #f4f4f5; }
   .modal-thumbs { display: flex; gap: 6px; padding: 10px; background: #fff; border-top: 1px solid var(--border); overflow-x: auto; }
   .m-thumb { width: 48px; height: 60px; border: 1.5px solid transparent; border-radius: var(--radius); overflow: hidden; flex-shrink: 0; opacity: 0.6; cursor: pointer; background: #eee; }
   .m-thumb.on { border-color: var(--border-dark); opacity: 1; }
-  .m-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .m-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
   .modal-info-pane { padding: 30px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
   .modal-price { font-family: monospace; font-size: 22px; font-weight: 700; color: var(--text); }
 
@@ -516,7 +541,7 @@
 </head>
 <body>
 
-<!-- STATIC MASTHEAD WITH ALIGNED UTILITY BAR & MEGA MENU -->
+<!-- STATIC MASTHEAD WITH ALIGNED UTILITY BAR & DROPDOWN NAVIGATION -->
 <header class="brand-masthead">
   <div class="masthead-top-row">
     <div class="brand-group" id="brandHomeTrigger" style="cursor:pointer;">
@@ -555,7 +580,7 @@
 <div class="editorial-shell">
   <!-- HOME EDITORIAL VIEW -->
   <div id="homeEditorialView">
-    <!-- SHORTENED COMPACT HERO BANNER WITH HANDCRAFTED KASHMIRI TEXTILE VISUAL -->
+    <!-- SHORTENED HERO BANNER WITH AUTOMATED 4-IMAGE SLIDESHOW ANIMATION -->
     <section class="hero-banner">
       <div class="hero-banner-content">
         <div class="hero-tag">Artisanal Curation</div>
@@ -563,8 +588,19 @@
         <p class="hero-desc">Discover heritage Aari embroidery, exquisite Kani weaves, and timeless luxury silhouettes stitched completely by hand.</p>
         <button class="hero-btn" onclick="window.openExploreView('featured')">Explore Collections</button>
       </div>
-      <div class="hero-banner-img">
-        <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=75" alt="Handcrafted Kashmiri Textile" style="width:100%;height:100%;object-fit:cover;opacity:0.9;" />
+      <div class="hero-banner-img" id="heroSlideshow">
+        <div class="slideshow-slide active">
+          <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=75" alt="Handcrafted Kashmiri Textile 1"/>
+        </div>
+        <div class="slideshow-slide">
+          <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=700&q=75" alt="Handcrafted Kashmiri Textile 2"/>
+        </div>
+        <div class="slideshow-slide">
+          <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=75" alt="Handcrafted Kashmiri Textile 3"/>
+        </div>
+        <div class="slideshow-slide">
+          <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&q=75" alt="Handcrafted Kashmiri Textile 4"/>
+        </div>
       </div>
     </section>
 
@@ -578,7 +614,7 @@
     <div class="edit-grid" id="bagsGrid"></div>
   </div>
 
-  <!-- EXPLORE / CURATED ROUTED VIEW (Featured This Summer & Shop By Budget) -->
+  <!-- EXPLORE / CURATED ROUTED VIEW -->
   <div class="explore-view" id="exploreView">
     <div class="catalog-bar">
       <button class="btn-back-catalog" id="btnBackFromExplore">
@@ -661,7 +697,7 @@
     t._t = setTimeout(() => t.classList.remove('show'), 2400);
   }
 
-  // OPTIMIZATION: Cloudinary & Drive image parameter compression to prevent mobile lagging
+  // IMAGE COMPRESSION & OPTIMIZATION HELPER
   function getOptimizedImageUrl(url) {
     if (!url) return '';
     if (url.includes('cloudinary.com') && !url.includes('w_')) {
@@ -680,7 +716,6 @@
         const rawPrice = String(r.price || r['Price'] || '0').replace(/[₹,\s]/g, '').replace(/[^0-9.]/g, '');
         const imgs = [r.image, r.image2, r.image3, r.image4].filter(Boolean).map(getOptimizedImageUrl);
         
-        // Map columns I (Shop By Budget) and J (Featured This Summer) securely
         const budgetVal = String(r.budget || r['Shop By Budget'] || '').trim().toUpperCase();
         const featuredVal = String(r.featured || r['Featured This Summer'] || '').trim().toUpperCase();
 
@@ -755,12 +790,23 @@
     renderGrid('', 'bagsGrid', 'bagsCount', true);
   }
 
+  // AUTOMATED 4-IMAGE HERO SLIDESHOW LOGIC
+  function initHeroSlideshow() {
+    const slides = document.querySelectorAll('.slideshow-slide');
+    if (!slides.length) return;
+    let currentIdx = 0;
+    setInterval(() => {
+      slides[currentIdx].classList.remove('active');
+      currentIdx = (currentIdx + 1) % slides.length;
+      slides[currentIdx].classList.add('active');
+    }, 3800);
+  }
+
   window.filterHomeSeason = function(seasonName) {
     const elSec = seasonName === 'Winter' ? $('winterSection') :$('summerSection');
     if (elSec) elSec.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // ROUTING FOR EXPLORE BUTTON (Featured Summer & Shop by Budget)
   window.openExploreView = function(type) {
     ACTIVE_EXPLORE = type;
     ACTIVE_CATEGORY = null;
@@ -1004,6 +1050,7 @@
   };
 
   loadStore();
+  initHeroSlideshow();
 })();
 </script>
 </body>
