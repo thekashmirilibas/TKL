@@ -212,7 +212,7 @@ button { cursor: pointer; }
 .cat-tile {
   position: relative; aspect-ratio: 4 / 5;
   border-radius: var(--radius); overflow: hidden;
-  cursor: pointer;
+  cursor: pointer; background: #222;
 }
 .winter-theme .cat-tile { background: var(--winter-card); border: 1px solid var(--winter-border); }
 .summer-theme .cat-tile { background: var(--summer-card); border: 1px solid var(--summer-border); }
@@ -534,7 +534,7 @@ async function loadInventory() {
         size: String(r.size || r['Size'] || '').trim(),
         color: String(r.color || r['Color'] || '').trim(),
         length: String(r.length || r['Length'] || '').trim(),
-        featured: r.featured === true || String(r.featured).toUpperCase() === 'TRUE'
+        featured: r.featured === true || String(r.featured).toUpperCase() === 'TRUE' || String(r.featured).toUpperCase() === 'Y'
       };
     }).filter(p => p.name);
 
@@ -555,7 +555,7 @@ async function loadInventory() {
 function renderHeroSeasonChips() {
   const seasons = ['All Seasons', ...new Set(ALL_PRODUCTS.map(p => p.season).filter(Boolean))].sort();
   $('seasonChipsBar').innerHTML = seasons.map(s => {
-    const active = (s === 'All Seasons' && filterState.season === 'All') || filterState.season === s;
+    const active = (s === 'All Seasons' && filterState.season === 'All') || filterState.season.toLowerCase() === s.toLowerCase();
     return `<button class="season-btn ${active ? 'on' : ''}" data-s="${s === 'All Seasons' ? 'All' : s}">${s}</button>`;
   }).join('');
 
@@ -589,17 +589,14 @@ function renderFeaturedShelf() {
 }
 
 function renderSeasonTiles() {
-  const renderEdits = (seasonName, gridId, countId) => {
-    const cats = [...new Set(ALL_PRODUCTS
-      .filter(p => p.season.toLowerCase() === seasonName.toLowerCase())
-      .map(p => p.category)
-      .filter(Boolean)
-    )].sort();
+  const renderEdits = (seasonKeyword, gridId, countId) => {
+    const matchingProducts = ALL_PRODUCTS.filter(p => p.season.toLowerCase().includes(seasonKeyword.toLowerCase()));
+    const cats = [...new Set(matchingProducts.map(p => p.category).filter(Boolean))].sort();
 
     $(countId).textContent = `${cats.length} Collections`;
     $(gridId).innerHTML = cats.map(cat => {
-      const match = ALL_PRODUCTS.find(p => p.category === cat && p.season.toLowerCase() === seasonName.toLowerCase() && p.image);
-      const totalCount = ALL_PRODUCTS.filter(p => p.category === cat && p.season.toLowerCase() === seasonName.toLowerCase()).length;
+      const match = matchingProducts.find(p => p.category.toLowerCase() === cat.toLowerCase() && p.image);
+      const totalCount = matchingProducts.filter(p => p.category.toLowerCase() === cat.toLowerCase()).length;
       return `
         <div class="cat-tile" onclick="window.openCategory('${cat}')">
           <img src="${match ? match.image : BLANK_SVG}" alt="${cat}" loading="lazy" onerror="this.src='${BLANK_SVG}'"/>
@@ -612,14 +609,14 @@ function renderSeasonTiles() {
     }).join('');
   };
 
-  if (filterState.season === 'All' || filterState.season.toLowerCase() === 'winter') {
+  if (filterState.season === 'All' || filterState.season.toLowerCase().includes('winter')) {
     $('winterSection').style.display = 'block';
     renderEdits('Winter', 'winterTileGrid', 'winterTileCount');
   } else {
     $('winterSection').style.display = 'none';
   }
 
-  if (filterState.season === 'All' || filterState.season.toLowerCase() === 'summer') {
+  if (filterState.season === 'All' || filterState.season.toLowerCase().includes('summer')) {
     $('summerSection').style.display = 'block';
     renderEdits('Summer', 'summerTileGrid', 'summerTileCount');
   } else {
