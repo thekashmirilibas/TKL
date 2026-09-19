@@ -571,7 +571,7 @@
     <div class="edit-section-title" id="summerSection"><span>The Summer Edit</span> <span id="summerCount" style="font-size:10px;color:var(--text-muted);font-weight:400;"></span></div>
     <div class="edit-grid" id="summerGrid"></div>
 
-    <div class="edit-section-title"><span>Bags & Accessories</span> <span id="bagsCount" style="font-size:10px;color:var(--text-muted);font-weight:400;"></span></div>
+    <div class="edit-section-title" id="bagsSection"><span>Bags & Accessories</span> <span id="bagsCount" style="font-size:10px;color:var(--text-muted);font-weight:400;"></span></div>
     <div class="edit-grid" id="bagsGrid"></div>
   </div>
 
@@ -666,12 +666,15 @@
     t._t = setTimeout(() => t.classList.remove('show'), 2400);
   }
 
-  // FAST IMAGE COMPRESSION PROXY (fixes slow loading & download lagging)
+  // ROBUST IMAGE CLEANER & IBB DIRECT LINK FIXER + LIGHTNING PROXY
   function getOptimizedImageUrl(url) {
     if (!url) return '';
     let clean = String(url).trim();
+    if (clean.includes('ibb.co/') && !clean.includes('//i.ibb.co/')) {
+      clean = clean.replace('//ibb.co/', '//i.ibb.co/');
+    }
     if (clean.includes('wsrv.nl')) return clean;
-    return `https://wsrv.nl/?url=${encodeURIComponent(clean)}&w=600&q=80&output=webp`;
+    return `https://wsrv.nl/?url=${encodeURIComponent(clean)}&w=600&q=85&output=webp`;
   }
 
   async function loadStore() {
@@ -1040,7 +1043,6 @@
   $('btnBackFromExplore').onclick = closeAllViews;
   $('btnOpenCart').onclick = () => $('cartOverlay').classList.add('open');$('cartCloseBtn').onclick = () => $('cartOverlay').classList.remove('open');$('cartOverlay').onclick = (e) => { if (e.target === $('cartOverlay'))$('cartOverlay').classList.remove('open'); };
 
-  // GLOBAL UNIVERSAL SEARCH
   $('searchInput').oninput = (e) => {
     const q = e.target.value.trim().toLowerCase();
     if (ACTIVE_CATEGORY) {
