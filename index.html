@@ -1,847 +1,1366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no"/>
+<base target="_top">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no">
 <title>The Kashmiri Libas — Authentic Kashmiri Clothing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
 :root {
-  --paper: #fcfbf9;
-  --surface: #ffffff;
-  --border: #e8e6e1;
-  --border-dark: #18181b;
-  --text: #121214;
-  --text-muted: #71717a;
-  --text-dim: #a1a1aa;
-  --saffron: #c28833;
-  --ruby: #7d1a1a;
-  --sage: #2a8f56;
+  --ink:#1c0f00; --ink-70:rgba(28,15,0,0.7); --ink-40:rgba(28,15,0,0.4); --ink-15:rgba(28,15,0,0.15); --ink-07:rgba(28,15,0,0.07);
+  --cream:#faf5ee; --parchment:#f3ebe0; --warm-white:#fff9f2;
+  --border:#e5d9c8; --border-strong:#c9b89a;
+  --ruby:#7d1a1a; --ruby-mid:#9e2020; --ruby-light:#c42828;
+  --gold:#b8832a; --gold-light:#d4a84b; --gold-pale:#fdf4e3; --gold-glow:rgba(184,131,42,0.18);
+  --sage:#3d5e38;
+  --r-sm:6px; --r-md:12px; --r-lg:18px; --r-xl:26px; --r-full:999px;
+  --sh-card:0 2px 14px rgba(28,15,0,0.08),0 1px 3px rgba(0,0,0,0.05);
+  --sh-hover:0 12px 44px rgba(28,15,0,0.16),0 4px 12px rgba(0,0,0,0.08);
+  --sh-modal:0 32px 96px rgba(0,0,0,0.3);
+  --sh-cart:-24px 0 80px rgba(0,0,0,0.22);
+  --font-d:'Tenor Sans',Georgia,serif;
+  --font-b:'Jost',system-ui,sans-serif;
+  --ease:0.22s cubic-bezier(0.4,0,0.2,1);
+  --spring:0.46s cubic-bezier(0.34,1.56,0.64,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+ul{list-style:none} a{text-decoration:none;color:inherit} button{cursor:pointer;border:none;background:none;font-family:inherit}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:var(--r-full)}
 
-  --winter-bg: #181412;
-  --winter-card: #221d19;
-  --winter-border: rgba(255, 255, 255, 0.12);
-  --winter-text: #f5ede2;
-  --winter-gold: #d4a84b;
+/* LOADER */
+#klLoader{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity 0.7s ease}
+#klLoader.out{opacity:0;pointer-events:none}
+.lo-name{font-family:var(--font-d);font-size:2.2rem;font-weight:400;color:var(--gold-light);letter-spacing:0.12em;text-transform:uppercase;text-align:center}
+.lo-sub{font-size:0.68rem;letter-spacing:0.24em;text-transform:uppercase;color:rgba(255,255,255,0.35)}
+.lo-bar{width:140px;height:1px;background:rgba(255,255,255,0.12);border-radius:var(--r-full);overflow:hidden;margin-top:4px}
+.lo-bar::after{content:'';display:block;height:100%;background:var(--gold-light);border-radius:var(--r-full);animation:lobar 1.4s ease-in-out infinite}
+@keyframes lobar{0%{width:0;margin-left:0}50%{width:55%;margin-left:22%}100%{width:0;margin-left:100%}}
 
-  --summer-bg: #f8f3e6;
-  --summer-card: #ffffff;
-  --summer-border: #e3d9c5;
-  --summer-text: #1f1b16;
+/* HERO TOP BAR */
+.kl-hero{
+  background:var(--cream);
+  color:var(--ink);
+  padding:0 clamp(16px,4vw,52px);
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.hero-topbar{
+  max-width:1380px;margin:0 auto;
+  min-height:64px;padding:10px 0;
+  display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid var(--border);
+}
+.hero-brand{font-family:var(--font-d);font-size:1.15rem;color:var(--ink);letter-spacing:.04em;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.hero-search{max-width:330px;flex:1;margin-left:auto;position:relative}
+.hero-search input{
+  width:100%;background:var(--warm-white);color:var(--ink);
+  border:1px solid var(--border);border-radius:var(--r-full);
+  padding:9px 14px 9px 35px;font-family:var(--font-b);font-size:0.82rem;outline:none;transition:all var(--ease)
+}
+.hero-search input::placeholder{color:var(--ink-40)}
+.hero-search input:focus{background:#fff;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+.hero-search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--ink-40);pointer-events:none}
+.hero-actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.hero-btn{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink);transition:all var(--ease);position:relative}
+.hero-btn:hover{background:var(--parchment);color:var(--ruby)}
+.cart-badge{position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--ruby-light);color:#fff;font-size:0.58rem;font-weight:700;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--cream);transform:scale(0);transition:transform var(--spring)}
+.cart-badge.show{transform:scale(1)}
+.hero-wa{display:flex;align-items:center;gap:6px;padding:8px 13px;background:var(--sage);border-radius:var(--r-full);color:#fff;font-size:0.75rem;font-weight:600;transition:all var(--ease);white-space:nowrap}
+.hero-wa:hover{background:#31512e}
+.hero-wa svg{width:14px;height:14px}
 
-  --radius: 3px;
-  --radius-pill: 999px;
-  --font-serif: 'Cinzel', Georgia, serif;
-  --font-sans: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --ease: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+.hero-inner{
+  max-width:900px;margin:0 auto;text-align:center;
+  padding:clamp(30px,4vw,48px) 0 clamp(26px,3.5vw,40px);
 }
+.hero-title{
+  color:var(--ink);font-family:var(--font-d);font-size:clamp(2.1rem,5vw,3.5rem);
+  line-height:1.08;letter-spacing:-.01em;font-weight:400;
+}
+.hero-title em{color:var(--ruby);font-style:normal}
+.hero-sub{color:var(--ink-70);font-size:.88rem;line-height:1.6;max-width:560px;margin:12px auto 0}
+.hero-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:20px}
+.hero-chip{
+  padding:8px 17px;color:var(--ink-70);border:1px solid var(--border);border-radius:var(--r-full);
+  background:var(--warm-white);font-size:.72rem;cursor:pointer;transition:all var(--ease)
+}
+.hero-chip:hover,.hero-chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { scroll-behavior: smooth; }
-body {
-  background-color: var(--paper);
-  color: var(--text);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-}
-img { display: block; width: 100%; height: 100%; object-fit: cover; }
-button, input, select { font: inherit; color: inherit; border: none; background: none; }
-button { cursor: pointer; }
-.hidden { display: none !important; }
-
-/* MASTHEAD */
-.site-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(252, 251, 249, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
-}
-.header-inner {
-  max-width: 1400px; margin: 0 auto;
-  min-height: 62px; padding: 8px 24px;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-}
-.brand-group { display: flex; flex-direction: column; cursor: pointer; }
-.brand-title {
-  font-family: var(--font-serif);
-  font-size: 20px; font-weight: 700;
-  letter-spacing: 4px; text-transform: uppercase;
-  color: var(--text);
-}
-.brand-sub {
-  font-size: 8.5px; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--saffron);
-  font-weight: 600; margin-top: 1px;
-}
-.header-controls { display: flex; align-items: center; gap: 10px; }
-.search-input-wrap { position: relative; width: 260px; }
-.search-input-wrap input {
-  width: 100%; height: 38px;
-  padding: 0 12px 0 34px; font-size: 11.5px;
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--radius); outline: none; transition: border-color var(--ease);
-}
-.search-input-wrap input:focus { border-color: var(--border-dark); }
-.search-input-wrap svg {
-  position: absolute; left: 11px; top: 12px;
-  width: 14px; height: 14px; color: var(--text-dim); pointer-events: none;
-}
-.btn-cart-nav {
-  position: relative; height: 38px; padding: 0 14px;
-  display: flex; align-items: center; gap: 8px;
-  border: 1px solid var(--border); border-radius: var(--radius);
-  background: #fff; font-size: 10px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 1px; transition: all var(--ease);
-}
-.btn-cart-nav:hover { border-color: var(--border-dark); }
-.cart-pill {
-  min-width: 17px; height: 17px;
-  background: var(--ruby); color: #fff;
-  border-radius: var(--radius-pill); font-size: 9px;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 4px; font-family: var(--font-mono); font-weight: 700;
-}
-.wa-direct-btn {
-  height: 38px; padding: 0 14px;
-  background: var(--sage); color: #fff;
-  border-radius: var(--radius); font-size: 10px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 1px;
-  display: flex; align-items: center; gap: 6px; text-decoration: none;
-}
-
-/* HERO */
-.hero-editorial {
-  text-align: center;
-  padding: clamp(36px, 5vw, 60px) 20px clamp(28px, 4vw, 44px);
-  max-width: 900px; margin: 0 auto;
-}
-.hero-title {
-  font-family: var(--font-serif);
-  font-size: clamp(26px, 5vw, 46px);
-  font-weight: 600; letter-spacing: 1px; line-height: 1.15;
-}
-.hero-title em { font-style: italic; color: var(--saffron); font-weight: 400; }
-.hero-sub {
-  color: var(--text-muted); font-size: 13px;
-  line-height: 1.6; margin: 12px auto 0; max-width: 580px;
-}
-.season-selector {
-  display: flex; justify-content: center; gap: 8px; margin-top: 24px; flex-wrap: wrap;
-}
-.season-btn {
-  padding: 8px 18px; border: 1px solid var(--border);
-  border-radius: var(--radius); background: #fff;
-  font-size: 10px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 1px; color: var(--text-muted); transition: all var(--ease);
-}
-.season-btn:hover { border-color: var(--border-dark); color: var(--text); }
-.season-btn.on { background: var(--text); color: #fff; border-color: var(--text); }
+/* MAIN BODY */
+.kl-body{max-width:none;padding:0;background:var(--cream)}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:clamp(16px,2vw,26px)}
+.sec-title{font-family:var(--font-d);font-size:clamp(1.35rem,3vw,1.8rem);font-weight:400;color:var(--ink);letter-spacing:0.02em}
+.sec-title em{color:var(--ruby);font-style:normal}
 
 /* FEATURED STRIP */
-.featured-row-wrap {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: #f7f5ed;
-  padding: 30px 24px;
+.featured-section{
+  margin:0;padding:clamp(38px,5vw,58px) clamp(16px,4vw,52px);
+  background:var(--cream);border-bottom:1px solid var(--border)
 }
-.section-masthead {
-  max-width: 1400px; margin: 0 auto 16px;
-  display: flex; justify-content: space-between; align-items: baseline;
-}
-.section-title {
-  font-family: var(--font-serif);
-  font-size: 17px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
-}
-.section-title em { color: var(--saffron); font-style: italic; }
-.featured-carousel {
-  max-width: 1400px; margin: 0 auto;
-  display: flex; gap: 14px; overflow-x: auto;
-  padding-bottom: 6px; scrollbar-width: none;
-}
-.featured-carousel::-webkit-scrollbar { display: none; }
-.feat-card {
-  flex-shrink: 0; width: clamp(155px, 17vw, 205px);
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden; cursor: pointer;
-  transition: transform var(--ease), border-color var(--ease);
-}
-.feat-card:hover { transform: translateY(-3px); border-color: var(--border-dark); }
-.feat-media { aspect-ratio: 4 / 5; position: relative; background: #eee; }
-.feat-details { padding: 10px 12px; }
-.feat-tag { font-size: 8.5px; font-weight: 600; color: var(--saffron); text-transform: uppercase; }
-.feat-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 2px 0 4px; }
-.feat-price { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; color: var(--text); }
+.featured-section .sec-head{max-width:1180px;margin:0 auto 20px}
+.featured-scroll{display:flex;gap:clamp(12px,1.5vw,18px);overflow-x:auto;padding-bottom:8px;max-width:1180px;margin:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.featured-scroll::-webkit-scrollbar{display:none}
+.feat-card{flex-shrink:0;width:clamp(150px,17vw,195px);background:#fff;border-radius:30px 6px 30px 6px;overflow:hidden;box-shadow:var(--sh-card);cursor:pointer;transition:transform var(--ease),box-shadow var(--ease)}
+.feat-card:hover{transform:translateY(-5px);box-shadow:var(--sh-hover)}
+.feat-img{aspect-ratio:3/4;overflow:hidden;background:var(--parchment);position:relative}
+.feat-img img{transition:transform 0.5s ease}
+.feat-card:hover .feat-img img{transform:scale(1.06)}
+.feat-star{position:absolute;top:8px;left:8px;z-index:2;background:var(--gold);color:#fff;font-size:0.6rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 8px;border-radius:var(--r-full)}
+.feat-info{padding:10px 12px 14px}
+.feat-cat{font-size:0.64rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:3px}
+.feat-name{font-family:var(--font-d);font-size:0.95rem;font-weight:600;line-height:1.3;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.feat-price{font-family:var(--font-d);font-size:1rem;font-weight:700;color:var(--ruby);margin-top:6px;font-style:italic}
 
-/* SEASON SECTIONS */
-.editorial-season-block {
-  padding: clamp(48px, 6vw, 76px) clamp(18px, 4vw, 56px);
+/* EDITORIAL SEASON CATEGORIES */
+.editorial-season{
+  padding:clamp(42px,6vw,72px) clamp(16px,4vw,52px) clamp(50px,7vw,82px);
 }
-.editorial-season-block.winter-theme {
-  background-color: var(--winter-bg);
-  color: var(--winter-text);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+.editorial-season.winter{background:var(--ink);color:#fff}
+.editorial-season.summer{background:var(--warm-white);color:var(--ink)}
+.editorial-head{
+  max-width:1180px;margin:0 auto clamp(24px,3vw,34px);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap
 }
-.editorial-season-block.summer-theme {
-  background-color: var(--summer-bg);
-  color: var(--summer-text);
-  border-bottom: 1px solid var(--summer-border);
+.editorial-kicker{
+  font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+  color:var(--gold-light);margin-bottom:6px
 }
-.edit-head {
-  max-width: 1400px; margin: 0 auto 24px;
-  display: flex; justify-content: space-between; align-items: baseline;
-  border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 12px;
+.editorial-season.summer .editorial-kicker{color:var(--sage)}
+.editorial-title{font-family:var(--font-d);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;line-height:1.1}
+.editorial-count{font-size:.75rem;opacity:.58}
+.editorial-grid{
+  max-width:1180px;margin:0 auto;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:clamp(12px,1.8vw,20px)
 }
-.winter-theme .edit-head { border-color: var(--winter-border); }
-.edit-kicker {
-  font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
-  color: var(--saffron);
+.editorial-card{
+  display:block;position:relative;aspect-ratio:3/3.6;overflow:hidden;
+  border-radius:30px 6px 30px 6px;background:#000;cursor:pointer;
+  box-shadow:0 4px 20px rgba(0,0,0,.12);transition:transform .22s ease,box-shadow .22s ease
 }
-.winter-theme .edit-kicker { color: var(--winter-gold); }
-.edit-title {
-  font-family: var(--font-serif); font-size: clamp(22px, 4vw, 32px); font-weight: 600;
-}
-.cat-tile-grid {
-  max-width: 1400px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;
-}
-.cat-tile {
-  position: relative; aspect-ratio: 4 / 5;
-  border-radius: var(--radius); overflow: hidden;
-  cursor: pointer; background: #222;
-}
-.winter-theme .cat-tile { background: var(--winter-card); border: 1px solid var(--winter-border); }
-.summer-theme .cat-tile { background: var(--summer-card); border: 1px solid var(--summer-border); }
-.cat-tile img { opacity: 0.88; transition: transform 0.35s ease, opacity 0.25s ease; }
-.cat-tile:hover img { transform: scale(1.05); opacity: 0.98; }
-.cat-tile::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(18, 18, 20, 0.88) 100%);
-}
-.cat-tile-meta {
-  position: absolute; left: 16px; right: 16px; bottom: 14px;
-  z-index: 2; color: #fff;
-}
-.cat-tile-name {
-  font-family: var(--font-serif); font-size: 18px; font-weight: 600; letter-spacing: 1px;
-}
-.cat-tile-count {
-  font-size: 9.5px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px;
-}
+.editorial-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(0,0,0,.2)}
+.editorial-card img{width:100%;height:100%;object-fit:cover;opacity:.88;transition:transform .5s ease,opacity .3s ease}
+.editorial-card:hover img{transform:scale(1.06);opacity:1}
+.editorial-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 38%,rgba(0,0,0,.8) 100%)}
+.cat-no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:var(--parchment)}
+.editorial-label{position:absolute;left:16px;right:16px;bottom:14px;z-index:2;color:#fff}
+.editorial-name{font-family:var(--font-d);font-size:1.08rem;font-weight:600;line-height:1.15}
+.editorial-num{font-size:.68rem;opacity:.75;margin-top:3px}
+.editorial-empty{max-width:1180px;margin:auto;padding:10px 0;opacity:.55;font-size:.82rem}
 
-/* CATALOG VIEW */
-.catalog-view { display: none; max-width: 1400px; margin: 0 auto; padding: 24px; }
-.catalog-view.visible { display: block; }
-.catalog-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
-}
-.catalog-title-group { display: flex; align-items: baseline; gap: 12px; }
-.catalog-title { font-family: var(--font-serif); font-size: 26px; font-weight: 600; }
-.btn-back-link {
-  height: 34px; padding: 0 12px; border: 1px solid var(--border);
-  border-radius: var(--radius); background: #fff; font-size: 9.5px;
-  font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-  display: flex; align-items: center; gap: 6px;
-}
-.btn-back-link:hover { border-color: var(--border-dark); }
-.toolbar-shelf {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 12px 14px;
-  margin-bottom: 24px; display: flex; flex-wrap: wrap;
-  align-items: center; gap: 8px;
-}
-.filter-dropdown {
-  height: 36px; padding: 0 10px;
-  border: 1px solid var(--border); border-radius: var(--radius);
-  background: #fff; font-size: 11px; outline: none; transition: border-color var(--ease);
-}
-.filter-dropdown:focus { border-color: var(--border-dark); }
-.toolbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+/* PRODUCT SECTION */
+.prod-section{display:none;max-width:1180px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,2vw,28px) 70px}
+.prod-section.visible{display:block;animation:fadeUp 0.35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.prod-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.back-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r-full);border:1.5px solid var(--border);font-size:0.78rem;font-weight:600;color:var(--ink-70);background:var(--warm-white);transition:all var(--ease)}
+.back-btn:hover{border-color:var(--ruby);color:var(--ruby)}
+.back-btn svg{width:14px;height:14px}
+.prod-cat-title{font-family:var(--font-d);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;color:var(--ink)}
+.copy-link-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r-full);border:1.5px solid var(--border);font-size:0.76rem;font-weight:600;color:var(--ink-70);background:var(--warm-white);transition:all var(--ease);white-space:nowrap}
+.copy-link-btn:hover{border-color:var(--gold);color:var(--gold)}
+.copy-link-btn svg{width:13px;height:13px}
+.copy-link-btn.copied{border-color:var(--sage);color:var(--sage)}
 
-/* PRODUCTS GRID */
-.products-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px;
-}
-.product-card {
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--radius); display: flex; flex-direction: column;
-  position: relative; cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease;
-}
-.product-card:hover { transform: translateY(-3px); border-color: var(--border-dark); }
-.product-media {
-  position: relative; aspect-ratio: 4 / 5; background: #f4f4f5; overflow: hidden;
-}
-.product-media img { loading: lazy; decoding: async; }
-.btn-bag-icon {
-  position: absolute; top: 10px; right: 10px; z-index: 2;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92); border: 1px solid var(--border);
-  display: grid; place-items: center; transition: all var(--ease);
-}
-.btn-bag-icon:hover { background: var(--text); color: #fff; }
-.btn-bag-icon.in-bag { background: var(--ruby); color: #fff; border-color: var(--ruby); }
-.btn-bag-icon svg { width: 14px; height: 14px; }
-.badge-shots-count {
-  position: absolute; bottom: 8px; right: 8px; z-index: 2;
-  font-family: var(--font-mono); font-size: 8.5px; font-weight: 600;
-  padding: 3px 6px; border-radius: var(--radius); background: rgba(255, 255, 255, 0.88);
-  border: 1px solid var(--border);
-}
-.product-info { padding: 12px; display: flex; flex-direction: column; gap: 3px; flex-grow: 1; }
-.product-tagline { font-size: 8.5px; font-weight: 600; color: var(--saffron); text-transform: uppercase; letter-spacing: 0.5px; }
-.product-name { font-size: 12.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.product-specs-line { font-size: 9px; color: var(--text-muted); text-transform: uppercase; margin: 2px 0 4px; }
-.product-price-bar {
-  display: flex; justify-content: space-between; align-items: baseline;
-  margin-top: auto; padding-top: 6px; border-top: 1px solid #f8f8f8;
-}
-.price-tag { font-family: var(--font-mono); font-size: 13.5px; font-weight: 700; color: var(--text); }
-.product-size-pill { font-size: 9px; color: var(--text-muted); }
+/* TABS & TOOLBAR */
+.season-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;padding:14px 18px;background:var(--warm-white);border-radius:18px;border:1px solid var(--border);align-items:center}
+.season-label{font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-40);font-weight:600;margin-right:4px}
+.stab{padding:6px 18px;border-radius:var(--r-full);font-size:0.78rem;font-weight:600;color:var(--ink-70);background:var(--parchment);border:1.5px solid transparent;transition:all var(--ease);cursor:pointer}
+.stab:hover{border-color:var(--gold-light);color:var(--ink)}
+.stab.on{background:var(--ruby);color:#fff;border-color:var(--ruby)}
+.tab-count{font-size:0.78rem;color:var(--ink-40);margin-left:4px;white-space:nowrap}
+.cat-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:22px;padding:12px 18px;background:var(--warm-white);border-radius:18px;border:1px solid var(--border)}
+.tb-select{padding:7px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:var(--font-b);font-size:0.78rem;background:#fff;color:var(--ink);outline:none;cursor:pointer;transition:border-color var(--ease)}
+.tb-select:focus{border-color:var(--gold)}
+.tb-right{margin-left:auto;display:flex;gap:8px;align-items:center}
 
-/* MODAL & CART */
-.modal-backdrop {
-  position: fixed; inset: 0; z-index: 400;
-  background: rgba(18, 18, 20, 0.55); backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  padding: 16px; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
-}
-.modal-backdrop.open { opacity: 1; pointer-events: auto; }
-.modal-window {
-  width: min(920px, 100%); max-height: 90vh;
-  background: #fff; border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden;
-  display: flex; flex-direction: column; position: relative;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-.btn-close-modal {
-  position: absolute; top: 14px; right: 14px; z-index: 10;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85); border: 1px solid var(--border);
-  display: grid; place-items: center;
-}
-.modal-content-grid { display: grid; grid-template-columns: 1.1fr 1fr; flex: 1; overflow: hidden; }
-.modal-gallery-pane { background: #f4f4f5; display: flex; flex-direction: column; position: relative; }
-.modal-main-image-wrap { flex: 1; position: relative; min-height: 380px; overflow: hidden; cursor: zoom-in; }
-.modal-gallery-thumbs { display: flex; gap: 6px; padding: 10px; background: #fff; border-top: 1px solid var(--border); overflow-x: auto; }
-.modal-thumb { width: 50px; height: 60px; border: 1.5px solid transparent; border-radius: var(--radius); overflow: hidden; flex-shrink: 0; opacity: 0.6; }
-.modal-thumb.on { border-color: var(--border-dark); opacity: 1; }
-.modal-details-pane { padding: 28px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
-.modal-specs-badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.spec-chip { padding: 4px 10px; border-radius: var(--radius); border: 1px solid var(--border); font-size: 9.5px; font-weight: 500; text-transform: uppercase; color: var(--text-muted); }
-.modal-price-tag { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--text); }
-.modal-action-buttons { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 14px; }
-.btn-primary-action { height: 44px; background: var(--text); color: #fff; border-radius: var(--radius); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
-.btn-wa-order { height: 44px; background: #25d366; color: #fff; border-radius: var(--radius); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 8px; }
+/* PRODUCT GRID */
+.kl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:clamp(14px,2vw,22px)}
 
-.cart-slide-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(18, 18, 20, 0.4); opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
-.cart-slide-overlay.open { opacity: 1; pointer-events: auto; }
-.cart-tray { position: fixed; top: 0; right: 0; bottom: 0; z-index: 501; width: min(420px, 100vw); background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-.cart-slide-overlay.open .cart-tray { transform: translateX(0); }
-.cart-tray-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.cart-tray-title { font-family: var(--font-serif); font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-.cart-tray-items { flex: 1; overflow-y: auto; padding: 14px 20px; }
-.cart-item-row { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f4f4f5; align-items: flex-start; }
-.cart-item-thumb { width: 58px; height: 72px; border-radius: var(--radius); overflow: hidden; background: #f4f4f5; flex-shrink: 0; }
-.cart-item-info { flex: 1; min-width: 0; }
-.cart-item-title { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cart-item-specs { font-size: 9px; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
-.cart-item-price { font-family: var(--font-mono); font-size: 12px; font-weight: 700; margin-top: 4px; }
-.btn-remove-item { font-size: 9px; color: var(--ruby); font-weight: 600; text-transform: uppercase; margin-top: 4px; cursor: pointer; }
-.cart-tray-foot { padding: 18px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
-.cart-total-line { display: flex; justify-content: space-between; align-items: baseline; }
-.cart-total-val { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text); }
-.customer-name-field { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 11.5px; outline: none; }
+/* SKELETON */
+@keyframes shimmer{0%{background-position:-700px 0}100%{background-position:700px 0}}
+.skel{background:linear-gradient(90deg,#ede4d8 25%,#f5ede0 50%,#ede4d8 75%);background-size:700px 100%;animation:shimmer 1.4s infinite linear;border-radius:var(--r-sm)}
+.sk-card{background:#fff;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-card)}
+.sk-img{aspect-ratio:3/4}.sk-body{padding:14px;display:flex;flex-direction:column;gap:9px}
+.sk-line{height:12px;border-radius:var(--r-full)}.sk-line.s{width:48%}.sk-line.m{width:72%}
 
-.toast-bar {
-  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px);
-  z-index: 1000; background: var(--text); color: #fff; padding: 8px 18px; border-radius: var(--radius);
-  font-size: 11px; font-weight: 500; opacity: 0; pointer-events: none; transition: all 0.2s ease;
+/* PRODUCT CARD */
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.kl-card{background:#fff;border-radius:30px 6px 30px 6px;overflow:hidden;box-shadow:0 2px 14px rgba(28,15,0,.07);cursor:pointer;transition:transform var(--ease),box-shadow var(--ease);animation:cardIn 0.38s ease both;animation-delay:calc(var(--i,0)*48ms);position:relative}
+.kl-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(28,15,0,.13)}
+.card-img{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--parchment);border-radius:30px 6px 30px 6px}
+.card-img img{position:absolute;inset:0;transition:transform 0.55s ease}
+.kl-card:hover .card-img img{transform:scale(1.07)}
+.card-season-tag{position:absolute;top:10px;right:10px;z-index:2;padding:3px 9px;border-radius:var(--r-full);font-size:0.62rem;font-weight:600;background:rgba(255,255,255,0.88);backdrop-filter:blur(6px);color:var(--ink-70)}
+.card-qv{position:absolute;bottom:0;left:0;right:0;z-index:3;padding:12px;text-align:center;background:linear-gradient(to top,rgba(28,15,0,0.62),transparent);opacity:0;transform:translateY(5px);transition:all var(--ease)}
+.kl-card:hover .card-qv{opacity:1;transform:translateY(0)}
+.qv-btn{padding:7px 22px;background:rgba(255,255,255,0.94);backdrop-filter:blur(4px);border-radius:30px 6px 30px 6px;font-size:0.74rem;font-weight:700;color:var(--ruby)}
+.card-bag-btn{position:absolute;top:10px;left:10px;z-index:3;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.9);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0.75);transition:all var(--ease)}
+.kl-card:hover .card-bag-btn,.card-bag-btn.in-cart{opacity:1;transform:scale(1)}
+.card-bag-btn.in-cart{background:#fff}
+.card-bag-btn svg{width:14px;height:14px;color:var(--ink-70)}
+.card-bag-btn.in-cart svg{color:var(--ruby)}
+.card-body{padding:12px 3px 15px}
+.card-cat{font-size:0.64rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--gold);margin-bottom:4px}
+.card-name{font-family:var(--font-d);font-size:0.98rem;font-weight:400;line-height:1.35;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:9px;letter-spacing:0.01em}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card-price{font-family:var(--font-b);font-size:1rem;font-weight:700;color:var(--ruby)}
+.card-size{font-size:0.68rem;color:var(--ink-40);background:var(--parchment);padding:2px 8px;border-radius:var(--r-full);letter-spacing:0.04em}
+.kl-empty{grid-column:1/-1;text-align:center;padding:72px 20px}
+.kl-empty h3{font-family:var(--font-d);font-size:1.7rem;color:var(--ink-40);font-style:italic}
+.kl-empty p{font-size:0.84rem;color:var(--ink-40);margin-top:6px}
+
+/* MODAL */
+.kl-overlay{position:fixed;inset:0;z-index:400;background:rgba(12,5,0,0.65);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity 0.3s ease}
+.kl-overlay.open{opacity:1;pointer-events:auto}
+.kl-modal{background:#fff;border-radius:var(--r-xl);box-shadow:var(--sh-modal);width:100%;max-width:900px;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;transform:translateY(30px) scale(0.97);opacity:0;transition:transform var(--spring),opacity 0.28s ease}
+.kl-overlay.open .kl-modal{transform:none;opacity:1}
+.modal-close{position:absolute;top:14px;right:14px;z-index:20;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.9);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;transition:all var(--ease)}
+.modal-close:hover{background:#fff;transform:rotate(90deg)}
+.modal-close svg{width:15px;height:15px}
+.m-grid{display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden}
+.m-gallery{background:var(--parchment);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.m-gallery-main{flex:1;position:relative;overflow:hidden;min-height:320px;cursor:zoom-in}
+.m-gallery-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.28s ease;user-select:none;-webkit-user-drag:none}
+.g-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.88);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;transition:all var(--ease);opacity:0}
+.m-gallery:hover .g-arrow,.m-gallery-main:focus-within .g-arrow{opacity:1}
+.g-arrow:hover{background:#fff;box-shadow:0 4px 14px rgba(0,0,0,0.15)}
+.g-arrow.prev{left:10px}.g-arrow.next{right:10px}
+.g-arrow svg{width:16px;height:16px}
+.g-arrow.hidden{display:none}
+.g-zoom-hint{position:absolute;bottom:10px;right:10px;z-index:4;padding:3px 9px;border-radius:var(--r-full);background:rgba(0,0,0,0.45);color:#fff;font-size:0.62rem;font-weight:500;pointer-events:none;backdrop-filter:blur(4px);display:flex;align-items:center;gap:4px}
+.m-thumbs{display:flex;gap:6px;padding:8px 10px;overflow-x:auto;flex-shrink:0;scrollbar-width:none;background:var(--parchment)}
+.m-thumbs::-webkit-scrollbar{display:none}
+.m-thumb{width:52px;height:62px;border-radius:var(--r-sm);overflow:hidden;flex-shrink:0;cursor:pointer;border:2px solid transparent;transition:border-color var(--ease),transform var(--ease);opacity:0.65}
+.m-thumb:hover{opacity:1;transform:scale(1.05)}
+.m-thumb.on{border-color:var(--ruby);opacity:1}
+.m-thumb img{width:100%;height:100%;object-fit:cover}
+.m-body{padding:28px 26px;overflow-y:auto;display:flex;flex-direction:column;gap:13px}
+.m-body::-webkit-scrollbar{width:3px}
+.m-eyebrow{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--gold)}
+.m-name{font-family:var(--font-d);font-size:clamp(1.4rem,3vw,1.9rem);font-weight:400;line-height:1.2;color:var(--ink);letter-spacing:0.01em}
+.m-tags{display:flex;flex-wrap:wrap;gap:6px}
+.m-tag{padding:3px 11px;border-radius:var(--r-full);font-size:0.7rem;background:var(--parchment);color:var(--ink-70);border:1px solid var(--border);letter-spacing:0.04em}
+.m-price{font-family:var(--font-b);font-size:1.75rem;font-weight:700;color:var(--ruby);letter-spacing:0.01em}
+.m-desc{font-size:0.88rem;line-height:1.75;color:var(--ink-70)}
+.m-divider{height:1px;background:var(--ink-07)}
+.m-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-40);margin-bottom:5px}
+.m-input{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--r-md);font-family:var(--font-b);font-size:0.86rem;background:#fff;color:var(--ink);outline:none;transition:border-color var(--ease)}
+.m-input:focus{border-color:var(--ruby)}
+.m-actions{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.btn-add-cart{display:flex;align-items:center;justify-content:center;gap:9px;padding:13px;background:var(--ink);color:#fff;border-radius:var(--r-md);font-size:0.9rem;font-weight:600;transition:all var(--ease)}
+.btn-add-cart:hover{background:var(--ruby);box-shadow:0 8px 28px rgba(125,26,26,0.35);transform:translateY(-2px)}
+.btn-wa-m{display:flex;align-items:center;justify-content:center;gap:9px;padding:12px;background:#fff;color:#25D366;border-radius:var(--r-md);font-size:0.87rem;font-weight:600;border:2px solid #25D366;transition:all var(--ease)}
+.btn-wa-m:hover{background:#25D366;color:#fff}
+
+/* LIGHTBOX */
+.lb-overlay{position:fixed;inset:0;z-index:9000;background:#000;opacity:0;pointer-events:none;transition:opacity 0.3s ease;display:flex;flex-direction:column}
+.lb-overlay.open{opacity:1;pointer-events:auto}
+.lb-header{display:flex;align-items:center;justify-content:space-between;padding:72px 20px 14px;flex-shrink:0;position:relative;z-index:10;background:linear-gradient(to bottom,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.5) 70%,transparent 100%)}
+.lb-counter{color:rgba(255,255,255,0.85);font-size:0.84rem;font-weight:600;letter-spacing:0.08em}
+.lb-close{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.22);display:flex;align-items:center;justify-content:center;color:#fff;transition:all var(--ease);border:2px solid rgba(255,255,255,0.5);flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,0.4)}
+.lb-close:hover{background:rgba(255,255,255,0.38)}
+.lb-close svg{width:20px;height:20px}
+.lb-stage{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.lb-img-wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none}
+.lb-img{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center center;transition:transform 0.15s ease;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.12);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;color:#fff;transition:all var(--ease)}
+.lb-arrow:hover{background:rgba(255,255,255,0.22)}
+.lb-arrow svg{width:20px;height:20px}
+.lb-arrow.prev{left:12px}.lb-arrow.next{right:12px}
+.lb-arrow.hidden{display:none}
+.lb-thumbs{display:flex;gap:6px;padding:10px 16px max(10px, env(safe-area-inset-bottom, 10px));overflow-x:auto;flex-shrink:0;justify-content:center;scrollbar-width:none;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 100%)}
+.lb-thumbs::-webkit-scrollbar{display:none}
+.lb-thumb{width:52px;height:62px;border-radius:var(--r-sm);overflow:hidden;flex-shrink:0;cursor:pointer;border:2px solid transparent;opacity:0.5;transition:all var(--ease)}
+.lb-thumb:hover{opacity:0.85}
+.lb-thumb.on{border-color:#fff;opacity:1}
+.lb-thumb img{width:100%;height:100%;object-fit:cover}
+.lb-zoom-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.45);font-size:0.72rem;pointer-events:none;white-space:nowrap;transition:opacity 0.4s ease;background:rgba(0,0,0,0.35);padding:4px 12px;border-radius:var(--r-full);backdrop-filter:blur(4px)}
+
+/* CART DRAWER */
+.cart-overlay{position:fixed;inset:0;z-index:600;background:rgba(12,5,0,0.5);opacity:0;pointer-events:none;transition:opacity 0.3s ease}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;z-index:601;width:min(420px,100vw);background:#fff;box-shadow:var(--sh-cart);display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.36s cubic-bezier(0.4,0,0.2,1)}
+.cart-overlay.open .cart-drawer{transform:none}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 16px;border-bottom:1px solid var(--border)}
+.cart-title{font-family:var(--font-d);font-size:1.3rem;font-weight:400;color:var(--ink);letter-spacing:0.06em;text-transform:uppercase}
+.cart-close{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ink-07);transition:all var(--ease)}
+.cart-close:hover{background:var(--ink-15);transform:rotate(90deg)}
+.cart-close svg{width:14px;height:14px}
+.cart-items{flex:1;overflow-y:auto;padding:14px 22px}
+.cart-empty-state{text-align:center;padding:56px 20px;color:var(--ink-40)}
+.cart-empty-state svg{width:40px;height:40px;margin:0 auto 12px;opacity:0.3}
+.cart-empty-state p{font-family:var(--font-d);font-size:1.2rem;font-style:italic}
+.cart-empty-state small{font-size:0.8rem;margin-top:4px;display:block}
+.ci{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--ink-07);align-items:flex-start}
+.ci-img{width:64px;height:80px;border-radius:var(--r-md);overflow:hidden;flex-shrink:0;background:var(--parchment)}
+.ci-img img{width:100%;height:100%;object-fit:cover}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-family:var(--font-d);font-size:0.95rem;font-weight:600;color:var(--ink);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ci-meta{font-size:0.72rem;color:var(--ink-40);margin-top:3px}
+.ci-price{font-family:var(--font-d);font-size:1rem;font-weight:700;color:var(--ruby);font-style:italic;margin-top:5px}
+.ci-remove{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ink-07);flex-shrink:0;transition:all var(--ease);margin-top:2px}
+.ci-remove:hover{background:#fee;color:var(--ruby)}
+.ci-remove svg{width:12px;height:12px}
+.cart-foot{padding:18px 22px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px}
+.cart-total-row{display:flex;justify-content:space-between;align-items:baseline}
+.cart-total-label{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-70)}
+.cart-total-val{font-family:var(--font-d);font-size:1.5rem;font-weight:700;color:var(--ruby);font-style:italic}
+.cart-name-input{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--r-md);font-family:var(--font-b);font-size:0.84rem;outline:none;color:var(--ink);transition:border-color var(--ease)}
+.cart-name-input:focus{border-color:var(--ruby)}
+.btn-co-wa{display:flex;align-items:center;justify-content:center;gap:9px;padding:13px;background:#25D366;color:#fff;border-radius:var(--r-md);font-size:0.9rem;font-weight:700;transition:all var(--ease)}
+.btn-co-wa:hover{background:#1db954;box-shadow:0 8px 28px rgba(37,211,102,0.4);transform:translateY(-2px)}
+.btn-co-pay{display:flex;align-items:center;justify-content:center;gap:9px;padding:12px;background:#fff;color:var(--ruby);border:2px solid var(--ruby);border-radius:var(--r-md);font-size:0.88rem;font-weight:700;transition:all var(--ease)}
+.btn-co-pay:hover{background:var(--ruby);color:#fff}
+.co-or{text-align:center;font-size:0.7rem;color:var(--ink-40);letter-spacing:0.1em;text-transform:uppercase}
+
+/* TOAST */
+.kl-toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(12px);z-index:9000;padding:10px 22px;background:var(--ink);color:#fff;border-radius:var(--r-full);font-size:0.82rem;font-weight:500;opacity:0;pointer-events:none;transition:all 0.3s ease;white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,0.2)}
+.kl-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.kl-toast.ok{background:var(--sage)}
+.kl-toast.err{background:var(--ruby)}
+
+/* FOOTER */
+.kl-footer{text-align:center;padding:32px 20px;font-size:0.78rem;color:var(--ink-40);border-top:1px solid var(--border);margin-top:56px;background:var(--warm-white)}
+.kl-footer strong{font-family:var(--font-d);font-size:1rem;font-style:italic;color:var(--ink-70)}
+.kl-footer a{color:var(--ruby)}
+
+/* RESPONSIVE */
+@media(max-width:760px){
+  .hero-topbar{min-height:58px;gap:8px}
+  .hero-brand{font-size:1rem}
+  .hero-search{max-width:210px}
+  .editorial-season{padding-top:40px;padding-bottom:48px}
+  .editorial-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .editorial-card{border-radius:22px 5px 22px 5px}
+  .kl-overlay{padding:0;align-items:flex-end}
+  .kl-modal{border-radius:var(--r-xl) var(--r-xl) 0 0;max-height:94vh;transform:translateY(100%)}
+  .kl-overlay.open .kl-modal{transform:none}
+  .kl-modal::before{content:'';display:block;width:36px;height:4px;background:var(--border);border-radius:99px;margin:12px auto 0;flex-shrink:0}
+  .m-grid{grid-template-columns:1fr;overflow-y:auto}
+  .m-gallery img{min-height:260px;max-height:300px}
+  .m-body{padding:16px 18px 28px;overflow-y:visible}
 }
-.toast-bar.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-@media (max-width: 768px) {
-  .header-inner { padding: 8px 16px; }
-  .search-input-wrap { display: none; }
-  .modal-content-grid { grid-template-columns: 1fr; overflow-y: auto; }
-  .modal-main-image-wrap { min-height: 280px; }
-  .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .cat-tile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media(max-width:500px){
+  .hero-topbar{padding:9px 0}
+  .hero-brand{font-size:.92rem}
+  .hero-search{display:none}
+  .hero-wa{display:none}
+  .hero-inner{padding:28px 0 30px}
+  .hero-title{font-size:2rem}
+  .hero-sub{font-size:.8rem;max-width:330px}
+  .hero-chips{margin-top:16px}
+  .editorial-head{margin-bottom:20px}
+  .editorial-title{font-size:1.7rem}
+  .editorial-count{width:100%}
+  .kl-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card-body{padding:9px 11px 13px}
+  .card-name{font-size:0.92rem}
+}
+@media(max-width:340px){
+  .kl-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <div class="brand-group" id="btnNavHome">
-      <span class="brand-title">The Kashmiri Libas</span>
-      <span class="brand-sub">Kashmir, Stitched by Hand</span>
+<div id="klLoader">
+  <div class="lo-name">The Kashmiri Libas</div>
+  <div class="lo-sub">Authentic Kashmiri Clothing</div>
+  <div class="lo-bar"></div>
+</div>
+
+<div class="kl-hero" id="klHero">
+  <div class="hero-topbar">
+    <div class="hero-brand" id="navBrand">The Kashmiri Libas</div>
+    <div class="hero-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="klSearch" type="search" placeholder="Search products…" autocomplete="off"/>
     </div>
-    <div class="header-controls">
-      <div class="search-input-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="search" id="searchInput" placeholder="Search kurtas, pherans, shawls..." autocomplete="off"/>
-      </div>
-      <button class="btn-cart-nav" id="btnOpenCart">
-        <span>Bag</span>
-        <span class="cart-pill" id="cartCountBadge">0</span>
+    <div class="hero-actions">
+      <button class="hero-btn" id="cartBtn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" id="cartBadge">0</span>
       </button>
-      <a class="wa-direct-btn" href="https://wa.me/919911029922" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="hero-wa" href="https://wa.me/919911029922" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.12.554 4.112 1.523 5.838L.057 23.213a.75.75 0 00.921.921l5.375-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.01-1.37l-.36-.213-3.723 1.015 1.015-3.723-.212-.36A9.818 9.818 0 1112 21.818z"/></svg>
+        WhatsApp
+      </a>
     </div>
   </div>
-</header>
-
-<main id="homeView">
-  <section class="hero-editorial">
-    <h1 class="hero-title">A Wardrobe <em>Crafted</em> by the Valley.</h1>
-    <p class="hero-sub">Pure woolens, delicate cotton weaves, authentic Aari embroidery, and Kani patterns. Each consignment finished with artisanal care.</p>
-    <div class="season-selector" id="seasonChipsBar"></div>
-  </section>
-
-  <section class="featured-row-wrap" id="featuredShelf" style="display:none;">
-    <div class="section-masthead"><div class="section-title">Curated <em>Highlights</em></div></div>
-    <div class="featured-carousel" id="featuredCarousel"></div>
-  </section>
-
-  <section class="editorial-season-block winter-theme" id="winterSection">
-    <div class="edit-head">
-      <div><div class="edit-kicker">Cold Weather Wardrobe</div><div class="edit-title">The Winter Edit</div></div>
-      <div id="winterTileCount" style="font-size:11px;opacity:0.6;"></div>
+  <div id="heroContent">
+    <div class="hero-inner">
+      <div class="hero-title">Kashmir, <em>stitched</em> by hand.</div>
+      <div class="hero-sub">Aari embroidery, Kani weaves, pherans, kurtis and more — a curated wardrobe inspired by the craft of Kashmir.</div>
+      <div class="hero-chips" id="heroSeasonChips"></div>
     </div>
-    <div class="cat-tile-grid" id="winterTileGrid"></div>
+  </div>
+</div>
+
+<main class="kl-body" id="klMain">
+
+  <section class="featured-section" id="featSection" style="display:none">
+    <div class="sec-head">
+      <div class="sec-title">Featured <em>This Season</em></div>
+    </div>
+    <div class="featured-scroll" id="featScroll"></div>
   </section>
 
-  <section class="editorial-season-block summer-theme" id="summerSection">
-    <div class="edit-head">
-      <div><div class="edit-kicker">Lightweight Weaves</div><div class="edit-title">The Summer Edit</div></div>
-      <div id="summerTileCount" style="font-size:11px;color:var(--text-dim);"></div>
-    </div>
-    <div class="cat-tile-grid" id="summerTileGrid"></div>
+  <section class="cat-section" id="catSection">
+    <section class="editorial-season winter" id="winterSeasonSection">
+      <div class="editorial-head">
+        <div>
+          <div class="editorial-kicker">Cold Season</div>
+          <div class="editorial-title">The Winter Edit</div>
+        </div>
+        <div class="editorial-count" id="winterCatCount"></div>
+      </div>
+      <div class="editorial-grid" id="winterCatGrid"></div>
+    </section>
+
+    <section class="editorial-season summer" id="summerSeasonSection">
+      <div class="editorial-head">
+        <div>
+          <div class="editorial-kicker">Warm Season</div>
+          <div class="editorial-title">The Summer Edit</div>
+        </div>
+        <div class="editorial-count" id="summerCatCount"></div>
+      </div>
+      <div class="editorial-grid" id="summerCatGrid"></div>
+    </section>
   </section>
+
+  <section class="prod-section" id="prodSection">
+    <div class="prod-header">
+      <button class="back-btn" id="backBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        All Categories
+      </button>
+      <div class="prod-cat-title" id="prodCatTitle"></div>
+      <button class="copy-link-btn" id="copyLinkBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        Copy Link
+      </button>
+    </div>
+    <div class="season-tabs" id="seasonTabs"></div>
+    <div class="cat-toolbar" id="catToolbar"></div>
+    <div class="kl-grid" id="klGrid"></div>
+  </section>
+
 </main>
 
-<section class="catalog-view" id="catalogView">
-  <div class="catalog-header">
-    <button class="btn-back-link" id="btnBackToEdits">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-      All Categories
+<!-- MODAL -->
+<div class="kl-overlay" id="klOverlay">
+  <div class="kl-modal" id="klModal">
+    <button class="modal-close" id="modalClose">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <div class="catalog-title-group">
-      <h2 class="catalog-title" id="catalogTitleDisplay">Category</h2>
-      <span id="catalogItemCount" style="font-size:11px;color:var(--text-dim);font-family:var(--font-mono);"></span>
-    </div>
-  </div>
-
-  <div class="toolbar-shelf" id="toolbarShelf">
-    <select class="filter-dropdown" id="selSeasonSub"><option value="">All Seasons</option></select>
-    <select class="filter-dropdown" id="selMaterialFilter"><option value="">All Materials</option></select>
-    <select class="filter-dropdown" id="selColorFilter"><option value="">All Colors</option></select>
-    <select class="filter-dropdown" id="selLengthFilter"><option value="">All Lengths</option></select>
-    <select class="filter-dropdown" id="selSizeFilter"><option value="">All Sizes</option></select>
-    <div class="toolbar-right">
-      <select class="filter-dropdown" id="selSortOrder">
-        <option value="">Sort: Default</option>
-        <option value="price_asc">Price: Low to High</option>
-        <option value="price_desc">Price: High to Low</option>
-        <option value="name_asc">Name: A to Z</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="products-grid" id="productsGrid"></div>
-</section>
-
-<div class="modal-backdrop" id="productModalBackdrop">
-  <div class="modal-window">
-    <button class="btn-close-modal" id="btnCloseModal">✕</button>
-    <div class="modal-content-grid" id="modalGridBody"></div>
+    <div class="m-grid" id="modalBody"></div>
   </div>
 </div>
 
-<div class="cart-slide-overlay" id="cartOverlay">
-  <div class="cart-tray">
-    <div class="cart-tray-head">
-      <span class="cart-tray-title">Your Bag</span>
-      <button id="btnCloseCart" style="font-size:16px;">✕</button>
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-drawer">
+    <div class="cart-head">
+      <div class="cart-title">Your Bag</div>
+      <button class="cart-close" id="cartClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <div class="cart-tray-items" id="cartItemsList"></div>
-    <div class="cart-tray-foot" id="cartFootBox" style="display:none;">
-      <div class="cart-total-line">
-        <span style="font-size:11px;text-transform:uppercase;color:var(--text-muted);">Total Estimate</span>
-        <span class="cart-total-val" id="cartTotalSum">₹0</span>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-foot" id="cartFoot" style="display:none">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-val" id="cartTotal">₹0</span>
       </div>
-      <input type="text" class="customer-name-field" id="cartCustomerName" placeholder="Your Name for WhatsApp Order..."/>
-      <button class="btn-wa-order" id="btnCheckoutWhatsApp">Send Order to WhatsApp</button>
+      <input class="cart-name-input" id="cartName" type="text" placeholder="Your name (for order)…"/>
+      <button class="btn-co-wa" id="checkoutWA">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.12.554 4.112 1.523 5.838L.057 23.213a.75.75 0 00.921.921l5.375-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.01-1.37l-.36-.213-3.723 1.015 1.015-3.723-.212-.36A9.818 9.818 0 1112 21.818z"/></svg>
+        Order via WhatsApp
+      </button>
+      <div class="co-or">— or pay online —</div>
+      <button class="btn-co-pay" id="checkoutPay">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pay ₹<span id="checkoutPayAmt">0</span> Online
+      </button>
     </div>
   </div>
 </div>
 
-<div class="toast-bar" id="toastBar"></div>
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lbOverlay">
+  <div class="lb-header">
+    <span class="lb-counter" id="lbCounter"></span>
+    <button class="lb-close" id="lbClose">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <div class="lb-img-wrap" id="lbImgWrap">
+      <img class="lb-img" id="lbImg" src="" alt=""/>
+    </div>
+    <button class="lb-arrow prev" id="lbPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="lb-arrow next" id="lbNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
+    <div class="lb-zoom-hint" id="lbZoomHint">Pinch to zoom · Double-tap to reset</div>
+  </div>
+  <div class="lb-thumbs" id="lbThumbs"></div>
+</div>
+
+<div class="kl-toast" id="klToast"></div>
+
+<footer class="kl-footer">
+  <strong>The Kashmiri Libas</strong><br><br>
+  Authentic Kashmiri Clothing &nbsp;·&nbsp;
+  <a href="https://wa.me/919911029922">+91 99110 29922</a> &nbsp;·&nbsp;
+  <a href="mailto:thekashmirilibas@gmail.com">thekashmirilibas@gmail.com</a>
+</footer>
 
 <script>
-(function(){
+(function () {
 'use strict';
 
-const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxXrnuQJigZsfDKQoeDcCH0CwoWS2R6wHauIRYp13dLh7QYEPs6DHwzlS1qDgA0LeYMeA/exec';
-const BLANK_SVG = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22400%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23f4f4f5%22%2F%3E%3C%2Fsvg%3E';
-const WA_PHONE = '919911029922';
+/* ─── CONFIG ───────────────────────────────── */
+var API_BASE     = 'https://script.google.com/macros/s/AKfycbxXrnuQJigZsfDKQoeDcCH0CwoWS2R6wHauIRYp13dLh7QYEPs6DHwzlS1qDgA0LeYMeA/exec';
+var SITE_URL     = 'https://sites.google.com/view/trendora24/the-kashmiri-libas';
+var RAZORPAY_KEY = '';   // paste rzp_live_xxxxx here when ready
+var WA_NUM       = '919911029922';
+var PLACEHOLDER  = 'https://placehold.co/400x533/f3ebe0/7d1a1a?text=Kashmiri+Libas';
+/* ─────────────────────────────────────────── */
 
-let ALL_PRODUCTS = [];
-let ACTIVE_CATEGORY = null;
-let CART = [];
+var S = { all:[], cart:[], activeCat:null, activeSeason:'All', seasonFilter:'', sort:'', query:'', activeSize:'', activeColor:'', activeLength:'' };
 
-let filterState = { season: 'All', material: '', color: '', length: '', size: '', query: '', sort: '' };
+function el(id){ return document.getElementById(id); }
+function qsa(s,r){ return Array.from((r||document).querySelectorAll(s)); }
+function fmt(n){ return '₹'+Number(n).toLocaleString('en-IN'); }
+function norm(s){ return String(s||'').trim().toLowerCase(); }
+function esc(s){ var d=document.createElement('div');d.appendChild(document.createTextNode(s||''));return d.innerHTML; }
+function deb(fn,ms){ var t; return function(){ var a=arguments;clearTimeout(t);t=setTimeout(function(){fn.apply(null,a);},ms); }; }
 
-const $ = (id) => document.getElementById(id);
-const all = (sel, root) => Array.from((root || document).querySelectorAll(sel));
-
-function showToast(msg) {
-  const t = $('toastBar');
-  t.textContent = msg;
-  t.classList.add('show');
+function toast(msg,type){
+  var t=el('klToast');
+  t.textContent=msg;
+  t.className='kl-toast show'+(type?' '+type:'');
   clearTimeout(t._t);
-  t._t = setTimeout(() => t.classList.remove('show'), 2400);
+  t._t=setTimeout(function(){t.classList.remove('show');},2600);
 }
 
-function parseSizes(raw) {
-  return raw ? String(raw).split(/[,;|]+/).map(s => s.trim()).filter(Boolean) : [];
+/* ─── ROBUST FETCH & MAPPING FOR UNIFIED BACKEND ─────────────── */
+function fetchAll(){
+  return fetch(API_BASE+'?type=products', { mode: 'cors' })
+    .then(function(r){
+      if(!r.ok) throw new Error('Network failure: ' + r.status);
+      return r.json();
+    })
+    .then(function(d){
+      var rows=[];
+      if(d&&d.success&&d.products) rows=d.products;
+      else if(Array.isArray(d)) rows=d;
+      return rows.map(clean);
+    })
+    .catch(function(err){
+      console.error('[KL Error]',err);
+      toast('Could not load store inventory','err');
+      return [];
+    });
 }
 
-async function loadInventory() {
-  try {
-    const res = await fetch(`${API_ENDPOINT}?type=products`);
-    const data = await res.json();
-    const rows = (data && data.success && data.products) ? data.products : (Array.isArray(data) ? data : []);
+function fixImg(u){var s=String(u||'').trim().replace(/[\r\n_]/g,'');if(!s)return '';if(s.indexOf('ibb.co')!==-1&&s.indexOf('//i.ibb.co')===-1)s=s.replace('//ibb.co/','//i.ibb.co/');return s;}
 
-    ALL_PRODUCTS = rows.map(r => {
-      const rawPrice = String(r.price || r['Price'] || '0').replace(/[₹,\s]/g, '').replace(/[^0-9.]/g, '');
-      const imgs = [r.image, r.image2, r.image3, r.image4].filter(Boolean);
-      return {
-        id: String(r.id || r.name).toLowerCase().replace(/[^a-z0-9]/g, '-'),
-        name: String(r.name || r['Product Name'] || '').trim(),
-        price: parseFloat(rawPrice) || 0,
-        image: imgs[0] || '',
-        images: imgs,
-        description: String(r.description || r['Description'] || '').trim(),
-        season: String(r.season || r['Season'] || '').trim(),
-        category: String(r.category || r['Category'] || '').trim(),
-        subcategory: String(r.subcategory || r['Subcategory'] || '').trim(),
-        size: String(r.size || r['Size'] || '').trim(),
-        color: String(r.color || r['Color'] || '').trim(),
-        length: String(r.length || r['Length'] || '').trim(),
-        featured: r.featured === true || String(r.featured).toUpperCase() === 'TRUE' || String(r.featured).toUpperCase() === 'Y'
-      };
-    }).filter(p => p.name);
+function clean(r){
+  var rawP=String(r.price||r['Price']||'0').replace(/[₹,\s]/g, '').replace(/[^0-9.]/g,'');
+  var name=String(r.name||r['Product Name']||'').trim();
+  var imgs=[fixImg(r.image||r['Image URL']||r.image1||r['Image1']||''),fixImg(r.image2||r['Image2']||''),fixImg(r.image3||r['Image3']||''),fixImg(r.image4||r['Image4']||'')].filter(Boolean);
+  
+  var isFeatured = r.featured === true || String(r.featured).toUpperCase() === 'TRUE' || String(r.featured).toUpperCase() === 'Y' || truthy(r['Featured This Summer']);
 
-    renderHeroSeasonChips();
-    renderFeaturedShelf();
-    renderSeasonTiles();
+  return {
+    id:           r.id||slug(name),
+    name:         name,
+    price:        parseFloat(rawP)||0,
+    image:        imgs[0]||'',
+    images:       imgs,
+    description:  String(r.description||r['Description']||r.waText||r['WhatsApp Text']||'').trim(),
+    season:       String(r.season||r['Season']||'').trim(),
+    category:     String(r.category||r['Category']||'').trim(),
+    subcategory:  String(r.subcategory||r['Subcategory']||'').trim(),
+    size:         String(r.size||r['Size']||'').trim(),
+    color:        String(r.color||r['Color']||'').trim(),
+    length:       String(r.length||r['Length']||'').trim(),
+    budget:       String(r.budget||r['Shop By Budget']||'').trim(),
+    featured:     isFeatured,
+  };
+}
 
-    if (location.hash) {
-      const catSlug = decodeURIComponent(location.hash.replace('#', '').trim());
-      const matched = ALL_PRODUCTS.find(p => p.category.toLowerCase() === catSlug.toLowerCase());
-      if (matched) openCategory(matched.category);
-    }
-  } catch (err) {
-    showToast('Failed to load store collection.');
+function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')||('p'+Date.now());}
+function truthy(v){var s=String(v||'').trim().toUpperCase();return s==='Y'||s==='YES'||s==='TRUE'||s==='1';}
+
+/* ─── DATA HELPERS ───────────────────────── */
+function unique(key){
+  var seen={},out=[];
+  S.all.forEach(function(p){var v=p[key];if(v&&!seen[v]){seen[v]=true;out.push(v);}});
+  return out.sort();
+}
+
+function productsFor(cat){
+  var list=S.all.filter(function(p){return norm(p.category)===norm(cat);});
+  if(S.activeSeason&&S.activeSeason!=='All') list=list.filter(function(p){return norm(p.season)===norm(S.activeSeason);});
+  if(S.activeSize)   list=list.filter(function(p){return norm(p.size)===norm(S.activeSize);});
+  if(S.activeColor)  list=list.filter(function(p){return norm(p.color)===norm(S.activeColor);});
+  if(S.activeLength) list=list.filter(function(p){return norm(p.length)===norm(S.activeLength);});
+  if(S.query){
+    var q=S.query.toLowerCase();
+    list=list.filter(function(p){
+      return p.name.toLowerCase().indexOf(q)!==-1||
+             (p.subcategory||'').toLowerCase().indexOf(q)!==-1||
+             (p.color||'').toLowerCase().indexOf(q)!==-1||
+             (p.length||'').toLowerCase().indexOf(q)!==-1;
+    });
   }
+  if(S.sort==='price_asc')  list.sort(function(a,b){return a.price-b.price;});
+  if(S.sort==='price_desc') list.sort(function(a,b){return b.price-a.price;});
+  if(S.sort==='name_asc')   list.sort(function(a,b){return a.name.localeCompare(b.name);});
+  return list;
 }
 
-function renderHeroSeasonChips() {
-  const seasons = ['All Seasons', ...new Set(ALL_PRODUCTS.map(p => p.season).filter(Boolean))].sort();
-  $('seasonChipsBar').innerHTML = seasons.map(s => {
-    const active = (s === 'All Seasons' && filterState.season === 'All') || filterState.season.toLowerCase() === s.toLowerCase();
-    return `<button class="season-btn ${active ? 'on' : ''}" data-s="${s === 'All Seasons' ? 'All' : s}">${s}</button>`;
-  }).join('');
+function seasonsFor(cat){
+  var seen={},out=[];
+  S.all.forEach(function(p){if(norm(p.category)===norm(cat)&&p.season&&!seen[p.season]){seen[p.season]=true;out.push(p.season);}});
+  return out.sort();
+}
 
-  $('seasonChipsBar').querySelectorAll('button').forEach(btn => {
-    btn.onclick = () => {
-      filterState.season = btn.dataset.s;
-      renderHeroSeasonChips();
-      renderSeasonTiles();
-    };
+/* ─── HERO CHIPS ─────────────────────────── */
+function renderHeroChips(){
+  var seasons=unique('season');
+  var c=el('heroSeasonChips');
+  if(!c||!seasons.length) return;
+  c.innerHTML='';
+  function chip(label,val){
+    var b=document.createElement('button');
+    b.className='hero-chip'+(norm(val)===norm(S.seasonFilter)||(!val&&!S.seasonFilter)?' on':'');
+    b.textContent=label;
+    b.addEventListener('click',function(){S.seasonFilter=val;renderHeroChips();renderCategories();});
+    c.appendChild(b);
+  }
+  chip('All Seasons','');
+  seasons.forEach(function(s){chip(s,s);});
+}
+
+/* ─── FEATURED ───────────────────────────── */
+function renderFeatured(){
+  var feat=S.all.filter(function(p){return p.featured;});
+  var sec=el('featSection'),sc=el('featScroll');
+  if(!feat.length||!sec||!sc) return;
+  sec.style.display='block';
+  sc.innerHTML=feat.map(function(p){
+    return '<div class="feat-card" data-id="'+p.id+'">'+
+      '<div class="feat-img">'+
+        '<img src="'+(p.image||PLACEHOLDER)+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.src=\''+PLACEHOLDER+'\'">'+
+        '<span class="feat-star">★ Featured</span>'+
+      '</div>'+
+      '<div class="feat-info">'+
+        '<div class="feat-cat">'+esc(p.category)+'</div>'+
+        '<div class="feat-name">'+esc(p.name)+'</div>'+
+        '<div class="feat-price">'+fmt(p.price)+'</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  qsa('.feat-card',sc).forEach(function(c){c.addEventListener('click',function(){openModal(c.dataset.id);});});
+}
+
+/* ─── CATEGORY GRID ──────────────────────── */
+var CAT_EMOJI={'kurtis':'👗','kurti':'👗','shawls':'🧣','shawl':'🧣','pherans':'🥻','pheran':'🥻','bags':'👜','stoles':'🧤','stole':'🧤','cord sets':'👘','coord':'👘','kani':'🪭','aari':'🧥','jacket':'🧥','poncho':'🪄'};
+function catEmoji(n){var k=norm(n);for(var e in CAT_EMOJI){if(k.indexOf(e)!==-1)return CAT_EMOJI[e];}return '🌿';}
+
+function renderCategories(){
+  var winterGrid=el('winterCatGrid'),summerGrid=el('summerCatGrid');
+  if(!winterGrid||!summerGrid) return;
+
+  function renderSeason(seasonKeyword,grid,countEl){
+    var cats=[];
+    var sKey=norm(seasonKeyword);
+    
+    S.all.forEach(function(p){
+      if(!p.category) return;
+      var pSeason=norm(p.season);
+      if(pSeason.indexOf(sKey)===-1) return;
+      if(S.seasonFilter && norm(S.seasonFilter)!==pSeason) return;
+      if(S.query){
+        var q=S.query.toLowerCase();
+        var match=p.name.toLowerCase().indexOf(q)!==-1||
+                  (p.subcategory||'').toLowerCase().indexOf(q)!==-1||
+                  (p.color||'').toLowerCase().indexOf(q)!==-1||
+                  (p.length||'').toLowerCase().indexOf(q)!==-1||
+                  p.category.toLowerCase().indexOf(q)!==-1;
+        if(!match) return;
+      }
+      if(cats.indexOf(p.category)===-1) cats.push(p.category);
+    });
+    cats.sort();
+
+    function catImg(cat){
+      var m=S.all.find(function(p){return norm(p.category)===norm(cat)&&norm(p.season).indexOf(sKey)!==-1&&p.image;});
+      if(!m) m=S.all.find(function(p){return norm(p.category)===norm(cat)&&p.image;});
+      return m?m.image:'';
+    }
+    function catCount(cat){
+      return S.all.filter(function(p){
+        return norm(p.category)===norm(cat)&&norm(p.season).indexOf(sKey)!==-1&&
+          (!S.query || p.name.toLowerCase().indexOf(S.query.toLowerCase())!==-1 ||
+           (p.subcategory||'').toLowerCase().indexOf(S.query.toLowerCase())!==-1 ||
+           (p.color||'').toLowerCase().indexOf(S.query.toLowerCase())!==-1 ||
+           (p.length||'').toLowerCase().indexOf(S.query.toLowerCase())!==-1);
+      }).length;
+    }
+
+    if(countEl) countEl.textContent=cats.length+' categor'+(cats.length===1?'y':'ies');
+    if(!cats.length){
+      grid.innerHTML='<div class="editorial-empty">No matching pieces in this edit.</div>';
+      return;
+    }
+
+    grid.innerHTML=cats.map(function(cat){
+      var img=catImg(cat),cnt=catCount(cat);
+      return '<div class="editorial-card" data-cat="'+esc(cat)+'" data-season="'+esc(seasonKeyword)+'">'+
+        (img?'<img src="'+img+'" alt="'+esc(cat)+'" loading="lazy" onerror="this.src=\''+PLACEHOLDER+'\'">'
+            :'<div class="cat-no-img">'+catEmoji(cat)+'</div>')+
+        '<div class="editorial-label">'+
+          '<div class="editorial-name">'+esc(cat)+'</div>'+
+          '<div class="editorial-num">'+cnt+' piece'+(cnt!==1?'s':'')+'</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+
+    qsa('.editorial-card',grid).forEach(function(c){
+      c.addEventListener('click',function(){
+        S.seasonFilter=c.dataset.season;
+        openCat(c.dataset.cat);
+      });
+    });
+  }
+
+  renderSeason('Winter',winterGrid,el('winterCatCount'));
+  renderSeason('Summer',summerGrid,el('summerCatCount'));
+}
+
+/* ─── CATEGORY → PRODUCTS ────────────────── */
+function openCat(cat){
+  S.activeCat=cat; S.activeSeason=(S.seasonFilter||'All'); S.sort=''; S.activeSize=''; S.activeColor=''; S.activeLength='';
+  el('catSection').style.display='none';
+  el('featSection').style.display='none';
+  el('heroContent').style.display='none';
+  el('prodCatTitle').textContent=cat;
+  el('prodSection').classList.add('visible');
+  history.pushState({cat:cat},'','#'+encodeURIComponent(cat));
+  renderSeasonTabs();
+  renderCatToolbar();
+  renderProductGrid();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function closeCat(){
+  S.activeCat=null; S.activeSeason='All'; S.seasonFilter=''; S.sort=''; S.query=''; S.activeSize=''; S.activeColor=''; S.activeLength='';
+  var si=el('klSearch');if(si)si.value='';
+  el('prodSection').classList.remove('visible');
+  el('catSection').style.display='block';
+  el('heroContent').style.display='block';
+  renderHeroChips();
+  if(S.all.some(function(p){return p.featured;})) el('featSection').style.display='block';
+  history.pushState({},'',window.location.pathname+window.location.search);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ─── SEASON TABS ────────────────────────── */
+function renderSeasonTabs(){
+  var tabs=el('seasonTabs');
+  if(!tabs||!S.activeCat) return;
+  var seasons=seasonsFor(S.activeCat);
+  var html='<span class="season-label">Season:</span>';
+  html+='<button class="stab'+(S.activeSeason==='All'?' on':'')+'" data-s="All">All</button>';
+  seasons.forEach(function(s){html+='<button class="stab'+(S.activeSeason===s?' on':'')+'" data-s="'+esc(s)+'">'+esc(s)+'</button>';});
+  html+='<span class="tab-count" id="tabCount"></span>';
+  tabs.innerHTML=html;
+  tabs.style.display=seasons.length>=1?'flex':'none';
+  qsa('.stab',tabs).forEach(function(b){
+    b.addEventListener('click',function(){
+      S.activeSeason=b.dataset.s;
+      qsa('.stab',tabs).forEach(function(x){x.classList.toggle('on',x.dataset.s===S.activeSeason);});
+      S.activeSize=''; S.activeColor=''; S.activeLength='';
+      renderCatToolbar();
+      renderProductGrid();
+    });
   });
 }
 
-function renderFeaturedShelf() {
-  const featured = ALL_PRODUCTS.filter(p => p.featured);
-  const shelf = $('featuredShelf');
-  if (!featured.length) { shelf.style.display = 'none'; return; }
-  shelf.style.display = 'block';
+/* ─── CATEGORY TOOLBAR ───────────────────── */
+function renderCatToolbar(){
+  var tb=el('catToolbar');if(!tb||!S.activeCat) return;
+  var pool=S.all.filter(function(p){
+    return norm(p.category)===norm(S.activeCat)&&
+      (S.activeSeason==='All'||norm(p.season)===norm(S.activeSeason));
+  });
 
-  $('featuredCarousel').innerHTML = featured.map(p => `
-    <div class="feat-card" onclick="window.viewProduct('${p.id}')">
-      <div class="feat-media">
-        <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" onerror="this.src='${BLANK_SVG}'"/>
-      </div>
-      <div class="feat-details">
-        <div class="feat-tag">${p.category}</div>
-        <div class="feat-name">${p.name}</div>
-        <div class="feat-price">₹${p.price.toLocaleString('en-IN')}</div>
-      </div>
-    </div>
-  `).join('');
+  var sizes=[];var seenSz={};
+  pool.forEach(function(p){if(p.size&&!seenSz[p.size]){seenSz[p.size]=true;sizes.push(p.size);}});
+  sizes.sort();
+
+  var colors=[];var seenCl={};
+  pool.forEach(function(p){if(p.color&&!seenCl[p.color]){seenCl[p.color]=true;colors.push(p.color);}});
+  colors.sort();
+
+  var lengths=[];var seenLn={};
+  pool.forEach(function(p){if(p.length&&!seenLn[p.length]){seenLn[p.length]=true;lengths.push(p.length);}});
+  lengths.sort();
+
+  var selectsHTML = '';
+
+  if(sizes.length > 1){
+    selectsHTML += '<select class="tb-select" id="sizeFilter"><option value="">All Sizes</option>'+
+      sizes.map(function(s){return '<option value="'+esc(s)+'"'+(S.activeSize===s?' selected':'')+'>'+esc(s)+'</option>';}).join('')+
+      '</select>';
+  }
+
+  if(colors.length > 1){
+    selectsHTML += '<select class="tb-select" id="colorFilter"><option value="">All Colors</option>'+
+      colors.map(function(c){return '<option value="'+esc(c)+'"'+(S.activeColor===c?' selected':'')+'>'+esc(c)+'</option>';}).join('')+
+      '</select>';
+  }
+
+  if(lengths.length > 1){
+    selectsHTML += '<select class="tb-select" id="lengthFilter"><option value="">All Lengths</option>'+
+      lengths.map(function(l){return '<option value="'+esc(l)+'"'+(S.activeLength===l?' selected':'')+'>'+esc(l)+'</option>';}).join('')+
+      '</select>';
+  }
+
+  tb.innerHTML = selectsHTML +
+    '<div class="tb-right">'+
+      '<select class="tb-select" id="tabSort">'+
+        '<option value="">Sort: Default</option>'+
+        '<option value="price_asc"'+(S.sort==='price_asc'?' selected':'')+'>Price: Low → High</option>'+
+        '<option value="price_desc"'+(S.sort==='price_desc'?' selected':'')+'>Price: High → Low</option>'+
+        '<option value="name_asc"'+(S.sort==='name_asc'?' selected':'')+'>Name: A → Z</option>'+
+      '</select>'+
+    '</div>';
+
+  var sf=el('sizeFilter');
+  if(sf) sf.addEventListener('change',function(){S.activeSize=sf.value;renderProductGrid();});
+  var cf=el('colorFilter');
+  if(cf) cf.addEventListener('change',function(){S.activeColor=cf.value;renderProductGrid();});
+  var lf=el('lengthFilter');
+  if(lf) lf.addEventListener('change',function(){S.activeLength=lf.value;renderProductGrid();});
+  var so=el('tabSort');
+  if(so) so.addEventListener('change',function(){S.sort=so.value;renderProductGrid();});
 }
 
-function renderSeasonTiles() {
-  const renderEdits = (seasonKeyword, gridId, countId) => {
-    const matchingProducts = ALL_PRODUCTS.filter(p => p.season.toLowerCase().includes(seasonKeyword.toLowerCase()));
-    const cats = [...new Set(matchingProducts.map(p => p.category).filter(Boolean))].sort();
+/* ─── PRODUCT GRID ───────────────────────── */
+function renderSkeletons(){
+  var g=el('klGrid');if(!g)return;
+  var h='';for(var i=0;i<8;i++)h+='<div class="sk-card"><div class="skel sk-img"></div><div class="sk-body"><div class="skel sk-line s"></div><div class="skel sk-line m"></div></div></div>';
+  g.innerHTML=h;
+}
 
-    $(countId).textContent = `${cats.length} Collections`;
-    $(gridId).innerHTML = cats.map(cat => {
-      const match = matchingProducts.find(p => p.category.toLowerCase() === cat.toLowerCase() && p.image);
-      const totalCount = matchingProducts.filter(p => p.category.toLowerCase() === cat.toLowerCase()).length;
-      return `
-        <div class="cat-tile" onclick="window.openCategory('${cat}')">
-          <img src="${match ? match.image : BLANK_SVG}" alt="${cat}" loading="lazy" onerror="this.src='${BLANK_SVG}'"/>
-          <div class="cat-tile-meta">
-            <div class="cat-tile-name">${cat}</div>
-            <div class="cat-tile-count">${totalCount} pieces</div>
-          </div>
-        </div>
-      `;
-    }).join('');
+function renderProductGrid(){
+  var g=el('klGrid');if(!g)return;
+  var list=productsFor(S.activeCat);
+  var tc=el('tabCount');if(tc)tc.textContent=list.length+' item'+(list.length!==1?'s':'');
+  if(!list.length){g.innerHTML='<div class="kl-empty"><h3>Nothing found</h3><p>Try a different season or filter.</p></div>';return;}
+  g.innerHTML=list.map(function(p,i){return cardHTML(p,i);}).join('');
+  qsa('.kl-card',g).forEach(function(card){
+    var id=card.dataset.id;
+    card.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.card-bag-btn'))return;openModal(id);});
+    var qv=card.querySelector('.qv-btn');if(qv)qv.addEventListener('click',function(e){e.stopPropagation();openModal(id);});
+    var bb=card.querySelector('.card-bag-btn');if(bb)bb.addEventListener('click',function(e){e.stopPropagation();addToCart(id);});
+  });
+  refreshBagBtns();
+}
+
+function cardHTML(p,i){
+  var ic=S.cart.some(function(c){return c.id===p.id;});
+  var specs=[];
+  if(p.size) specs.push(esc(p.size));
+  if(p.color) specs.push(esc(p.color));
+  if(p.length) specs.push(esc(p.length));
+  var specsLabel = specs.join(' · ');
+
+  return '<article class="kl-card" data-id="'+p.id+'" style="--i:'+i+'">'+
+    '<div class="card-img">'+
+      '<img src="'+(p.image||PLACEHOLDER)+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.src=\''+PLACEHOLDER+'\'">'+
+      (p.season?'<span class="card-season-tag">'+esc(p.season)+'</span>':'')+
+      '<button class="card-bag-btn'+(ic?' in-cart':'')+'" title="Add to bag">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>'+
+      '</button>'+
+      '<div class="card-qv"><button class="qv-btn">View Details</button></div>'+
+    '</div>'+
+    '<div class="card-body">'+
+      '<div class="card-cat">'+esc(p.category)+(p.subcategory?' · '+esc(p.subcategory):'')+' </div>'+
+      '<div class="card-name">'+esc(p.name)+'</div>'+
+      '<div class="card-foot">'+
+        '<div class="card-price">'+fmt(p.price)+'</div>'+
+        (specsLabel?'<span class="card-size">'+specsLabel+'</span>':'')+
+      '</div>'+
+    '</div>'+
+  '</article>';
+}
+
+function refreshBagBtns(){
+  qsa('.kl-card').forEach(function(card){
+    var bb=card.querySelector('.card-bag-btn');if(!bb)return;
+    bb.classList.toggle('in-cart',S.cart.some(function(c){return c.id===card.dataset.id;}));
+  });
+}
+
+/* ─── MODAL + GALLERY ────────────────────── */
+var MG = { imgs:[], idx:0, touchX:0 };
+
+function openModal(id){
+  var p=S.all.find(function(x){return x.id===id;});if(!p)return;
+  MG.imgs = p.images && p.images.length ? p.images : (p.image ? [p.image] : [PLACEHOLDER]);
+  MG.idx = 0;
+  el('modalBody').innerHTML=modalHTML(p);
+  initModalGallery(p);
+  var ac=el('mAddCart');
+  if(ac)ac.addEventListener('click',function(){addToCart(p.id);closeModal();toast('Added to bag!','ok');});
+  var wa=el('mWA');
+  if(wa)wa.addEventListener('click',function(){
+    var name=(el('mName')||{}).value||'';
+    var specs=[];
+    if(p.size) specs.push('Size: '+p.size);
+    if(p.color) specs.push('Color: '+p.color);
+    if(p.length) specs.push('Length: '+p.length);
+    var specStr = specs.length ? ' ('+specs.join(', ')+')' : '';
+    var msg='Hi! I want to order *'+p.name+'*'+specStr+' — '+fmt(p.price)+'.';
+    if(name) msg+=' My name is '+name+'.';
+    msg+=' Please confirm availability.';
+    window.open('https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(msg),'_blank');
+  });
+  el('klOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){el('klOverlay').classList.remove('open');document.body.style.overflow='';}
+
+function modalHTML(p){
+  var imgs = p.images && p.images.length ? p.images : (p.image?[p.image]:[PLACEHOLDER]);
+  var mainSrc = imgs[0]||PLACEHOLDER;
+  var thumbsHTML = imgs.length > 1
+    ? '<div class="m-thumbs" id="mThumbs">'+imgs.map(function(src,i){
+        return '<button class="m-thumb'+(i===0?' on':'')+'" data-idx="'+i+'" type="button"><img src="'+src+'" loading="lazy" onerror="this.src=\''+PLACEHOLDER+'\'"></button>';
+      }).join('')+'</div>'
+    : '';
+  var arrowsHTML = imgs.length > 1
+    ? '<button class="g-arrow prev'+(imgs.length<2?' hidden':'')+'" id="gPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>'+
+      '<button class="g-arrow next'+(imgs.length<2?' hidden':'')+'" id="gNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>'
+    : '';
+  return '<div class="m-gallery">'+
+    '<div class="m-gallery-main" id="mGalleryMain">'+
+      '<img id="mMainImg" src="'+mainSrc+'" alt="'+esc(p.name)+'" onerror="this.src=\''+PLACEHOLDER+'\'">'+
+      arrowsHTML+
+      '<div class="g-zoom-hint"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Tap to zoom</div>'+
+    '</div>'+
+    thumbsHTML+
+  '</div>'+
+  '<div class="m-body">'+
+    '<div class="m-eyebrow">'+esc(p.category)+(p.subcategory?' · '+esc(p.subcategory):'')+' </div>'+
+    '<h2 class="m-name">'+esc(p.name)+'</h2>'+
+    '<div class="m-tags">'+
+      (p.season?'<span class="m-tag">🌤 '+esc(p.season)+'</span>':'')+
+      (p.size?'<span class="m-tag">📏 '+esc(p.size)+'</span>':'')+
+      (p.color?'<span class="m-tag">🎨 '+esc(p.color)+'</span>':'')+
+      (p.length?'<span class="m-tag">📐 '+esc(p.length)+'</span>':'')+
+      (p.budget?'<span class="m-tag">💰 '+esc(p.budget)+'</span>':'')+
+    '</div>'+
+    '<div class="m-price">'+fmt(p.price)+'</div>'+
+    (p.description?'<p class="m-desc">'+esc(p.description)+'</p>':'')+
+    '<div class="m-divider"></div>'+
+    '<div><div class="m-label">Your Name</div><input class="m-input" id="mName" type="text" placeholder="Enter your name…"/></div>'+
+    '<div class="m-actions">'+
+      '<button class="btn-add-cart" id="mAddCart">'+
+        '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>'+
+        'Add to Bag'+
+      '</button>'+
+      '<button class="btn-wa-m" id="mWA">'+
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.12.554 4.112 1.523 5.838L.057 23.213a.75.75 0 00.921.921l5.375-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.01-1.37l-.36-.213-3.723 1.015 1.015-3.723-.212-.36A9.818 9.818 0 1112 21.818z"/></svg>'+
+        'Order via WhatsApp'+
+      '</button>'+
+    '</div>'+
+  '</div>';
+}
+
+function initModalGallery(p){
+  var imgs = MG.imgs;
+
+  function goTo(idx){
+    MG.idx = (idx + imgs.length) % imgs.length;
+    var mImg = el('mMainImg'); if(mImg){ mImg.style.opacity='0'; setTimeout(function(){mImg.src=imgs[MG.idx];mImg.style.opacity='1';},180); }
+    qsa('.m-thumb').forEach(function(t){t.classList.toggle('on', Number(t.dataset.idx)===MG.idx);});
+  }
+
+  var prev=el('gPrev'); if(prev) prev.addEventListener('click',function(){goTo(MG.idx-1);});
+  var next=el('gNext'); if(next) next.addEventListener('click',function(){goTo(MG.idx+1);});
+
+  qsa('.m-thumb').forEach(function(t){t.addEventListener('click',function(){goTo(Number(t.dataset.idx));});});
+
+  var main=el('mGalleryMain');
+  if(main){
+    main.addEventListener('click',function(){openLightbox(MG.idx);});
+    var tx=0;
+    main.addEventListener('touchstart',function(e){tx=e.changedTouches[0].screenX;},{passive:true});
+    main.addEventListener('touchend',function(e){var dx=e.changedTouches[0].screenX-tx;if(Math.abs(dx)>40)goTo(MG.idx+(dx<0?1:-1));},{passive:true});
+  }
+}
+
+/* ─── LIGHTBOX ───────────────────────────── */
+var LB = { imgs:[], idx:0, scale:1, lastScale:1, origin:{x:0,y:0}, translate:{x:0,y:0}, lastTranslate:{x:0,y:0}, touches:[] };
+
+function openLightbox(startIdx){
+  LB.imgs = MG.imgs; LB.idx = startIdx||0; LB.scale=1; LB.translate={x:0,y:0};
+  lbSetImg(LB.idx);
+  lbBuildThumbs();
+  el('lbOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeLightbox(){
+  el('lbOverlay').classList.remove('open');
+  if(el('klOverlay').classList.contains('open')) document.body.style.overflow='hidden';
+  else document.body.style.overflow='';
+}
+
+function lbSetImg(idx){
+  LB.idx = (idx + LB.imgs.length) % LB.imgs.length;
+  LB.scale=1; LB.translate={x:0,y:0}; LB.lastTranslate={x:0,y:0};
+  var img=el('lbImg'); if(img){ img.style.transform=''; img.src=LB.imgs[LB.idx]; }
+  var c=el('lbCounter'); if(c) c.textContent=(LB.idx+1)+' / '+LB.imgs.length;
+  var prev=el('lbPrev'),next=el('lbNext');
+  if(prev) prev.classList.toggle('hidden',LB.imgs.length<2);
+  if(next) next.classList.toggle('hidden',LB.imgs.length<2);
+  qsa('.lb-thumb').forEach(function(t){t.classList.toggle('on',Number(t.dataset.idx)===LB.idx);});
+  var h=el('lbZoomHint'); if(h){h.style.opacity='1';clearTimeout(h._t);h._t=setTimeout(function(){h.style.opacity='0';},2600);}
+}
+
+function lbBuildThumbs(){
+  var tc=el('lbThumbs'); if(!tc) return;
+  if(LB.imgs.length<2){tc.style.display='none';return;}
+  tc.style.display='flex';
+  tc.innerHTML=LB.imgs.map(function(src,i){
+    return '<button class="lb-thumb'+(i===LB.idx?' on':'')+'" data-idx="'+i+'" type="button"><img src="'+src+'" loading="lazy" onerror="this.src=\''+PLACEHOLDER+'\'"></button>';
+  }).join('');
+  qsa('.lb-thumb',tc).forEach(function(t){t.addEventListener('click',function(){lbApplyTransform(1,0,0);lbSetImg(Number(t.dataset.idx));});});
+}
+
+function lbApplyTransform(scale,tx,ty){
+  LB.scale=scale; LB.translate.x=tx; LB.translate.y=ty;
+  var img=el('lbImg'); if(img) img.style.transform='scale('+scale+') translate('+tx+'px,'+ty+'px)';
+}
+
+function initLightbox(){
+  el('lbClose').addEventListener('click',closeLightbox);
+  el('lbOverlay').addEventListener('click',function(e){if(e.target===el('lbOverlay'))closeLightbox();});
+  el('lbPrev').addEventListener('click',function(){lbApplyTransform(1,0,0);lbSetImg(LB.idx-1);});
+  el('lbNext').addEventListener('click',function(){lbApplyTransform(1,0,0);lbSetImg(LB.idx+1);});
+
+  var wrap=el('lbImgWrap'); if(!wrap) return;
+
+  wrap.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var delta = e.deltaY > 0 ? 0.85 : 1.18;
+    var newScale = Math.min(5, Math.max(1, LB.scale * delta));
+    if(newScale===1){ lbApplyTransform(1,0,0); return; }
+    lbApplyTransform(newScale, LB.translate.x, LB.translate.y);
+  },{passive:false});
+
+  wrap.addEventListener('dblclick',function(){ lbApplyTransform(1,0,0); });
+
+  var initDist=0, initScale=1;
+  var swipeStartX=0, swipeStartY=0, isSwiping=false;
+
+  wrap.addEventListener('touchstart',function(e){
+    LB.touches = Array.from(e.touches);
+    if(e.touches.length===2){
+      isSwiping=false;
+      initDist=Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      initScale=LB.scale;
+    } else if(e.touches.length===1){
+      swipeStartX=e.touches[0].clientX;
+      swipeStartY=e.touches[0].clientY;
+      isSwiping=true;
+    }
+    LB.lastTranslate={x:LB.translate.x,y:LB.translate.y};
+    LB.lastScale=LB.scale;
+  },{passive:true});
+
+  wrap.addEventListener('touchmove',function(e){
+    if(e.touches.length===2){
+      e.preventDefault();
+      var dist=Math.hypot(
+        e.touches[0].clientX-e.touches[1].clientX,
+        e.touches[0].clientY-e.touches[1].clientY
+      );
+      var newScale=Math.min(5,Math.max(1,initScale*(dist/initDist)));
+      lbApplyTransform(newScale,LB.translate.x,LB.translate.y);
+      isSwiping=false;
+    } else if(e.touches.length===1 && LB.scale>1){
+      e.preventDefault();
+      var dx=e.touches[0].clientX-swipeStartX;
+      var dy=e.touches[0].clientY-swipeStartY;
+      lbApplyTransform(LB.scale, LB.lastTranslate.x+dx/LB.scale, LB.lastTranslate.y+dy/LB.scale);
+      isSwiping=false;
+    }
+  },{passive:false});
+
+  wrap.addEventListener('touchend',function(e){
+    if(isSwiping && LB.scale<=1 && e.changedTouches.length===1){
+      var dx=e.changedTouches[0].clientX-swipeStartX;
+      var dy=e.changedTouches[0].clientY-swipeStartY;
+      if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>40){
+        lbApplyTransform(1,0,0);
+        lbSetImg(LB.idx+(dx<0?1:-1));
+      }
+    }
+    if(LB.scale<1) lbApplyTransform(1,0,0);
+    isSwiping=false;
+  },{passive:true});
+
+  document.addEventListener('keydown',function(e){
+    if(!el('lbOverlay').classList.contains('open')) return;
+    if(e.key==='ArrowLeft'){ lbApplyTransform(1,0,0); lbSetImg(LB.idx-1); }
+    if(e.key==='ArrowRight'){ lbApplyTransform(1,0,0); lbSetImg(LB.idx+1); }
+    if(e.key==='Escape') closeLightbox();
+  });
+}
+
+/* ─── SHARED CART ─────────────────────────── */
+var CART_KEY = 'kl_cart_v1';
+function cartLoad(){ try{ return JSON.parse(localStorage.getItem(CART_KEY)||'[]'); }catch(e){ return []; } }
+function cartSave(){ try{ localStorage.setItem(CART_KEY, JSON.stringify(S.cart)); }catch(e){} }
+
+function addToCart(id){
+  var p=S.all.find(function(x){return x.id===id;});if(!p)return;
+  if(S.cart.some(function(c){return c.id===id;})){toast('Already in your bag!');return;}
+  S.cart.push(p);
+  cartSave();updateBadge();refreshBagBtns();
+  toast('Added: '+p.name,'ok');
+}
+
+function removeFromCart(id){
+  S.cart=S.cart.filter(function(c){return c.id!==id;});
+  cartSave();updateBadge();refreshBagBtns();renderCartDrawer();
+}
+
+function cartTotal(){return S.cart.reduce(function(s,p){return s+p.price;},0);}
+
+function updateBadge(){
+  var b=el('cartBadge'),n=S.cart.length;
+  b.textContent=n;b.classList.toggle('show',n>0);
+}
+
+function openCart(){renderCartDrawer();el('cartOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeCart(){el('cartOverlay').classList.remove('open');document.body.style.overflow='';}
+
+function renderCartDrawer(){
+  var ci=el('cartItems'),cf=el('cartFoot');if(!ci)return;
+  if(!S.cart.length){
+    ci.innerHTML='<div class="cart-empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><p>Your bag is empty</p><small>Browse and add items you love</small></div>';
+    if(cf)cf.style.display='none';return;
+  }
+  ci.innerHTML=S.cart.map(function(p){
+    var metaArr=[];
+    if(p.size) metaArr.push(p.size);
+    if(p.color) metaArr.push(p.color);
+    if(p.length) metaArr.push(p.length);
+    var metaStr = metaArr.join(' · ');
+
+    return '<div class="ci">'+
+      '<div class="ci-img"><img src="'+(p.image||PLACEHOLDER)+'" loading="lazy" onerror="this.src=\''+PLACEHOLDER+'\'"></div>'+
+      '<div class="ci-info">'+
+        '<div class="ci-name">'+esc(p.name)+'</div>'+
+        '<div class="ci-meta">'+esc(p.category)+(metaStr?' · '+esc(metaStr):'')+' </div>'+
+        '<div class="ci-price">'+fmt(p.price)+'</div>'+
+      '</div>'+
+      '<button class="ci-remove" data-id="'+p.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'+
+    '</div>';
+  }).join('');
+  qsa('.ci-remove',ci).forEach(function(b){b.addEventListener('click',function(){removeFromCart(b.dataset.id);});});
+  if(cf){
+    cf.style.display='flex';
+    var tv=el('cartTotal');if(tv)tv.textContent=fmt(cartTotal());
+    var pv=el('checkoutPayAmt');if(pv)pv.textContent=Number(cartTotal()).toLocaleString('en-IN');
+  }
+}
+
+function buildWACartMsg(){
+  var name=(el('cartName')||{}).value||'Customer';
+  var lines=S.cart.map(function(p,i){
+    var metaArr=[];
+    if(p.size) metaArr.push(p.size);
+    if(p.color) metaArr.push(p.color);
+    if(p.length) metaArr.push(p.length);
+    var metaStr = metaArr.length ? ' ('+metaArr.join(', ')+')' : '';
+    return (i+1)+'. '+p.name+metaStr+' — '+fmt(p.price);
+  });
+  return '🧣 *New Order — The Kashmiri Libas*\n\nCustomer: '+name+'\n\n'+lines.join('\n')+'\n\n*Total: '+fmt(cartTotal())+'*\n\nPlease confirm my order!';
+}
+
+/* ─── SEARCH ─────────────────────────────── */
+function handleSearch(q){
+  S.query=q;
+  if(S.activeCat) renderProductGrid();
+  else renderCategories();
+}
+
+/* ─── INIT ───────────────────────────────── */
+function init(){
+  S.cart = cartLoad();
+  updateBadge();
+  el('navBrand').addEventListener('click',function(){if(S.activeCat)closeCat();});
+  el('backBtn').addEventListener('click',closeCat);
+  el('cartBtn').addEventListener('click',openCart);
+  el('cartClose').addEventListener('click',closeCart);
+  el('cartOverlay').addEventListener('click',function(e){if(e.currentTarget===e.target)closeCart();});
+  el('modalClose').addEventListener('click',closeModal);
+  el('klOverlay').addEventListener('click',function(e){if(e.currentTarget===e.target)closeModal();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(el('lbOverlay').classList.contains('open')){closeLightbox();}else{closeModal();closeCart();}}});
+
+  var CAT_URL_MAP = {
+    'summer|kaftan':            'https://sites.google.com/view/trendora24/summer-kaftan',
+    'summer|kurtis':            'https://sites.google.com/view/trendora24/summer-kurtis',
+    'summer|cord sets':         'https://sites.google.com/view/trendora24/summer-cord-set',
+    'summer|unstitched suits':  'https://sites.google.com/view/trendora24/summer-unstitched-suits',
+    'winter|pherans':           'https://sites.google.com/view/trendora24/winter-pherans',
+    'winter|cord sets':         'https://sites.google.com/view/trendora24/winter-cord-sets',
+    'winter|kurtis':            'https://sites.google.com/view/trendora24/winter-kurtis',
+    'winter|aari jackets':      'https://sites.google.com/view/trendora24/winter-aari-jackets',
+    'winter|ponchos':           'https://sites.google.com/view/trendora24/winter-ponchos',
+    'winter|kani capes':        'https://sites.google.com/view/trendora24/winter-kani-capes',
+    'winter|stoles':            'https://sites.google.com/view/trendora24/winter-stoles',
+    '|shawls':                  'https://sites.google.com/view/trendora24/shawls',
+    '|bags':                    'https://sites.google.com/view/trendora24/bags',
+    'aari jackets':             'https://sites.google.com/view/trendora24/winter-aari-jackets',
+    'pherans':                  'https://sites.google.com/view/trendora24/winter-pherans',
+    'cord sets':                'https://sites.google.com/view/trendora24/winter-cord-sets',
+    'kurtis':                   'https://sites.google.com/view/trendora24/winter-kurtis',
+    'ponchos':                  'https://sites.google.com/view/trendora24/winter-ponchos',
+    'kani capes':               'https://sites.google.com/view/trendora24/winter-kani-capes',
+    'stoles':                   'https://sites.google.com/view/trendora24/winter-stoles',
+    'kaftan':                   'https://sites.google.com/view/trendora24/summer-kaftan',
+    'unstitched suits':         'https://sites.google.com/view/trendora24/summer-unstitched-suits',
+    'shawls':                   'https://sites.google.com/view/trendora24/shawls',
+    'bags':                     'https://sites.google.com/view/trendora24/bags',
   };
 
-  if (filterState.season === 'All' || filterState.season.toLowerCase().includes('winter')) {
-    $('winterSection').style.display = 'block';
-    renderEdits('Winter', 'winterTileGrid', 'winterTileCount');
-  } else {
-    $('winterSection').style.display = 'none';
-  }
+  el('copyLinkBtn').addEventListener('click',function(){
+    var season = norm(S.seasonFilter||'');
+    var cat    = norm(S.activeCat||'');
 
-  if (filterState.season === 'All' || filterState.season.toLowerCase().includes('summer')) {
-    $('summerSection').style.display = 'block';
-    renderEdits('Summer', 'summerTileGrid', 'summerTileCount');
-  } else {
-    $('summerSection').style.display = 'none';
-  }
-}
+    var shareUrl =
+      CAT_URL_MAP[season + '|' + cat] ||
+      CAT_URL_MAP['|' + cat]          ||
+      CAT_URL_MAP[cat]                ||
+      null;
 
-window.openCategory = function(catName) {
-  ACTIVE_CATEGORY = catName;
-  filterState.material = ''; filterState.color = ''; filterState.length = ''; filterState.size = '';
-  $('homeView').style.display = 'none';
-  $('catalogView').classList.add('visible');$('catalogTitleDisplay').textContent = catName;
-  location.hash = encodeURIComponent(catName);
+    if(!shareUrl){
+      var slug = cat.replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+      shareUrl = 'https://sites.google.com/view/trendora24/' + slug;
+    }
 
-  populateToolbarFilters();
-  renderCategoryProducts();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-function closeCategoryView() {
-  ACTIVE_CATEGORY = null;
-  $('catalogView').classList.remove('visible');$('homeView').style.display = 'block';
-  location.hash = '';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function populateToolbarFilters() {
-  const pool = ALL_PRODUCTS.filter(p => p.category.toLowerCase() === ACTIVE_CATEGORY.toLowerCase());
-  const seasons = [...new Set(pool.map(p => p.season).filter(Boolean))].sort();
-  $('selSeasonSub').innerHTML = '<option value="">All Seasons</option>' + seasons.map(s => `<option value="${s}">${s}</option>`).join('');
-
-  const materials = [...new Set(pool.map(p => p.subcategory).filter(Boolean))].sort();
-  $('selMaterialFilter').innerHTML = '<option value="">All Materials</option>' + materials.map(m => `<option value="${m}">${m}</option>`).join('');
-  $('selMaterialFilter').style.display = materials.length > 1 ? 'block' : 'none';
-
-  const colors = [...new Set(pool.map(p => p.color).filter(Boolean))].sort();
-  $('selColorFilter').innerHTML = '<option value="">All Colors</option>' + colors.map(c => `<option value="${c}">${c}</option>`).join('');
-  $('selColorFilter').style.display = colors.length > 1 ? 'block' : 'none';
-
-  const lengths = [...new Set(pool.map(p => p.length).filter(Boolean))].sort();
-  $('selLengthFilter').innerHTML = '<option value="">All Lengths</option>' + lengths.map(l => `<option value="${l}">${l}</option>`).join('');
-  $('selLengthFilter').style.display = lengths.length > 1 ? 'block' : 'none';
-
-  const sizes = [...new Set(pool.flatMap(p => parseSizes(p.size)))].sort();
-  $('selSizeFilter').innerHTML = '<option value="">All Sizes</option>' + sizes.map(sz => `<option value="${sz}">${sz}</option>`).join('');
-  $('selSizeFilter').style.display = sizes.length > 1 ? 'block' : 'none';
-}
-
-function renderCategoryProducts() {
-  let list = ALL_PRODUCTS.filter(p => p.category.toLowerCase() === ACTIVE_CATEGORY.toLowerCase());
-
-  if (filterState.season !== 'All' && filterState.season) list = list.filter(p => p.season.toLowerCase() === filterState.season.toLowerCase());
-  if (filterState.material) list = list.filter(p => p.subcategory.toLowerCase() === filterState.material.toLowerCase());
-  if (filterState.color) list = list.filter(p => p.color.toLowerCase() === filterState.color.toLowerCase());
-  if (filterState.length) list = list.filter(p => p.length.toLowerCase() === filterState.length.toLowerCase());
-  if (filterState.size) list = list.filter(p => parseSizes(p.size).includes(filterState.size));
-
-  if (filterState.query) {
-    const q = filterState.query.toLowerCase();
-    list = list.filter(p => p.name.toLowerCase().includes(q) || p.subcategory.toLowerCase().includes(q) || p.color.toLowerCase().includes(q));
-  }
-
-  if (filterState.sort === 'price_asc') list.sort((a, b) => a.price - b.price);
-  if (filterState.sort === 'price_desc') list.sort((a, b) => b.price - a.price);
-  if (filterState.sort === 'name_asc') list.sort((a, b) => a.name.localeCompare(b.name));
-
-  $('catalogItemCount').textContent = `${list.length} Items`;
-
-  if (!list.length) {
-    $('productsGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-dim);font-size:11.5px;letter-spacing:1px;text-transform:uppercase;">No pieces match selected specifications.</div>`;
-    return;
-  }
-
-  $('productsGrid').innerHTML = list.map(p => {
-    const inBag = CART.some(item => item.id === p.id);
-    const specsArr = [p.subcategory, p.color, p.length, p.size].filter(Boolean);
-    return `
-      <div class="product-card" onclick="window.viewProduct('${p.id}')">
-        <div class="product-media">
-          <button class="btn-bag-icon ${inBag ? 'in-bag' : ''}" onclick="event.stopPropagation(); window.toggleCartItem('${p.id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-          </button>
-          ${p.images.length > 1 ? `<span class="badge-shots-count">${p.images.length} Photos</span>` : ''}
-          <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" onerror="this.src='${BLANK_SVG}'"/>
-        </div>
-        <div class="product-info">
-          <div class="product-tagline">${p.subcategory || p.category}</div>
-          <div class="product-name">${p.name}</div>
-          <div class="product-specs-line">${specsArr.join(' • ')}</div>
-          <div class="product-price-bar">
-            <span class="price-tag">₹${p.price.toLocaleString('en-IN')}</span>
-            <span class="product-size-pill">${p.size || 'Free Size'}</span>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-window.viewProduct = function(productId) {
-  const p = ALL_PRODUCTS.find(item => item.id === productId);
-  if (!p) return;
-
-  const images = p.images.length ? p.images : [p.image || BLANK_SVG];
-  let activeIndex = 0;
-
-  const buildModalContent = () => `
-    <div class="modal-gallery-pane">
-      <div class="modal-main-image-wrap" onclick="window.openLightbox('${images[activeIndex]}')">
-        <img src="${images[activeIndex]}" alt="${p.name}" onerror="this.src='${BLANK_SVG}'"/>
-      </div>
-      ${images.length > 1 ? `
-        <div class="modal-gallery-thumbs">
-          ${images.map((src, i) => `
-            <div class="modal-thumb ${i === activeIndex ? 'on' : ''}" data-idx="${i}"><img src="${src}" onerror="this.src='${BLANK_SVG}'"/></div>
-          `).join('')}
-        </div>
-      ` : ''}
-    </div>
-    <div class="modal-details-pane">
-      <div style="font-size:9px;color:var(--saffron);font-weight:600;letter-spacing:1px;text-transform:uppercase;">${p.season} • ${p.category}</div>
-      <h3 style="font-family:var(--font-serif);font-size:22px;line-height:1.2;font-weight:600;">${p.name}</h3>
-      <div class="modal-specs-badge-row">
-        ${p.subcategory ? `<span class="spec-chip">Material: ${p.subcategory}</span>` : ''}
-        ${p.color ? `<span class="spec-chip">Color: ${p.color}</span>` : ''}
-        ${p.length ? `<span class="spec-chip">Length: ${p.length}</span>` : ''}
-        ${p.size ? `<span class="spec-chip">Size: ${p.size}</span>` : ''}
-      </div>
-      <div class="modal-price-tag">₹${p.price.toLocaleString('en-IN')}</div>
-      ${p.description ? `<p style="font-size:12px;line-height:1.6;color:var(--text-muted);">${p.description}</p>` : ''}
-      <div class="modal-action-buttons">
-        <button class="btn-primary-action" onclick="window.toggleCartItem('${p.id}'); window.closeModal();">
-          ${CART.some(item => item.id === p.id) ? 'Remove From Bag' : 'Add to Bag'}
-        </button>
-        <button class="btn-wa-order" onclick="window.orderSingleItemWhatsApp('${p.id}')">Order Direct on WhatsApp</button>
-      </div>
-    </div>
-  `;
-
-  $('modalGridBody').innerHTML = buildModalContent();$('productModalBackdrop').classList.add('open');
-
-  all('.modal-thumb', $('modalGridBody')).forEach(thumb => {
-    thumb.onclick = () => {
-      activeIndex = parseInt(thumb.dataset.idx, 10);
-      $('modalGridBody').innerHTML = buildModalContent();
-    };
+    var btn=el('copyLinkBtn');
+    function showCopied(){
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+      btn.classList.add('copied');
+      setTimeout(function(){
+        btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> Copy Link';
+        btn.classList.remove('copied');
+      },2200);
+    }
+    try {
+      var ta=document.createElement('textarea');
+      ta.value=shareUrl;ta.setAttribute('readonly','');
+      ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0;font-size:16px';
+      document.body.appendChild(ta);ta.focus();ta.select();
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      if(ok){showCopied();}else{toast('Link: '+shareUrl);}
+    }catch(e){toast('Link: '+shareUrl);}
   });
-};
 
-window.closeModal = () => $('productModalBackdrop').classList.remove('open');$('btnCloseModal').onclick = window.closeModal;
-$('productModalBackdrop').onclick = (e) => { if (e.target ===$('productModalBackdrop')) window.closeModal(); };
+  window.addEventListener('popstate',function(){
+    var hash=decodeURIComponent(window.location.hash.replace('#','').trim());
+    if(hash){
+      var match=S.all.find(function(p){return norm(p.category)===norm(hash);});
+      if(match&&norm(match.category)!==norm(S.activeCat||'')) openCat(match.category);
+    } else {
+      if(S.activeCat) closeCat();
+    }
+  });
 
-window.openLightbox = (src) => {
-  $('lightboxTargetImg').src = src;
-  $('lightboxView').classList.add('open');
-};
-$('btnCloseLightbox').onclick = () =>$('lightboxView').classList.remove('open');
+  var si=el('klSearch');
+  if(si)si.addEventListener('input',deb(function(e){handleSearch(e.target.value.trim());},240));
 
-window.toggleCartItem = function(productId) {
-  const p = ALL_PRODUCTS.find(item => item.id === productId);
-  if (!p) return;
-  const idx = CART.findIndex(item => item.id === productId);
-  if (idx > -1) { CART.splice(idx, 1); showToast(`Removed ${p.name}`); }
-  else { CART.push(p); showToast(`Added ${p.name} to Bag`); }
-  updateCartVisuals();
-  if (ACTIVE_CATEGORY) renderCategoryProducts();
-};
+  el('checkoutWA').addEventListener('click',function(){
+    if(!S.cart.length){toast('Your bag is empty','err');return;}
+    window.open('https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(buildWACartMsg()),'_blank');
+  });
 
-function updateCartVisuals() {
-  $('cartCountBadge').textContent = CART.length;
-  const list = $('cartItemsList');
-  const foot = $('cartFootBox');
+  el('checkoutPay').addEventListener('click',function(){
+    if(!S.cart.length){toast('Your bag is empty','err');return;}
+    if(!RAZORPAY_KEY){toast('WhatsApp order available now — pay online coming soon!');return;}
+    var total=cartTotal(),name=(el('cartName')||{}).value||'Customer';
+    var rzp=new Razorpay({
+      key:RAZORPAY_KEY,amount:Math.round(total*100),currency:'INR',
+      name:'The Kashmiri Libas',description:S.cart.length+' items',
+      prefill:{name:name},theme:{color:'#7d1a1a'},
+      handler:function(res){toast('Payment done! ID: '+res.razorpay_payment_id,'ok');S.cart=[];cartSave();updateBadge();renderCartDrawer();closeCart();}
+    });
+    rzp.open();
+  });
 
-  if (!CART.length) {
-    list.innerHTML = `<div style="text-align:center;padding:50px 20px;font-size:11px;color:var(--text-dim);text-transform:uppercase;">Your shopping bag is empty.</div>`;
-    foot.style.display = 'none';
-    return;
-  }
+  renderSkeletons();
+  initLightbox();
 
-  foot.style.display = 'flex';
-  list.innerHTML = CART.map(p => `
-    <div class="cart-item-row">
-      <div class="cart-item-thumb"><img src="${p.image || BLANK_SVG}" onerror="this.src='${BLANK_SVG}'"/></div>
-      <div class="cart-item-info">
-        <div class="cart-item-title">${p.name}</div>
-        <div class="cart-item-specs">${[p.subcategory, p.color, p.length, p.size].filter(Boolean).join(' • ')}</div>
-        <div class="cart-item-price">₹${p.price.toLocaleString('en-IN')}</div>
-        <span class="btn-remove-item" onclick="window.toggleCartItem('${p.id}')">Remove</span>
-      </div>
-    </div>
-  `).join('');
-  $('cartTotalSum').textContent = `₹${CART.reduce((sum, item) => sum + item.price, 0).toLocaleString('en-IN')}`;
+  fetchAll().then(function(products){
+    S.all=products;
+    renderHeroChips();
+    renderFeatured();
+    renderCategories();
+
+    function navigateFromUrl(){
+      var catParam = new URL(window.location.href).searchParams.get('cat');
+      var hashParam = decodeURIComponent(window.location.hash.replace('#','').trim());
+      var target = catParam || hashParam;
+      if(target){
+        var match = S.all.find(function(p){ return norm(p.category)===norm(target); });
+        if(match) openCat(match.category);
+      }
+    }
+    navigateFromUrl();
+
+    window.addEventListener('hashchange', function(){
+      var hashParam = decodeURIComponent(window.location.hash.replace('#','').trim());
+      if(hashParam){
+        var match = S.all.find(function(p){ return norm(p.category)===norm(hashParam); });
+        if(match && norm(match.category) !== norm(S.activeCat||'')) openCat(match.category);
+      } else {
+        if(S.activeCat) closeCat();
+      }
+    });
+
+    var loader=el('klLoader');
+    if(loader){loader.classList.add('out');setTimeout(function(){if(loader.parentNode)loader.parentNode.removeChild(loader);},700);}
+  });
 }
 
-window.orderSingleItemWhatsApp = function(productId) {
-  const p = ALL_PRODUCTS.find(item => item.id === productId);
-  if (!p) return;
-  const specText = [p.subcategory, p.color, p.length, p.size].filter(Boolean).join(', ');
-  const msg = `Hi! I would like to order: *${p.name}*\nPrice: ₹${p.price.toLocaleString('en-IN')}\nSpecs: ${specText || 'Standard'}\nCategory: ${p.category} (${p.season})\nPlease confirm availability!`;
-  window.open(`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
-};
-
-$('btnCheckoutWhatsApp').onclick = () => {
-  if (!CART.length) return;
-  const name = $('cartCustomerName').value.trim() || 'Valued Customer';
-  let msg = `🧣 *NEW ORDER INQUIRY — THE KASHMIRI LIBAS*\nClient: ${name}\n\n`;
-  CART.forEach((p, i) => {
-    const specs = [p.subcategory, p.color, p.length, p.size].filter(Boolean).join(', ');
-    msg += `${i + 1}. *${p.name}* — ₹${p.price.toLocaleString('en-IN')}\n    ${specs || 'Default'}\n`;
-  });
-  msg += `\n*Estimated Total: ₹${CART.reduce((sum, item) => sum + item.price, 0).toLocaleString('en-IN')}*\nPlease confirm availability.`;
-  window.open(`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
-};
-
-$('btnNavHome').onclick = closeCategoryView;
-$('btnBackToEdits').onclick = closeCategoryView;
-$('btnOpenCart').onclick = () => $('cartOverlay').classList.add('open');$('btnCloseCart').onclick = () => $('cartOverlay').classList.remove('open');$('cartOverlay').onclick = (e) => { if (e.target === $('cartOverlay'))$('cartOverlay').classList.remove('open'); };
-
-$('searchInput').oninput = (e) => {
-  filterState.query = e.target.value.trim();
-  if (ACTIVE_CATEGORY) renderCategoryProducts();
-};
-
-loadInventory();
-
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
 })();
 </script>
 </body>
