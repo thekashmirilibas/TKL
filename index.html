@@ -53,7 +53,7 @@ button, input, select { font: inherit; color: inherit; border: none; background:
 button { cursor: pointer; }
 .hidden { display: none !important; }
 
-/* ─── MASTHEAD ──────────────────────────────── */
+/* MASTHEAD */
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: rgba(252, 251, 249, 0.92);
@@ -114,7 +114,7 @@ button { cursor: pointer; }
   display: flex; align-items: center; gap: 6px; text-decoration: none;
 }
 
-/* ─── HERO ──────────────────────────────────── */
+/* HERO */
 .hero-editorial {
   text-align: center;
   padding: clamp(36px, 5vw, 60px) 20px clamp(28px, 4vw, 44px);
@@ -142,7 +142,7 @@ button { cursor: pointer; }
 .season-btn:hover { border-color: var(--border-dark); color: var(--text); }
 .season-btn.on { background: var(--text); color: #fff; border-color: var(--text); }
 
-/* ─── FEATURED STRIP ────────────────────────── */
+/* FEATURED STRIP */
 .featured-row-wrap {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -177,7 +177,7 @@ button { cursor: pointer; }
 .feat-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 2px 0 4px; }
 .feat-price { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; color: var(--text); }
 
-/* ─── SEASON EDITORIAL SECTIONS ─────────────── */
+/* SEASON SECTIONS */
 .editorial-season-block {
   padding: clamp(48px, 6vw, 76px) clamp(18px, 4vw, 56px);
 }
@@ -191,7 +191,6 @@ button { cursor: pointer; }
   color: var(--summer-text);
   border-bottom: 1px solid var(--summer-border);
 }
-
 .edit-head {
   max-width: 1400px; margin: 0 auto 24px;
   display: flex; justify-content: space-between; align-items: baseline;
@@ -217,7 +216,6 @@ button { cursor: pointer; }
 }
 .winter-theme .cat-tile { background: var(--winter-card); border: 1px solid var(--winter-border); }
 .summer-theme .cat-tile { background: var(--summer-card); border: 1px solid var(--summer-border); }
-
 .cat-tile img { opacity: 0.88; transition: transform 0.35s ease, opacity 0.25s ease; }
 .cat-tile:hover img { transform: scale(1.05); opacity: 0.98; }
 .cat-tile::after {
@@ -235,7 +233,7 @@ button { cursor: pointer; }
   font-size: 9.5px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px;
 }
 
-/* ─── CATALOG VIEW & FILTER TOOLBAR ──────────── */
+/* CATALOG VIEW */
 .catalog-view { display: none; max-width: 1400px; margin: 0 auto; padding: 24px; }
 .catalog-view.visible { display: block; }
 .catalog-header {
@@ -243,9 +241,7 @@ button { cursor: pointer; }
   margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
 }
 .catalog-title-group { display: flex; align-items: baseline; gap: 12px; }
-.catalog-title {
-  font-family: var(--font-serif); font-size: 26px; font-weight: 600;
-}
+.catalog-title { font-family: var(--font-serif); font-size: 26px; font-weight: 600; }
 .btn-back-link {
   height: 34px; padding: 0 12px; border: 1px solid var(--border);
   border-radius: var(--radius); background: #fff; font-size: 9.5px;
@@ -253,7 +249,6 @@ button { cursor: pointer; }
   display: flex; align-items: center; gap: 6px;
 }
 .btn-back-link:hover { border-color: var(--border-dark); }
-
 .toolbar-shelf {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 12px 14px;
@@ -268,7 +263,7 @@ button { cursor: pointer; }
 .filter-dropdown:focus { border-color: var(--border-dark); }
 .toolbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 
-/* Product Cards */
+/* PRODUCTS GRID */
 .products-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px;
 }
@@ -297,7 +292,6 @@ button { cursor: pointer; }
   padding: 3px 6px; border-radius: var(--radius); background: rgba(255, 255, 255, 0.88);
   border: 1px solid var(--border);
 }
-
 .product-info { padding: 12px; display: flex; flex-direction: column; gap: 3px; flex-grow: 1; }
 .product-tagline { font-size: 8.5px; font-weight: 600; color: var(--saffron); text-transform: uppercase; letter-spacing: 0.5px; }
 .product-name { font-size: 12.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -309,7 +303,7 @@ button { cursor: pointer; }
 .price-tag { font-family: var(--font-mono); font-size: 13.5px; font-weight: 700; color: var(--text); }
 .product-size-pill { font-size: 9px; color: var(--text-muted); }
 
-/* ─── DETAILS MODAL ─────────────────────────── */
+/* MODAL & CART */
 .modal-backdrop {
   position: fixed; inset: 0; z-index: 400;
   background: rgba(18, 18, 20, 0.55); backdrop-filter: blur(8px);
@@ -330,74 +324,28 @@ button { cursor: pointer; }
   background: rgba(255, 255, 255, 0.85); border: 1px solid var(--border);
   display: grid; place-items: center;
 }
-.modal-content-grid {
-  display: grid; grid-template-columns: 1.1fr 1fr; flex: 1; overflow: hidden;
-}
-.modal-gallery-pane {
-  background: #f4f4f5; display: flex; flex-direction: column; position: relative;
-}
-.modal-main-image-wrap {
-  flex: 1; position: relative; min-height: 380px; overflow: hidden; cursor: zoom-in;
-}
-.modal-gallery-thumbs {
-  display: flex; gap: 6px; padding: 10px; background: #fff;
-  border-top: 1px solid var(--border); overflow-x: auto;
-}
-.modal-thumb {
-  width: 50px; height: 60px; border: 1.5px solid transparent;
-  border-radius: var(--radius); overflow: hidden; flex-shrink: 0; opacity: 0.6;
-}
+.modal-content-grid { display: grid; grid-template-columns: 1.1fr 1fr; flex: 1; overflow: hidden; }
+.modal-gallery-pane { background: #f4f4f5; display: flex; flex-direction: column; position: relative; }
+.modal-main-image-wrap { flex: 1; position: relative; min-height: 380px; overflow: hidden; cursor: zoom-in; }
+.modal-gallery-thumbs { display: flex; gap: 6px; padding: 10px; background: #fff; border-top: 1px solid var(--border); overflow-x: auto; }
+.modal-thumb { width: 50px; height: 60px; border: 1.5px solid transparent; border-radius: var(--radius); overflow: hidden; flex-shrink: 0; opacity: 0.6; }
 .modal-thumb.on { border-color: var(--border-dark); opacity: 1; }
-.modal-details-pane {
-  padding: 28px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;
-}
+.modal-details-pane { padding: 28px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
 .modal-specs-badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.spec-chip {
-  padding: 4px 10px; border-radius: var(--radius); border: 1px solid var(--border);
-  font-size: 9.5px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);
-}
-.modal-price-tag {
-  font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--text);
-}
-.modal-action-buttons {
-  display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 14px;
-}
-.btn-primary-action {
-  height: 44px; background: var(--text); color: #fff;
-  border-radius: var(--radius); font-size: 11px; font-weight: 600;
-  letter-spacing: 1.5px; text-transform: uppercase;
-}
-.btn-wa-order {
-  height: 44px; background: #25d366; color: #fff;
-  border-radius: var(--radius); font-size: 11px; font-weight: 600;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
+.spec-chip { padding: 4px 10px; border-radius: var(--radius); border: 1px solid var(--border); font-size: 9.5px; font-weight: 500; text-transform: uppercase; color: var(--text-muted); }
+.modal-price-tag { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--text); }
+.modal-action-buttons { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 14px; }
+.btn-primary-action { height: 44px; background: var(--text); color: #fff; border-radius: var(--radius); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+.btn-wa-order { height: 44px; background: #25d366; color: #fff; border-radius: var(--radius); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-/* ─── CART SLIDE-OVER ───────────────────────── */
-.cart-slide-overlay {
-  position: fixed; inset: 0; z-index: 500;
-  background: rgba(18, 18, 20, 0.4); opacity: 0;
-  pointer-events: none; transition: opacity 0.25s ease;
-}
+.cart-slide-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(18, 18, 20, 0.4); opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
 .cart-slide-overlay.open { opacity: 1; pointer-events: auto; }
-.cart-tray {
-  position: fixed; top: 0; right: 0; bottom: 0; z-index: 501;
-  width: min(420px, 100vw); background: #fff;
-  border-left: 1px solid var(--border); display: flex;
-  flex-direction: column; transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+.cart-tray { position: fixed; top: 0; right: 0; bottom: 0; z-index: 501; width: min(420px, 100vw); background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 .cart-slide-overlay.open .cart-tray { transform: translateX(0); }
-.cart-tray-head {
-  padding: 18px 20px; border-bottom: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-}
+.cart-tray-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .cart-tray-title { font-family: var(--font-serif); font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
 .cart-tray-items { flex: 1; overflow-y: auto; padding: 14px 20px; }
-.cart-item-row {
-  display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f4f4f5; align-items: flex-start;
-}
+.cart-item-row { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f4f4f5; align-items: flex-start; }
 .cart-item-thumb { width: 58px; height: 72px; border-radius: var(--radius); overflow: hidden; background: #f4f4f5; flex-shrink: 0; }
 .cart-item-info { flex: 1; min-width: 0; }
 .cart-item-title { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -407,31 +355,12 @@ button { cursor: pointer; }
 .cart-tray-foot { padding: 18px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
 .cart-total-line { display: flex; justify-content: space-between; align-items: baseline; }
 .cart-total-val { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text); }
-.customer-name-field {
-  width: 100%; height: 40px; padding: 0 12px;
-  border: 1px solid var(--border); border-radius: var(--radius);
-  font-size: 11.5px; outline: none;
-}
+.customer-name-field { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 11.5px; outline: none; }
 
-/* Lightbox Modal */
-.lightbox-overlay {
-  position: fixed; inset: 0; z-index: 600; background: #000;
-  display: none; align-items: center; justify-content: center;
-}
-.lightbox-overlay.open { display: flex; }
-.lightbox-img-holder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 30px; }
-.lightbox-img-holder img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.btn-lightbox-close {
-  position: absolute; top: 16px; right: 20px; color: #fff; font-size: 26px; z-index: 601;
-}
-
-/* Toast Bar */
 .toast-bar {
   position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px);
-  z-index: 1000; background: var(--text); color: #fff;
-  padding: 8px 18px; border-radius: var(--radius);
-  font-size: 11px; font-weight: 500; opacity: 0; pointer-events: none;
-  transition: all 0.2s ease;
+  z-index: 1000; background: var(--text); color: #fff; padding: 8px 18px; border-radius: var(--radius);
+  font-size: 11px; font-weight: 500; opacity: 0; pointer-events: none; transition: all 0.2s ease;
 }
 .toast-bar.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -440,7 +369,6 @@ button { cursor: pointer; }
   .search-input-wrap { display: none; }
   .modal-content-grid { grid-template-columns: 1fr; overflow-y: auto; }
   .modal-main-image-wrap { min-height: 280px; }
-  .modal-window { max-height: 94vh; }
   .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .cat-tile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 }
@@ -448,7 +376,6 @@ button { cursor: pointer; }
 </head>
 <body>
 
-<!-- SITE MASTHEAD -->
 <header class="site-header">
   <div class="header-inner">
     <div class="brand-group" id="btnNavHome">
@@ -464,14 +391,11 @@ button { cursor: pointer; }
         <span>Bag</span>
         <span class="cart-pill" id="cartCountBadge">0</span>
       </button>
-      <a class="wa-direct-btn" href="https://wa.me/919911029922" target="_blank" rel="noopener">
-        WhatsApp
-      </a>
+      <a class="wa-direct-btn" href="https://wa.me/919911029922" target="_blank" rel="noopener">WhatsApp</a>
     </div>
   </div>
 </header>
 
-<!-- HOME / EDITORIAL SEASONS -->
 <main id="homeView">
   <section class="hero-editorial">
     <h1 class="hero-title">A Wardrobe <em>Crafted</em> by the Valley.</h1>
@@ -479,40 +403,28 @@ button { cursor: pointer; }
     <div class="season-selector" id="seasonChipsBar"></div>
   </section>
 
-  <!-- Curated Highlights Strip -->
   <section class="featured-row-wrap" id="featuredShelf" style="display:none;">
-    <div class="section-masthead">
-      <div class="section-title">Curated <em>Highlights</em></div>
-    </div>
+    <div class="section-masthead"><div class="section-title">Curated <em>Highlights</em></div></div>
     <div class="featured-carousel" id="featuredCarousel"></div>
   </section>
 
-  <!-- Cold Season Theme -->
   <section class="editorial-season-block winter-theme" id="winterSection">
     <div class="edit-head">
-      <div>
-        <div class="edit-kicker">Cold Weather Wardrobe</div>
-        <div class="edit-title">The Winter Edit</div>
-      </div>
+      <div><div class="edit-kicker">Cold Weather Wardrobe</div><div class="edit-title">The Winter Edit</div></div>
       <div id="winterTileCount" style="font-size:11px;opacity:0.6;"></div>
     </div>
     <div class="cat-tile-grid" id="winterTileGrid"></div>
   </section>
 
-  <!-- Warm Season Theme -->
   <section class="editorial-season-block summer-theme" id="summerSection">
     <div class="edit-head">
-      <div>
-        <div class="edit-kicker">Lightweight Weaves</div>
-        <div class="edit-title">The Summer Edit</div>
-      </div>
+      <div><div class="edit-kicker">Lightweight Weaves</div><div class="edit-title">The Summer Edit</div></div>
       <div id="summerTileCount" style="font-size:11px;color:var(--text-dim);"></div>
     </div>
     <div class="cat-tile-grid" id="summerTileGrid"></div>
   </section>
 </main>
 
-<!-- CATEGORY VIEW -->
 <section class="catalog-view" id="catalogView">
   <div class="catalog-header">
     <button class="btn-back-link" id="btnBackToEdits">
@@ -525,7 +437,6 @@ button { cursor: pointer; }
     </div>
   </div>
 
-  <!-- Dynamic Toolbar -->
   <div class="toolbar-shelf" id="toolbarShelf">
     <select class="filter-dropdown" id="selSeasonSub"><option value="">All Seasons</option></select>
     <select class="filter-dropdown" id="selMaterialFilter"><option value="">All Materials</option></select>
@@ -545,7 +456,6 @@ button { cursor: pointer; }
   <div class="products-grid" id="productsGrid"></div>
 </section>
 
-<!-- PRODUCT MODAL -->
 <div class="modal-backdrop" id="productModalBackdrop">
   <div class="modal-window">
     <button class="btn-close-modal" id="btnCloseModal">✕</button>
@@ -553,7 +463,6 @@ button { cursor: pointer; }
   </div>
 </div>
 
-<!-- CART SLIDE-OVER -->
 <div class="cart-slide-overlay" id="cartOverlay">
   <div class="cart-tray">
     <div class="cart-tray-head">
@@ -567,18 +476,8 @@ button { cursor: pointer; }
         <span class="cart-total-val" id="cartTotalSum">₹0</span>
       </div>
       <input type="text" class="customer-name-field" id="cartCustomerName" placeholder="Your Name for WhatsApp Order..."/>
-      <button class="btn-wa-order" id="btnCheckoutWhatsApp">
-        Send Order to WhatsApp
-      </button>
+      <button class="btn-wa-order" id="btnCheckoutWhatsApp">Send Order to WhatsApp</button>
     </div>
-  </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox-overlay" id="lightboxView">
-  <span class="btn-lightbox-close" id="btnCloseLightbox">✕</span>
-  <div class="lightbox-img-holder">
-    <img id="lightboxTargetImg" src="" alt=""/>
   </div>
 </div>
 
@@ -596,15 +495,7 @@ let ALL_PRODUCTS = [];
 let ACTIVE_CATEGORY = null;
 let CART = [];
 
-let filterState = {
-  season: 'All',
-  material: '',
-  color: '',
-  length: '',
-  size: '',
-  query: '',
-  sort: ''
-};
+let filterState = { season: 'All', material: '', color: '', length: '', size: '', query: '', sort: '' };
 
 const $ = (id) => document.getElementById(id);
 const all = (sel, root) => Array.from((root || document).querySelectorAll(sel));
@@ -621,26 +512,15 @@ function parseSizes(raw) {
   return raw ? String(raw).split(/[,;|]+/).map(s => s.trim()).filter(Boolean) : [];
 }
 
-function cleanImageUrl(url) {
-  let s = String(url || '').trim().replace(/[\r\n_]/g, '');
-  if (!s) return '';
-  // Fix Google Drive share links to direct export links if necessary, or pass through proxy-safe formatting
-  if (s.includes('ibb.co') && !s.includes('//i.ibb.co')) {
-    s = s.replace('//ibb.co/', '//i.ibb.co/');
-  }
-  return s;
-}
-
-// 1. LAZY ON-DEMAND LOAD PIPELINE FOR INSTAGRAM WEB-VIEW
 async function loadInventory() {
   try {
-    const res = await fetch(`${API_ENDPOINT}?type=products`, { mode: 'cors' });
+    const res = await fetch(`${API_ENDPOINT}?type=products`);
     const data = await res.json();
     const rows = (data && data.success && data.products) ? data.products : (Array.isArray(data) ? data : []);
 
     ALL_PRODUCTS = rows.map(r => {
       const rawPrice = String(r.price || r['Price'] || '0').replace(/[₹,\s]/g, '').replace(/[^0-9.]/g, '');
-      const imgs = [cleanImageUrl(r.image), cleanImageUrl(r.image2), cleanImageUrl(r.image3), cleanImageUrl(r.image4)].filter(Boolean);
+      const imgs = [r.image, r.image2, r.image3, r.image4].filter(Boolean);
       return {
         id: String(r.id || r.name).toLowerCase().replace(/[^a-z0-9]/g, '-'),
         name: String(r.name || r['Product Name'] || '').trim(),
@@ -668,11 +548,10 @@ async function loadInventory() {
       if (matched) openCategory(matched.category);
     }
   } catch (err) {
-    showToast('Failed to load store collection. Please refresh.');
+    showToast('Failed to load store collection.');
   }
 }
 
-// 2. HERO SEASONS & DISTINCT TILES
 function renderHeroSeasonChips() {
   const seasons = ['All Seasons', ...new Set(ALL_PRODUCTS.map(p => p.season).filter(Boolean))].sort();
   $('seasonChipsBar').innerHTML = seasons.map(s => {
@@ -698,7 +577,7 @@ function renderFeaturedShelf() {
   $('featuredCarousel').innerHTML = featured.map(p => `
     <div class="feat-card" onclick="window.viewProduct('${p.id}')">
       <div class="feat-media">
-        <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
+        <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" onerror="this.src='${BLANK_SVG}'"/>
       </div>
       <div class="feat-details">
         <div class="feat-tag">${p.category}</div>
@@ -723,7 +602,7 @@ function renderSeasonTiles() {
       const totalCount = ALL_PRODUCTS.filter(p => p.category === cat && p.season.toLowerCase() === seasonName.toLowerCase()).length;
       return `
         <div class="cat-tile" onclick="window.openCategory('${cat}')">
-          <img src="${match ? match.image : BLANK_SVG}" alt="${cat}" loading="lazy" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
+          <img src="${match ? match.image : BLANK_SVG}" alt="${cat}" loading="lazy" onerror="this.src='${BLANK_SVG}'"/>
           <div class="cat-tile-meta">
             <div class="cat-tile-name">${cat}</div>
             <div class="cat-tile-count">${totalCount} pieces</div>
@@ -748,7 +627,6 @@ function renderSeasonTiles() {
   }
 }
 
-// 3. CATEGORY VIEW & TOOLBAR
 window.openCategory = function(catName) {
   ACTIVE_CATEGORY = catName;
   filterState.material = ''; filterState.color = ''; filterState.length = ''; filterState.size = '';
@@ -770,7 +648,6 @@ function closeCategoryView() {
 
 function populateToolbarFilters() {
   const pool = ALL_PRODUCTS.filter(p => p.category.toLowerCase() === ACTIVE_CATEGORY.toLowerCase());
-
   const seasons = [...new Set(pool.map(p => p.season).filter(Boolean))].sort();
   $('selSeasonSub').innerHTML = '<option value="">All Seasons</option>' + seasons.map(s => `<option value="${s}">${s}</option>`).join('');
 
@@ -818,13 +695,7 @@ function renderCategoryProducts() {
 
   $('productsGrid').innerHTML = list.map(p => {
     const inBag = CART.some(item => item.id === p.id);
-    const specsArr = [
-      p.subcategory ? `Mat: ${p.subcategory}` : '',
-      p.color ? `Col: ${p.color}` : '',
-      p.length ? `Len: ${p.length}` : '',
-      p.size ? `Size: ${p.size}` : ''
-    ].filter(Boolean);
-
+    const specsArr = [p.subcategory, p.color, p.length, p.size].filter(Boolean);
     return `
       <div class="product-card" onclick="window.viewProduct('${p.id}')">
         <div class="product-media">
@@ -832,7 +703,7 @@ function renderCategoryProducts() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           </button>
           ${p.images.length > 1 ? `<span class="badge-shots-count">${p.images.length} Photos</span>` : ''}
-          <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
+          <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" onerror="this.src='${BLANK_SVG}'"/>
         </div>
         <div class="product-info">
           <div class="product-tagline">${p.subcategory || p.category}</div>
@@ -848,7 +719,6 @@ function renderCategoryProducts() {
   }).join('');
 }
 
-// 4. DETAILS MODAL
 window.viewProduct = function(productId) {
   const p = ALL_PRODUCTS.find(item => item.id === productId);
   if (!p) return;
@@ -859,22 +729,18 @@ window.viewProduct = function(productId) {
   const buildModalContent = () => `
     <div class="modal-gallery-pane">
       <div class="modal-main-image-wrap" onclick="window.openLightbox('${images[activeIndex]}')">
-        <img src="${images[activeIndex]}" alt="${p.name}" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
+        <img src="${images[activeIndex]}" alt="${p.name}" onerror="this.src='${BLANK_SVG}'"/>
       </div>
       ${images.length > 1 ? `
         <div class="modal-gallery-thumbs">
           ${images.map((src, i) => `
-            <div class="modal-thumb ${i === activeIndex ? 'on' : ''}" data-idx="${i}">
-              <img src="${src}" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
-            </div>
+            <div class="modal-thumb ${i === activeIndex ? 'on' : ''}" data-idx="${i}"><img src="${src}" onerror="this.src='${BLANK_SVG}'"/></div>
           `).join('')}
         </div>
       ` : ''}
     </div>
     <div class="modal-details-pane">
-      <div style="font-size:9px;color:var(--saffron);font-weight:600;letter-spacing:1px;text-transform:uppercase;">
-        ${p.season} • ${p.category} ${p.subcategory ? `• ${p.subcategory}` : ''}
-      </div>
+      <div style="font-size:9px;color:var(--saffron);font-weight:600;letter-spacing:1px;text-transform:uppercase;">${p.season} • ${p.category}</div>
       <h3 style="font-family:var(--font-serif);font-size:22px;line-height:1.2;font-weight:600;">${p.name}</h3>
       <div class="modal-specs-badge-row">
         ${p.subcategory ? `<span class="spec-chip">Material: ${p.subcategory}</span>` : ''}
@@ -884,14 +750,11 @@ window.viewProduct = function(productId) {
       </div>
       <div class="modal-price-tag">₹${p.price.toLocaleString('en-IN')}</div>
       ${p.description ? `<p style="font-size:12px;line-height:1.6;color:var(--text-muted);">${p.description}</p>` : ''}
-
       <div class="modal-action-buttons">
         <button class="btn-primary-action" onclick="window.toggleCartItem('${p.id}'); window.closeModal();">
           ${CART.some(item => item.id === p.id) ? 'Remove From Bag' : 'Add to Bag'}
         </button>
-        <button class="btn-wa-order" onclick="window.orderSingleItemWhatsApp('${p.id}')">
-          Order Direct on WhatsApp
-        </button>
+        <button class="btn-wa-order" onclick="window.orderSingleItemWhatsApp('${p.id}')">Order Direct on WhatsApp</button>
       </div>
     </div>
   `;
@@ -915,27 +778,18 @@ window.openLightbox = (src) => {
 };
 $('btnCloseLightbox').onclick = () =>$('lightboxView').classList.remove('open');
 
-// 5. CART & WHATSAPP
 window.toggleCartItem = function(productId) {
   const p = ALL_PRODUCTS.find(item => item.id === productId);
   if (!p) return;
-
   const idx = CART.findIndex(item => item.id === productId);
-  if (idx > -1) {
-    CART.splice(idx, 1);
-    showToast(`Removed ${p.name}`);
-  } else {
-    CART.push(p);
-    showToast(`Added ${p.name} to Bag`);
-  }
+  if (idx > -1) { CART.splice(idx, 1); showToast(`Removed ${p.name}`); }
+  else { CART.push(p); showToast(`Added ${p.name} to Bag`); }
   updateCartVisuals();
   if (ACTIVE_CATEGORY) renderCategoryProducts();
 };
 
 function updateCartVisuals() {
-  const badge = $('cartCountBadge');
-  badge.textContent = CART.length;
-
+  $('cartCountBadge').textContent = CART.length;
   const list = $('cartItemsList');
   const foot = $('cartFootBox');
 
@@ -957,22 +811,14 @@ function updateCartVisuals() {
       </div>
     </div>
   `).join('');
-
-  const total = CART.reduce((sum, item) => sum + item.price, 0);
-  $('cartTotalSum').textContent = `₹${total.toLocaleString('en-IN')}`;
+  $('cartTotalSum').textContent = `₹${CART.reduce((sum, item) => sum + item.price, 0).toLocaleString('en-IN')}`;
 }
 
 window.orderSingleItemWhatsApp = function(productId) {
   const p = ALL_PRODUCTS.find(item => item.id === productId);
   if (!p) return;
-  const specText = [
-    p.subcategory ? `Material: ${p.subcategory}` : '',
-    p.color ? `Color: ${p.color}` : '',
-    p.length ? `Length: ${p.length}` : '',
-    p.size ? `Size: ${p.size}` : ''
-  ].filter(Boolean).join(', ');
-
-  const msg = `Hi! I would like to order: *${p.name}*\nPrice: ₹${p.price.toLocaleString('en-IN')}\nSpecs: ${specText || 'Standard'}\nCategory: ${p.category} (${p.season})\nPlease confirm piece availability!`;
+  const specText = [p.subcategory, p.color, p.length, p.size].filter(Boolean).join(', ');
+  const msg = `Hi! I would like to order: *${p.name}*\nPrice: ₹${p.price.toLocaleString('en-IN')}\nSpecs: ${specText || 'Standard'}\nCategory: ${p.category} (${p.season})\nPlease confirm availability!`;
   window.open(`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 };
 
@@ -980,18 +826,14 @@ $('btnCheckoutWhatsApp').onclick = () => {
   if (!CART.length) return;
   const name = $('cartCustomerName').value.trim() || 'Valued Customer';
   let msg = `🧣 *NEW ORDER INQUIRY — THE KASHMIRI LIBAS*\nClient: ${name}\n\n`;
-
   CART.forEach((p, i) => {
     const specs = [p.subcategory, p.color, p.length, p.size].filter(Boolean).join(', ');
     msg += `${i + 1}. *${p.name}* — ₹${p.price.toLocaleString('en-IN')}\n    ${specs || 'Default'}\n`;
   });
-
-  const total = CART.reduce((sum, item) => sum + item.price, 0);
-  msg += `\n*Estimated Total: ₹${total.toLocaleString('en-IN')}*\nPlease confirm availability.`;
+  msg += `\n*Estimated Total: ₹${CART.reduce((sum, item) => sum + item.price, 0).toLocaleString('en-IN')}*\nPlease confirm availability.`;
   window.open(`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 };
 
-// 6. EVENT BINDINGS
 $('btnNavHome').onclick = closeCategoryView;
 $('btnBackToEdits').onclick = closeCategoryView;
 $('btnOpenCart').onclick = () => $('cartOverlay').classList.add('open');$('btnCloseCart').onclick = () => $('cartOverlay').classList.remove('open');$('cartOverlay').onclick = (e) => { if (e.target === $('cartOverlay'))$('cartOverlay').classList.remove('open'); };
@@ -999,14 +841,6 @@ $('btnOpenCart').onclick = () => $('cartOverlay').classList.add('open');$('btnCl
 $('searchInput').oninput = (e) => {
   filterState.query = e.target.value.trim();
   if (ACTIVE_CATEGORY) renderCategoryProducts();
-};
-
-$('selSeasonSub').onchange = (e) => { filterState.season = e.target.value \vert{}\vert{} 'All'; renderCategoryProducts(); };$('selMaterialFilter').onchange = (e) => { filterState.material = e.target.value; renderCategoryProducts(); };
-$('selColorFilter').onchange = (e) => { filterState.color = e.target.value; renderCategoryProducts(); };$('selLengthFilter').onchange = (e) => { filterState.length = e.target.value; renderCategoryProducts(); };
-$('selSizeFilter').onchange = (e) => { filterState.size = e.target.value; renderCategoryProducts(); };$('selSortOrder').onchange = (e) => { filterState.sort = e.target.value; renderCategoryProducts(); };
-
-window.onpopstate = () => {
-  if (!location.hash && ACTIVE_CATEGORY) closeCategoryView();
 };
 
 loadInventory();
