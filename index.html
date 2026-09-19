@@ -20,12 +20,10 @@
   --ruby: #7d1a1a;
   --sage: #2a8f56;
 
-  /* Distinct High-Contrast Seasonal Backgrounds */
   --winter-bg: #181412;
   --winter-card: #221d19;
   --winter-border: rgba(255, 255, 255, 0.12);
   --winter-text: #f5ede2;
-  --winter-muted: #a69888;
   --winter-gold: #d4a84b;
 
   --summer-bg: #f8f3e6;
@@ -171,7 +169,6 @@ button { cursor: pointer; }
   background: #fff; border: 1px solid var(--border);
   border-radius: var(--radius); overflow: hidden; cursor: pointer;
   transition: transform var(--ease), border-color var(--ease);
-  contain: content;
 }
 .feat-card:hover { transform: translateY(-3px); border-color: var(--border-dark); }
 .feat-media { aspect-ratio: 4 / 5; position: relative; background: #eee; }
@@ -180,7 +177,7 @@ button { cursor: pointer; }
 .feat-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 2px 0 4px; }
 .feat-price { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; color: var(--text); }
 
-/* ─── DISTINCT SEASON EDITORIAL SECTIONS ─────── */
+/* ─── SEASON EDITORIAL SECTIONS ─────────────── */
 .editorial-season-block {
   padding: clamp(48px, 6vw, 76px) clamp(18px, 4vw, 56px);
 }
@@ -216,7 +213,7 @@ button { cursor: pointer; }
 .cat-tile {
   position: relative; aspect-ratio: 4 / 5;
   border-radius: var(--radius); overflow: hidden;
-  cursor: pointer; contain: content;
+  cursor: pointer;
 }
 .winter-theme .cat-tile { background: var(--winter-card); border: 1px solid var(--winter-border); }
 .summer-theme .cat-tile { background: var(--summer-card); border: 1px solid var(--summer-border); }
@@ -257,7 +254,6 @@ button { cursor: pointer; }
 }
 .btn-back-link:hover { border-color: var(--border-dark); }
 
-/* Context Filter Toolbar: Season, Material, Color, Length, Size */
 .toolbar-shelf {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 12px 14px;
@@ -280,12 +276,12 @@ button { cursor: pointer; }
   background: #fff; border: 1px solid var(--border);
   border-radius: var(--radius); display: flex; flex-direction: column;
   position: relative; cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease;
-  contain: content;
 }
 .product-card:hover { transform: translateY(-3px); border-color: var(--border-dark); }
 .product-media {
   position: relative; aspect-ratio: 4 / 5; background: #f4f4f5; overflow: hidden;
 }
+.product-media img { loading: lazy; decoding: async; }
 .btn-bag-icon {
   position: absolute; top: 10px; right: 10px; z-index: 2;
   width: 32px; height: 32px; border-radius: 50%;
@@ -491,7 +487,7 @@ button { cursor: pointer; }
     <div class="featured-carousel" id="featuredCarousel"></div>
   </section>
 
-  <!-- Cold Season Theme: Deep Velvet Dark -->
+  <!-- Cold Season Theme -->
   <section class="editorial-season-block winter-theme" id="winterSection">
     <div class="edit-head">
       <div>
@@ -503,7 +499,7 @@ button { cursor: pointer; }
     <div class="cat-tile-grid" id="winterTileGrid"></div>
   </section>
 
-  <!-- Warm Season Theme: Soft Cream Parchment -->
+  <!-- Warm Season Theme -->
   <section class="editorial-season-block summer-theme" id="summerSection">
     <div class="edit-head">
       <div>
@@ -529,7 +525,7 @@ button { cursor: pointer; }
     </div>
   </div>
 
-  <!-- Dynamic Toolbar: Season, Material (Col G), Color (Col N), Length (Col O), Size (Col H) -->
+  <!-- Dynamic Toolbar -->
   <div class="toolbar-shelf" id="toolbarShelf">
     <select class="filter-dropdown" id="selSeasonSub"><option value="">All Seasons</option></select>
     <select class="filter-dropdown" id="selMaterialFilter"><option value="">All Materials</option></select>
@@ -625,16 +621,26 @@ function parseSizes(raw) {
   return raw ? String(raw).split(/[,;|]+/).map(s => s.trim()).filter(Boolean) : [];
 }
 
-// 1. DATA INITIALIZATION
+function cleanImageUrl(url) {
+  let s = String(url || '').trim().replace(/[\r\n_]/g, '');
+  if (!s) return '';
+  // Fix Google Drive share links to direct export links if necessary, or pass through proxy-safe formatting
+  if (s.includes('ibb.co') && !s.includes('//i.ibb.co')) {
+    s = s.replace('//ibb.co/', '//i.ibb.co/');
+  }
+  return s;
+}
+
+// 1. LAZY ON-DEMAND LOAD PIPELINE FOR INSTAGRAM WEB-VIEW
 async function loadInventory() {
   try {
-    const res = await fetch(`${API_ENDPOINT}?type=products`);
+    const res = await fetch(`${API_ENDPOINT}?type=products`, { mode: 'cors' });
     const data = await res.json();
     const rows = (data && data.success && data.products) ? data.products : (Array.isArray(data) ? data : []);
 
     ALL_PRODUCTS = rows.map(r => {
       const rawPrice = String(r.price || r['Price'] || '0').replace(/[₹,\s]/g, '').replace(/[^0-9.]/g, '');
-      const imgs = [r.image, r.image2, r.image3, r.image4].filter(Boolean);
+      const imgs = [cleanImageUrl(r.image), cleanImageUrl(r.image2), cleanImageUrl(r.image3), cleanImageUrl(r.image4)].filter(Boolean);
       return {
         id: String(r.id || r.name).toLowerCase().replace(/[^a-z0-9]/g, '-'),
         name: String(r.name || r['Product Name'] || '').trim(),
@@ -644,7 +650,7 @@ async function loadInventory() {
         description: String(r.description || r['Description'] || '').trim(),
         season: String(r.season || r['Season'] || '').trim(),
         category: String(r.category || r['Category'] || '').trim(),
-        subcategory: String(r.subcategory || r['Subcategory'] || '').trim(), // Material
+        subcategory: String(r.subcategory || r['Subcategory'] || '').trim(),
         size: String(r.size || r['Size'] || '').trim(),
         color: String(r.color || r['Color'] || '').trim(),
         length: String(r.length || r['Length'] || '').trim(),
@@ -692,7 +698,7 @@ function renderFeaturedShelf() {
   $('featuredCarousel').innerHTML = featured.map(p => `
     <div class="feat-card" onclick="window.viewProduct('${p.id}')">
       <div class="feat-media">
-        <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" onerror="this.src='${BLANK_SVG}'"/>
+        <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
       </div>
       <div class="feat-details">
         <div class="feat-tag">${p.category}</div>
@@ -717,7 +723,7 @@ function renderSeasonTiles() {
       const totalCount = ALL_PRODUCTS.filter(p => p.category === cat && p.season.toLowerCase() === seasonName.toLowerCase()).length;
       return `
         <div class="cat-tile" onclick="window.openCategory('${cat}')">
-          <img src="${match ? match.image : BLANK_SVG}" alt="${cat}" loading="lazy" decoding="async" fetchpriority="low" onerror="this.src='${BLANK_SVG}'"/>
+          <img src="${match ? match.image : BLANK_SVG}" alt="${cat}" loading="lazy" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
           <div class="cat-tile-meta">
             <div class="cat-tile-name">${cat}</div>
             <div class="cat-tile-count">${totalCount} pieces</div>
@@ -742,13 +748,12 @@ function renderSeasonTiles() {
   }
 }
 
-// 3. CATEGORY VIEW & MULTI-PARAM TOOLBAR
+// 3. CATEGORY VIEW & TOOLBAR
 window.openCategory = function(catName) {
   ACTIVE_CATEGORY = catName;
   filterState.material = ''; filterState.color = ''; filterState.length = ''; filterState.size = '';
   $('homeView').style.display = 'none';
-  $('catalogView').classList.add('visible');
-  $('catalogTitleDisplay').textContent = catName;
+  $('catalogView').classList.add('visible');$('catalogTitleDisplay').textContent = catName;
   location.hash = encodeURIComponent(catName);
 
   populateToolbarFilters();
@@ -758,8 +763,7 @@ window.openCategory = function(catName) {
 
 function closeCategoryView() {
   ACTIVE_CATEGORY = null;
-  $('catalogView').classList.remove('visible');
-  $('homeView').style.display = 'block';
+  $('catalogView').classList.remove('visible');$('homeView').style.display = 'block';
   location.hash = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -767,26 +771,21 @@ function closeCategoryView() {
 function populateToolbarFilters() {
   const pool = ALL_PRODUCTS.filter(p => p.category.toLowerCase() === ACTIVE_CATEGORY.toLowerCase());
 
-  // Season
   const seasons = [...new Set(pool.map(p => p.season).filter(Boolean))].sort();
   $('selSeasonSub').innerHTML = '<option value="">All Seasons</option>' + seasons.map(s => `<option value="${s}">${s}</option>`).join('');
 
-  // Material / Subcategory (Column G)
   const materials = [...new Set(pool.map(p => p.subcategory).filter(Boolean))].sort();
   $('selMaterialFilter').innerHTML = '<option value="">All Materials</option>' + materials.map(m => `<option value="${m}">${m}</option>`).join('');
   $('selMaterialFilter').style.display = materials.length > 1 ? 'block' : 'none';
 
-  // Color (Column N)
   const colors = [...new Set(pool.map(p => p.color).filter(Boolean))].sort();
   $('selColorFilter').innerHTML = '<option value="">All Colors</option>' + colors.map(c => `<option value="${c}">${c}</option>`).join('');
   $('selColorFilter').style.display = colors.length > 1 ? 'block' : 'none';
 
-  // Length (Column O)
   const lengths = [...new Set(pool.map(p => p.length).filter(Boolean))].sort();
   $('selLengthFilter').innerHTML = '<option value="">All Lengths</option>' + lengths.map(l => `<option value="${l}">${l}</option>`).join('');
   $('selLengthFilter').style.display = lengths.length > 1 ? 'block' : 'none';
 
-  // Size (Column H)
   const sizes = [...new Set(pool.flatMap(p => parseSizes(p.size)))].sort();
   $('selSizeFilter').innerHTML = '<option value="">All Sizes</option>' + sizes.map(sz => `<option value="${sz}">${sz}</option>`).join('');
   $('selSizeFilter').style.display = sizes.length > 1 ? 'block' : 'none';
@@ -833,7 +832,7 @@ function renderCategoryProducts() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           </button>
           ${p.images.length > 1 ? `<span class="badge-shots-count">${p.images.length} Photos</span>` : ''}
-          <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" onerror="this.src='${BLANK_SVG}'"/>
+          <img src="${p.image || BLANK_SVG}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
         </div>
         <div class="product-info">
           <div class="product-tagline">${p.subcategory || p.category}</div>
@@ -860,13 +859,13 @@ window.viewProduct = function(productId) {
   const buildModalContent = () => `
     <div class="modal-gallery-pane">
       <div class="modal-main-image-wrap" onclick="window.openLightbox('${images[activeIndex]}')">
-        <img src="${images[activeIndex]}" alt="${p.name}" decoding="async"/>
+        <img src="${images[activeIndex]}" alt="${p.name}" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
       </div>
       ${images.length > 1 ? `
         <div class="modal-gallery-thumbs">
           ${images.map((src, i) => `
             <div class="modal-thumb ${i === activeIndex ? 'on' : ''}" data-idx="${i}">
-              <img src="${src}" decoding="async"/>
+              <img src="${src}" decoding="async" onerror="this.src='${BLANK_SVG}'"/>
             </div>
           `).join('')}
         </div>
@@ -897,8 +896,7 @@ window.viewProduct = function(productId) {
     </div>
   `;
 
-  $('modalGridBody').innerHTML = buildModalContent();
-  $('productModalBackdrop').classList.add('open');
+  $('modalGridBody').innerHTML = buildModalContent();$('productModalBackdrop').classList.add('open');
 
   all('.modal-thumb', $('modalGridBody')).forEach(thumb => {
     thumb.onclick = () => {
@@ -908,16 +906,14 @@ window.viewProduct = function(productId) {
   });
 };
 
-window.closeModal = () => $('productModalBackdrop').classList.remove('open');
-$('btnCloseModal').onclick = window.closeModal;
-$('productModalBackdrop').onclick = (e) => { if (e.target === $('productModalBackdrop')) window.closeModal(); };
+window.closeModal = () => $('productModalBackdrop').classList.remove('open');$('btnCloseModal').onclick = window.closeModal;
+$('productModalBackdrop').onclick = (e) => { if (e.target ===$('productModalBackdrop')) window.closeModal(); };
 
-// Lightbox zoom
 window.openLightbox = (src) => {
   $('lightboxTargetImg').src = src;
   $('lightboxView').classList.add('open');
 };
-$('btnCloseLightbox').onclick = () => $('lightboxView').classList.remove('open');
+$('btnCloseLightbox').onclick = () =>$('lightboxView').classList.remove('open');
 
 // 5. CART & WHATSAPP
 window.toggleCartItem = function(productId) {
@@ -952,7 +948,7 @@ function updateCartVisuals() {
   foot.style.display = 'flex';
   list.innerHTML = CART.map(p => `
     <div class="cart-item-row">
-      <div class="cart-item-thumb"><img src="${p.image || BLANK_SVG}"/></div>
+      <div class="cart-item-thumb"><img src="${p.image || BLANK_SVG}" onerror="this.src='${BLANK_SVG}'"/></div>
       <div class="cart-item-info">
         <div class="cart-item-title">${p.name}</div>
         <div class="cart-item-specs">${[p.subcategory, p.color, p.length, p.size].filter(Boolean).join(' • ')}</div>
@@ -987,7 +983,7 @@ $('btnCheckoutWhatsApp').onclick = () => {
 
   CART.forEach((p, i) => {
     const specs = [p.subcategory, p.color, p.length, p.size].filter(Boolean).join(', ');
-    msg += `${i + 1}. *${p.name}* — ₹${p.price.toLocaleString('en-IN')}\n   ${specs || 'Default'}\n`;
+    msg += `${i + 1}. *${p.name}* — ₹${p.price.toLocaleString('en-IN')}\n    ${specs || 'Default'}\n`;
   });
 
   const total = CART.reduce((sum, item) => sum + item.price, 0);
@@ -998,21 +994,16 @@ $('btnCheckoutWhatsApp').onclick = () => {
 // 6. EVENT BINDINGS
 $('btnNavHome').onclick = closeCategoryView;
 $('btnBackToEdits').onclick = closeCategoryView;
-$('btnOpenCart').onclick = () => $('cartOverlay').classList.add('open');
-$('btnCloseCart').onclick = () => $('cartOverlay').classList.remove('open');
-$('cartOverlay').onclick = (e) => { if (e.target === $('cartOverlay')) $('cartOverlay').classList.remove('open'); };
+$('btnOpenCart').onclick = () => $('cartOverlay').classList.add('open');$('btnCloseCart').onclick = () => $('cartOverlay').classList.remove('open');$('cartOverlay').onclick = (e) => { if (e.target === $('cartOverlay'))$('cartOverlay').classList.remove('open'); };
 
 $('searchInput').oninput = (e) => {
   filterState.query = e.target.value.trim();
   if (ACTIVE_CATEGORY) renderCategoryProducts();
 };
 
-$('selSeasonSub').onchange = (e) => { filterState.season = e.target.value || 'All'; renderCategoryProducts(); };
-$('selMaterialFilter').onchange = (e) => { filterState.material = e.target.value; renderCategoryProducts(); };
-$('selColorFilter').onchange = (e) => { filterState.color = e.target.value; renderCategoryProducts(); };
-$('selLengthFilter').onchange = (e) => { filterState.length = e.target.value; renderCategoryProducts(); };
-$('selSizeFilter').onchange = (e) => { filterState.size = e.target.value; renderCategoryProducts(); };
-$('selSortOrder').onchange = (e) => { filterState.sort = e.target.value; renderCategoryProducts(); };
+$('selSeasonSub').onchange = (e) => { filterState.season = e.target.value \vert{}\vert{} 'All'; renderCategoryProducts(); };$('selMaterialFilter').onchange = (e) => { filterState.material = e.target.value; renderCategoryProducts(); };
+$('selColorFilter').onchange = (e) => { filterState.color = e.target.value; renderCategoryProducts(); };$('selLengthFilter').onchange = (e) => { filterState.length = e.target.value; renderCategoryProducts(); };
+$('selSizeFilter').onchange = (e) => { filterState.size = e.target.value; renderCategoryProducts(); };$('selSortOrder').onchange = (e) => { filterState.sort = e.target.value; renderCategoryProducts(); };
 
 window.onpopstate = () => {
   if (!location.hash && ACTIVE_CATEGORY) closeCategoryView();
