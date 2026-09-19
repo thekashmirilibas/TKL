@@ -3,17 +3,15 @@
 <head>
 <base target="_top">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no">
 <title>The Kashmiri Libas — Authentic Kashmiri Clothing</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
   :root {
     --bg: #faf5ee;
     --surface: #ffffff;
-    --card-bg: #ffffff;
     --border: #e5d9c8;
     --border-dark: #1c0f00;
     --text: #1c0f00;
@@ -21,10 +19,10 @@
     --saffron: #c28833;
     --ruby: #7d1a1a;
     --sage: #3d5e38;
-    --radius: 4px;
+    --radius: 2px;
     --font-serif: 'Cinzel', serif;
     --font-sans: 'Inter', -apple-system, sans-serif;
-    --ease: 0.2s ease;
+    --ease: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   *, *::before, *::after {
@@ -38,59 +36,63 @@
   body {
     background-color: var(--bg);
     color: var(--text);
-    padding: 16px 16px 120px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 80px;
   }
 
   .editorial-shell {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1500px;
+    padding: 0 24px;
   }
 
-  button, input, select { font: inherit; color: inherit; }
+  button, input { font: inherit; color: inherit; }
   button { cursor: pointer; border: none; background: none; }
   .hidden { display: none !important; }
 
-  /* ZARA / EDITORIAL MASTHEAD */
+  /* ZARA MINIMAL EDITORIAL MASTHEAD */
   .brand-masthead {
     text-align: center;
-    padding: 16px 0 20px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 24px;
-    background: rgba(250, 245, 238, 0.9);
+    padding: 24px 0 20px;
+    background: rgba(250, 245, 238, 0.95);
     backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
   }
 
   .brand-logo {
     font-family: var(--font-serif);
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
-    letter-spacing: 5px;
+    letter-spacing: 8px;
     text-transform: uppercase;
     color: var(--text);
   }
 
   .brand-sub {
-    font-size: 8.5px;
-    letter-spacing: 2px;
+    font-size: 9px;
+    letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--saffron);
     font-weight: 600;
-    margin-top: 3px;
+    margin-top: 4px;
   }
 
-  /* SEARCH & CONTROLS STRIP */
+  /* TOP CONTROLS BAR */
   .control-grid {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 40px;
     align-items: center;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .search-box {
@@ -100,13 +102,14 @@
 
   .search-box input {
     width: 100%;
-    height: 44px;
-    padding: 0 12px 0 38px;
-    font-size: 13px;
+    height: 42px;
+    padding: 0 14px 0 38px;
+    font-size: 11.5px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     outline: none;
+    letter-spacing: 0.5px;
     transition: border var(--ease);
   }
 
@@ -115,22 +118,22 @@
   .search-box svg {
     position: absolute;
     left: 12px;
-    top: 15px;
+    top: 14px;
     width: 14px;
     height: 14px;
     color: var(--text-muted);
   }
 
   .btn-cart-nav {
-    height: 44px;
-    padding: 0 16px;
+    height: 42px;
+    padding: 0 18px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -142,117 +145,138 @@
     font-size: 9px;
     padding: 2px 6px;
     border-radius: 99px;
+    font-family: monospace;
     font-weight: 700;
   }
 
   .wa-direct-btn {
-    height: 44px;
-    padding: 0 16px;
+    height: 42px;
+    padding: 0 18px;
     background: var(--sage);
     color: #fff;
     border-radius: var(--radius);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     display: flex;
     align-items: center;
     gap: 6px;
     text-decoration: none;
+    transition: opacity var(--ease);
   }
+  .wa-direct-btn:hover { opacity: 0.9; }
 
-  /* SEASON PILLS FILTER BAR */
-  .filter-pills {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 12px;
-    margin-bottom: 24px;
-    scrollbar-width: none;
-  }
-  .filter-pills::-webkit-scrollbar { display: none; }
-
-  .f-pill {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 8px 16px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-muted);
-    white-space: nowrap;
-    transition: all var(--ease);
-  }
-
-  .f-pill.on {
-    background: var(--border-dark);
-    color: #fff;
-    border-color: var(--border-dark);
-  }
-
-  /* EDITORIAL CATEGORY TILES */
+  /* ZARA-STYLE FULLSCREEN EDITORIAL BLOCKS */
   .edit-section-title {
     font-family: var(--font-serif);
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    margin: 24px 0 14px;
+    margin: 40px 0 16px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
     display: flex;
-    align-items: baseline;
     justify-content: space-between;
+    align-items: baseline;
   }
 
+  /* High-fashion ZARA layout: large immersive grid items */
   .edit-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 16px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 50px;
   }
 
   .edit-tile {
     position: relative;
-    aspect-ratio: 4 / 5;
-    background: var(--surface);
-    border: 1px solid var(--border);
+    aspect-ratio: 3 / 4;
+    background: #e5d9c8;
     border-radius: var(--radius);
     overflow: hidden;
     cursor: pointer;
-    transition: transform var(--ease), border-color var(--ease);
   }
 
-  .edit-tile:hover { transform: translateY(-3px); border-color: var(--border-dark); }
-  .edit-tile img { opacity: 0.9; transition: transform 0.4s ease; }
-  .edit-tile:hover img { transform: scale(1.05); }
+  .edit-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.95);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease;
+  }
+
+  .edit-tile:hover img {
+    transform: scale(1.04);
+    filter: brightness(1);
+  }
+
   .edit-tile::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(28,15,0,0.85) 100%);
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(28, 15, 0, 0.75) 100%);
   }
+
   .edit-tile-meta {
-    position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 2; color: #fff;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2;
+    color: #fff;
   }
-  .edit-tile-name { font-family: var(--font-serif); font-size: 16px; font-weight: 600; letter-spacing: 1px; }
-  .edit-tile-count { font-size: 9px; opacity: 0.75; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+  .edit-tile-name {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .edit-tile-count {
+    font-size: 9.5px;
+    opacity: 0.75;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
 
   /* CATALOG GRID VIEW */
-  .catalog-view { display: none; }
+  .catalog-view { display: none; width: 100%; }
   .catalog-view.visible { display: block; }
-  
+
   .catalog-bar {
-    display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
   }
+
   .btn-back-catalog {
-    height: 38px; padding: 0 12px; background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-    display: flex; align-items: center; gap: 6px;
+    height: 38px;
+    padding: 0 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
   .kl-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
   }
 
   .kl-card {
@@ -263,113 +287,176 @@
     flex-direction: column;
     position: relative;
     cursor: pointer;
-    transition: transform var(--ease), border-color var(--ease);
+    transition: border-color var(--ease);
   }
 
-  .kl-card:hover { transform: translateY(-3px); border-color: var(--border-dark); }
+  .kl-card:hover { border-color: var(--border-dark); }
 
   .card-media {
     position: relative;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 4;
     background: #f4f4f5;
     overflow: hidden;
   }
 
   .card-bag-btn {
-    position: absolute; top: 10px; right: 10px; z-index: 2;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9); border: 1px solid var(--border);
-    display: grid; place-items: center; transition: all var(--ease);
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    transition: all var(--ease);
   }
   .card-bag-btn:hover { background: var(--border-dark); color: #fff; }
   .card-bag-btn.in-bag { background: var(--ruby); color: #fff; border-color: var(--ruby); }
   .card-bag-btn svg { width: 14px; height: 14px; }
 
-  .card-body { padding: 12px; display: flex; flex-direction: column; gap: 3px; flex-grow: 1; }
-  .card-cat { font-size: 8.5px; font-weight: 600; color: var(--saffron); text-transform: uppercase; letter-spacing: 0.5px; }
-  .card-name { font-size: 12.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-specs { font-size: 9px; color: var(--text-muted); text-transform: uppercase; margin: 2px 0 4px; }
+  .card-body { padding: 16px; display: flex; flex-direction: column; gap: 4px; flex-grow: 1; }
+  .card-cat { font-size: 9px; font-weight: 600; color: var(--saffron); text-transform: uppercase; letter-spacing: 1px; }
+  .card-name { font-size: 13px; font-weight: 500; color: var(--text); letter-spacing: 0.3px; }
+  .card-specs { font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; margin: 2px 0 6px; letter-spacing: 0.5px; }
   .card-finance {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-top: auto; padding-top: 6px; border-top: 1px solid #f8f8f8;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid #f4f4f5;
   }
-  .card-price { font-family: var(--font-mono); font-size: 13.5px; font-weight: 700; color: var(--text); }
-  .card-size { font-size: 9px; color: var(--text-muted); }
+  .card-price { font-family: monospace; font-size: 14px; font-weight: 700; color: var(--text); }
+  .card-size { font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; }
 
   /* PRODUCT DETAILS MODAL */
   .modal-overlay {
-    position: fixed; inset: 0; z-index: 400;
-    background: rgba(28, 15, 0, 0.5); backdrop-filter: blur(8px);
-    display: none; align-items: center; justify-content: center; padding: 16px;
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    background: rgba(28, 15, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
   }
   .modal-overlay.open { display: flex; }
   .modal-box {
-    width: min(880px, 100%); max-height: 90vh; background: #fff;
-    border: 1px solid var(--border); border-radius: var(--radius);
-    overflow: hidden; display: flex; flex-direction: column; position: relative;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    width: min(960px, 100%);
+    max-height: 90vh;
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.25);
   }
   .modal-close-btn {
-    position: absolute; top: 14px; right: 14px; z-index: 10;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(255,255,255,0.9); border: 1px solid var(--border);
-    display: grid; place-items: center; cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
   }
-  .modal-grid { display: grid; grid-template-columns: 1.1fr 1fr; flex: 1; overflow: hidden; }
+  .modal-grid { display: grid; grid-template-columns: 1.2fr 1fr; flex: 1; overflow: hidden; }
   .modal-img-pane { background: #f4f4f5; display: flex; flex-direction: column; position: relative; }
-  .modal-main-img { flex: 1; position: relative; min-height: 360px; overflow: hidden; cursor: zoom-in; }
-  .modal-thumbs { display: flex; gap: 6px; padding: 10px; background: #fff; border-top: 1px solid var(--border); overflow-x: auto; }
-  .m-thumb { width: 50px; height: 60px; border: 1.5px solid transparent; border-radius: var(--radius); overflow: hidden; flex-shrink: 0; opacity: 0.6; cursor: pointer; }
+  .modal-main-img { flex: 1; position: relative; min-height: 420px; overflow: hidden; cursor: zoom-in; }
+  .modal-thumbs { display: flex; gap: 8px; padding: 12px; background: #fff; border-top: 1px solid var(--border); overflow-x: auto; }
+  .m-thumb { width: 54px; height: 68px; border: 1.5px solid transparent; border-radius: var(--radius); overflow: hidden; flex-shrink: 0; opacity: 0.6; cursor: pointer; }
   .m-thumb.on { border-color: var(--border-dark); opacity: 1; }
-  .modal-info-pane { padding: 28px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
-  .modal-price { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--text); }
+  .modal-info-pane { padding: 36px 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+  .modal-price { font-family: monospace; font-size: 24px; font-weight: 700; color: var(--text); }
 
   .btn-action-primary {
-    height: 44px; background: var(--border-dark); color: #fff;
-    border-radius: var(--radius); font-size: 11px; font-weight: 600;
-    letter-spacing: 1.5px; text-transform: uppercase; width: 100%;
+    height: 48px;
+    background: var(--border-dark);
+    color: #fff;
+    border-radius: var(--radius);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: 100%;
+    transition: opacity var(--ease);
   }
-  .btn-action-wa {
-    height: 44px; background: #25d366; color: #fff;
-    border-radius: var(--radius); font-size: 11px; font-weight: 600;
-    letter-spacing: 1.5px; text-transform: uppercase; width: 100%;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
+  .btn-action-primary:hover { opacity: 0.9; }
 
-  /* CART SLIDE OVER */
+  .btn-action-wa {
+    height: 48px;
+    background: #25d366;
+    color: #fff;
+    border-radius: var(--radius);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity var(--ease);
+  }
+  .btn-action-wa:hover { opacity: 0.9; }
+
+  /* CART TRAY */
   .cart-overlay {
-    position: fixed; inset: 0; z-index: 500; background: rgba(28,15,0,0.4);
-    opacity: 0.2; pointer-events: none; transition: opacity var(--ease);
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(28,15,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--ease);
   }
   .cart-overlay.open { opacity: 1; pointer-events: auto; }
   .cart-tray {
-    position: fixed; top: 0; right: 0; bottom: 0; z-index: 501;
-    width: min(420px, 100vw); background: #fff; border-left: 1px solid var(--border);
-    display: flex; flex-direction: column; transform: translateX(100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    z-index: 501;
+    width: min(440px, 100vw);
+    background: #fff;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .cart-overlay.open .cart-tray { transform: translateX(0); }
-  .cart-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .cart-items { flex: 1; overflow-y: auto; padding: 14px 20px; }
-  .cart-foot { padding: 18px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
+  .cart-head { padding: 22px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 16px 24px; }
+  .cart-foot { padding: 22px 24px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
 
   /* LIGHTBOX */
   .lightbox-view {
     position: fixed; inset: 0; z-index: 9000; background: #000; display: none; align-items: center; justify-content: center;
   }
   .lightbox-view.open { display: flex; }
-  .lightbox-close { position: absolute; top: 20px; right: 24px; color: #fff; font-size: 26px; z-index: 9001; cursor: pointer; }
+  .lightbox-close { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 28px; z-index: 9001; cursor: pointer; }
 
   .toast-bar {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px);
-    z-index: 1000; background: var(--border-dark); color: #fff; padding: 8px 18px;
-    border-radius: var(--radius); font-size: 11px; opacity: 0; pointer-events: none; transition: all 0.2s ease;
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    z-index: 1000; background: var(--border-dark); color: #fff; padding: 10px 20px;
+    border-radius: var(--radius); font-size: 11px; letter-spacing: 0.5px; opacity: 0; pointer-events: none; transition: all 0.25s ease;
   }
   .toast-bar.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  @media(max-width:768px) {
+  @media (max-width: 900px) {
+    .edit-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .modal-grid { grid-template-columns: 1fr; overflow-y: auto; }
-    .kl-grid, .edit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .kl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   }
 </style>
 </head>
@@ -396,12 +483,10 @@
 
   <!-- HOME EDITORIAL VIEW -->
   <div id="homeEditorialView">
-    <div class="filter-pills" id="seasonChipsBar"></div>
-
-    <div class="edit-section-title"><span>The Winter Edit</span> <span id="winterCount" style="font-size:11px;color:var(--text-muted);"></span></div>
+    <div class="edit-section-title"><span>The Winter Edit</span> <span id="winterCount" style="font-size:10px;color:var(--text-muted);font-weight:400;"></span></div>
     <div class="edit-grid" id="winterGrid"></div>
 
-    <div class="edit-section-title"><span>The Summer Edit</span> <span id="summerCount" style="font-size:11px;color:var(--text-muted);"></span></div>
+    <div class="edit-section-title"><span>The Summer Edit</span> <span id="summerCount" style="font-size:10px;color:var(--text-muted);font-weight:400;"></span></div>
     <div class="edit-grid" id="summerGrid"></div>
   </div>
 
@@ -412,7 +497,7 @@
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
         All Collections
       </button>
-      <h2 style="font-family:var(--font-serif);font-size:20px;" id="catalogHeaderTitle"></h2>
+      <h2 style="font-family:var(--font-serif);font-size:18px;letter-spacing:1px;text-transform:uppercase;" id="catalogHeaderTitle"></h2>
     </div>
     <div class="kl-grid" id="catalogGrid"></div>
   </div>
@@ -427,19 +512,19 @@
 </div>
 
 <!-- CART TRAY -->
-<div class="cart-slide-overlay" id="cartOverlay">
+<div class="cart-overlay" id="cartOverlay">
   <div class="cart-tray">
     <div class="cart-head">
-      <span style="font-family:var(--font-serif);font-weight:700;text-transform:uppercase;">Your Shopping Bag</span>
-      <button id="cartCloseBtn" style="font-size:16px;">✕</button>
+      <span style="font-family:var(--font-serif);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:14px;">Your Shopping Bag</span>
+      <button id="cartCloseBtn" style="font-size:18px;cursor:pointer;">✕</button>
     </div>
     <div class="cart-items" id="cartItemsList"></div>
     <div class="cart-foot" id="cartFootBox" style="display:none;">
       <div style="display:flex;justify-content:space-between;align-items:baseline;">
-        <span style="font-size:11px;text-transform:uppercase;color:var(--text-muted);">Estimated Total</span>
-        <span style="font-family:var(--font-mono);font-size:18px;font-weight:700;" id="cartTotalSum">₹0</span>
+        <span style="font-size:10px;text-transform:uppercase;color:var(--text-muted);letter-spacing:1px;">Estimated Total</span>
+        <span style="font-family:monospace;font-size:18px;font-weight:700;" id="cartTotalSum">₹0</span>
       </div>
-      <input type="text" id="customerNameInput" placeholder="Your Name for WhatsApp Order..." style="width:100%;height:40px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;outline:none;"/>
+      <input type="text" id="customerNameInput" placeholder="Your Name for WhatsApp Order..." style="width:100%;height:42px;padding:0 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;outline:none;background:#faf5ee;"/>
       <button class="btn-action-wa" id="whatsappCheckoutBtn">Send Order via WhatsApp</button>
     </div>
   </div>
@@ -464,7 +549,6 @@
   let ALL_PRODUCTS = [];
   let ACTIVE_CATEGORY = null;
   let CART = [];
-  let activeSeasonFilter = 'All';
 
   const $ = (id) => document.getElementById(id);
 
@@ -505,26 +589,10 @@
         };
       }).filter(p => p.name);
 
-      renderSeasonChips();
       renderEdits();
     } catch (err) {
       showToast('Error syncing collection data.');
     }
-  }
-
-  function renderSeasonChips() {
-    const seasons = ['All', ...new Set(ALL_PRODUCTS.map(p => p.season).filter(Boolean))].sort();
-    $('seasonChipsBar').innerHTML = seasons.map(s => `
-      <button class="f-pill ${activeSeasonFilter === s ? 'on' : ''}" data-season="${s}">${s}</button>
-    `).join('');
-
-    $('seasonChipsBar').querySelectorAll('button').forEach(btn => {
-      btn.onclick = () => {
-        activeSeasonFilter = btn.dataset.season;
-        renderSeasonChips();
-        renderEdits();
-      };
-    });
   }
 
   function renderEdits() {
@@ -548,22 +616,8 @@
       }).join('');
     };
 
-    const winterSec = $('winterSection');
-    const summerSec = $('summerSection');
-
-    if (activeSeasonFilter === 'All' || activeSeasonFilter.toLowerCase().includes('winter')) {
-      winterSec.style.display = 'block';
-      renderGrid('Winter', 'winterGrid', 'winterCount');
-    } else {
-      winterSec.style.display = 'none';
-    }
-
-    if (activeSeasonFilter === 'All' || activeSeasonFilter.toLowerCase().includes('summer')) {
-      summerSec.style.display = 'block';
-      renderGrid('Summer', 'summerGrid', 'summerCount');
-    } else {
-      summerSec.style.display = 'none';
-    }
+    renderGrid('Winter', 'winterGrid', 'winterCount');
+    renderGrid('Summer', 'summerGrid', 'summerCount');
   }
 
   window.openCategory = function(catName) {
@@ -640,10 +694,10 @@
       </div>
       <div class="modal-info-pane">
         <div style="font-size:9px;color:var(--saffron);font-weight:600;letter-spacing:1px;text-transform:uppercase;">${p.season} • ${p.category}</div>
-        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:600;">${p.name}</h3>
+        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:600;letter-spacing:0.5px;">${p.name}</h3>
         <div class="modal-price">₹${p.price.toLocaleString('en-IN')}</div>
         ${p.description ? `<p style="font-size:12px;line-height:1.6;color:var(--text-muted);">${p.description}</p>` : ''}
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:auto;">
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:auto;">
           <button class="btn-action-primary" onclick="window.toggleBag('${p.id}'); window.closeModal();">
             ${CART.some(item => item.id === p.id) ? 'Remove From Bag' : 'Add to Bag'}
           </button>
@@ -692,19 +746,19 @@
     const foot = $('cartFootBox');
 
     if (!CART.length) {
-      list.innerHTML = `<div style="text-align:center;padding:50px 20px;font-size:11px;color:var(--text-muted);text-transform:uppercase;">Your bag is empty.</div>`;
+      list.innerHTML = `<div style="text-align:center;padding:50px 20px;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">Your bag is empty.</div>`;
       foot.style.display = 'none';
       return;
     }
 
     foot.style.display = 'flex';
     list.innerHTML = CART.map(p => `
-      <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:center;">
-        <div style="width:52px;height:64px;border-radius:var(--radius);overflow:hidden;background:#eee;"><img src="${p.image || BLANK_SVG}"/></div>
+      <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);align-items:center;">
+        <div style="width:54px;height:68px;border-radius:var(--radius);overflow:hidden;background:#eee;"><img src="${p.image || BLANK_SVG}"/></div>
         <div style="flex:1;min-width:0;">
           <div style="font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.name}</div>
-          <div style="font-family:var(--font-mono);font-size:12px;font-weight:700;margin-top:2px;">₹${p.price.toLocaleString('en-IN')}</div>
-          <span style="font-size:9px;color:var(--ruby);cursor:pointer;font-weight:600;text-transform:uppercase;" onclick="window.toggleBag('${p.id}')">Remove</span>
+          <div style="font-family:monospace;font-size:12px;font-weight:700;margin-top:3px;">₹${p.price.toLocaleString('en-IN')}</div>
+          <span style="font-size:9px;color:var(--ruby);cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;" onclick="window.toggleBag('${p.id}')">Remove</span>
         </div>
       </div>
     `).join('');
@@ -740,7 +794,6 @@
     if (ACTIVE_CATEGORY) {
       renderCatalogGrid();
     } else if (q.length > 0) {
-      // Direct quick search activation if user types on home screen
       const matched = ALL_PRODUCTS.find(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
       if (matched) openCategory(matched.category);
     }
